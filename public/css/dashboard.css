@@ -1,0 +1,53 @@
+
+.firstnav {
+    background-color: black;
+    overflow: hidden;
+    margin: 0;
+    padding:10px;
+    color: white;
+}
+.secondnav {
+    background-color: #DCDCDC;
+    overflow: hidden;
+    margin: 0;
+    padding-top:13px;
+}
+
+/* Pen-specific styles */
+* {
+    box-sizing: border-box;
+}
+
+
+section {
+    color: #fff;
+    text-align: center;
+}
+
+div {
+    height: 100%;
+}
+
+
+
+/* Pattern styles */
+.container {
+    display: table;
+    width: 100%;
+}
+
+.left-half {
+    background-color: #ff9e2c;
+    position: absolute;
+    left: 0px;
+    width: 30%;
+}
+
+.right-half {
+    position: absolute;
+    right: 0px;
+    width: 70%;
+}
+
+
+
