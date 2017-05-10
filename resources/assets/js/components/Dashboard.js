@@ -36,18 +36,27 @@ class Dashboard extends Component {
             return (
                 <tr key={task.id}>
                     <th scope="row">
-                        <div className="panel panel-default">
-                            <div className="panel-heading">
+                        <div >
+                            <div>
+                                <div className ="textName">
                                 { task.description }
+                                </div>
                                 {
                                     (task.priority === "") ? <span></span>:
-                                        <span className="panel panel-primary" style={{ "float":"right"}}>{ task.priority }</span>
+                                        <button type="button" className="btn btn-warning btn-sm" style={{ "float":"right"}}>{ task.priority }</button>
                                 }
                             </div>
-                            <div className="panel-body">
-                                <p>{ task['company-name'] }</p>
-                                <p>{ task['project-name'] }</p>
-                                <p>{ task['created-on'] }</p>
+
+                            <div>
+                                <p className ="projectName">ProjectName:{ task['project-name'] }</p>
+                                <p className ="companyName">{ task['company-name'] }</p>
+                            </div>
+
+                            <div className="progress" id ="progressBar">
+                                <div className="progress-bar progress-bar-striped active" role="progressbar"
+                                     aria-valuenow="40" aria-valuemin="0" aria-valuemax="100" style={{"width":"40%"}}>
+                                    40%
+                                </div>
                             </div>
                         </div>
                     </th>
@@ -61,14 +70,14 @@ class Dashboard extends Component {
         return (
             <div>
                 <table className="table table-bordered" id="task_table">
-                    <thead>
+                    <thead >
                         <tr>
                             <th rowSpan="2" style={{"width": "12%"}}></th>
                             <th className="text-center" colSpan="5"> 9-13 Jan</th>
                             <th className="text-center" colSpan="5"> 16-20 Jan</th>
                         </tr>
-                        <tr>
-                            <th>9</th>
+                        <tr >
+                            <th >9</th>
                             <th>10</th>
                             <th>11</th>
                             <th>12</th>
@@ -97,11 +106,9 @@ class Dashboard extends Component {
                                 </div>
                             </div>
                         </th>
-                        <td colspan="10" >
-                            <div id ="scheduledBar">
-                                <p id ="scheduledText">65h/ 80h(81%) scheduled</p>
-                            </div>
-                        </td>
+                        <td colSpan="10"><div id ="scheduledBar">
+                            <p id ="scheduledText">65h/ 80h(81%) scheduled</p>
+                        </div></td>
                     </tr>
                     { this.renderTasks() }
                     </tbody>

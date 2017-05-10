@@ -89,5 +89,37 @@ th {
     width: 3%;
 }
 
+/* Tasks */
+.textName{
+    font-size : larger;
+}
+.projectName{
+    font-family: "Tahoma";
+    font-size: smaller;
+    color: #2a88bd;
+}
+.companyName{
+    font-family: "Tahoma";
+    color: lightgray;
+    font-weight: lighter;
+}
+
+/* scheduledBar */
+#scheduledBar {
+    background-color: #99b900;
+    height: 50px;
+    border-radius: 3px;
+}
+
+#scheduledText {
+    padding: 15px;
+    color: white;
+    font-weight: bold;
+}
+
+#progressBar{
+    width: 80%;
+}
+
 
 
