@@ -70,10 +70,15 @@ class Example extends Component {
                 </table>
             </div>
         );
+
     }
 }
 
 export default Example;
+
+
+// We only want to try to render our component on pages that have a div with an ID
+// of "example"; otherwise, we will see an error in our console
 
 if (document.getElementById('example')) {
     ReactDOM.render(<Example />, document.getElementById('example'));
