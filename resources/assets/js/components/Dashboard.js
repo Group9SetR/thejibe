@@ -97,7 +97,11 @@ class Dashboard extends Component {
                                 </div>
                             </div>
                         </th>
-                        <td colSpan="10"> 65h/ 80h(81%)scheduled</td>
+                        <td colspan="10" >
+                            <div id ="scheduledBar">
+                                <p id ="scheduledText">65h/ 80h(81%) scheduled</p>
+                            </div>
+                        </td>
                     </tr>
                     { this.renderTasks() }
                     </tbody>
