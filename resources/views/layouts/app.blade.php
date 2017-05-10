@@ -51,6 +51,27 @@
 
         @yield('content')
 
+        <footer>
+            <div class="chat-box">
+                <input type="checkbox" />
+                <label data-expanded="^" data-collapsed="Timer "></label>
+                <div class="chat-box-content">
+                    Task: Create time-tracking widget
+                    <br><br>
+                    Log Time
+                    <br><br>
+                    <textarea>Optional description</textarea>
+                    <br><br><br><br>
+                    <br><br><br><br>
+                    <br><br><br><br>
+                    <button class="btn btn-success">Save</button>
+                </div>
+
+                <button>Pause</button>
+                <button>Log Time</button>
+            </div>
+        </footer>
+
     <!-- Scripts -->
     <script src="/js/app.js"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
