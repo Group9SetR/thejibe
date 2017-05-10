@@ -38,16 +38,17 @@ class Dashboard extends Component {
                     <th scope="row">
                         <div className="panel panel-default">
                             <div className="panel-heading">
-                                { task['project-name'] }
+                                { task.description }
                                 {
                                     (task.priority === "") ? <span></span>:
                                         <span className="panel panel-primary" style={{ "float":"right"}}>{ task.priority }</span>
                                 }
                             </div>
                             <div className="panel-body">
-                                <p>{ task.description }</p><p>{ task['created-on'] }</p>
+                                <p>{ task['company-name'] }</p>
+                                <p>{ task['project-name'] }</p>
+                                <p>{ task['created-on'] }</p>
                             </div>
-
                         </div>
                     </th>
                     <td colSpan="10">TIMESPAN</td>

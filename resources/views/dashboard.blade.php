@@ -40,8 +40,7 @@
 @endsection
 @section('content')
     <div class = "container" id="wrapper">
-        <div id="task_table"></div>
-
+        <div id="dashboard"></div>
         <!--
         <div class="left-half">
             <div class = "row" id ="profile">
