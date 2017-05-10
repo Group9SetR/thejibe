@@ -64,10 +64,26 @@ div {
 }
 
 #profile {
-    margin-top: 10%;
     width: 100%;
-    padding: 10px;
     height: 10%;
+}
+
+#profile name{
+    margin-top: 10px;
+    padding: auto;
+}
+#wrapper{
+    width: 100%;
+    height: 100%;
+}
+
+table {
+    padding: 0;
+    margin-top:10px;
+}
+
+th {
+    width: 3%;
 }
 
 
