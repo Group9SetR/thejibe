@@ -23,6 +23,9 @@
                     <option>Priorities 2</option>
                 </select>
             </div>
+
+
+
             <div id="navbar" class="navbar-collapse collapse">
                 <ul class="nav navbar-nav navbar-right ">
                     {{ Form::open(['url'=>'/select-date']) }}
@@ -96,7 +99,9 @@
             </tr>
             </tbody>
         </table>
+        <button id="logTimeBtn">Log Time</button>
         <div id="dashboard"></div>
+
         <!--
         <div class="left-half">
             <div class = "row" id ="profile">

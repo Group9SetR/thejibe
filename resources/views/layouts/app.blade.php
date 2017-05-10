@@ -38,6 +38,8 @@
                         </a>
                     </div>
 
+
+
                     <div class="collapse navbar-collapse" id="app-navbar-collapse">
                         <!-- Right Side Of Navbar -->
                         <ul class="nav navbar-nav navbar-right">
@@ -51,29 +53,33 @@
 
         @yield('content')
 
-        <footer>
-            <div class="chat-box">
-                <input type="checkbox" />
-                <label data-expanded="^" data-collapsed="Timer "></label>
-                <div class="chat-box-content">
-                    Task: Create time-tracking widget
-                    <br><br>
-                    Log Time
-                    <br><br>
-                    <textarea>Optional description</textarea>
-                    <br><br><br><br>
-                    <br><br><br><br>
-                    <br><br><br><br>
-                    <button class="btn btn-success">Save</button>
+        <div id="timerbox" class="chat-box" style="visibility:hidden;">
+            <input type="checkbox" />
+            <label data-expanded="Timer &nbsp;&and;" data-collapsed="Timer &nbsp;&or;"></label>
+            <div class="chat-box-content">
+                Task: Create time-tracking widget
+                <br><br>
+                Log Time
+                <br><br>
+                <textarea>Optional description</textarea>
+                <br><br>
+                <button class="btn btn-success">Save</button>
+                <br><br>
+                <div class="text-center">
+                    <button>Pause</button>
+                    <button>Log Time</button>
                 </div>
-
-                <button>Pause</button>
-                <button>Log Time</button>
             </div>
-        </footer>
+
+        </div>
 
     <!-- Scripts -->
     <script src="/js/app.js"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+    <script>
+        $('#logTimeBtn').click(function(){
+            $('#timerbox').css('visibility', 'visible');
+        });
+    </script>
 </body>
 </html>
