@@ -12,8 +12,9 @@
 
     <!-- Bootstrap Core CSS -->
     <link href="/css/app.css" rel="stylesheet">
-
     <link href="/css/dashboard.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+
 
 </head>
 <body>
@@ -27,12 +28,11 @@
                         <span class="icon-bar"></span>
                         <span class="icon-bar"></span>
                     </button>
-                    <a class="navbar-brand text-white" href="#">My shedule</a>
+                    <a class="navbar-brand text-white" href="#"><font color="white">My shedule</font></a>
                 </div>
                 <div id="navbar" class="navbar-collapse collapse">
                     <ul class="nav navbar-nav navbar-right">
-                        <li><a href="#">My Account</a></li>
-
+                        <li color = "white"><a href="#"><font color="white">My Account</font></a></li>
                     </ul>
                 </div><!--/.nav-collapse -->
             </div>
@@ -79,5 +79,7 @@
 
     <!-- Scripts -->
     <script src="/js/app.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+
 </body>
 </html>
