@@ -7,6 +7,5 @@
 
 require('./bootstrap');
 
-
 import Example from './components/Example';
-
+import Dashboard from './components/Dashboard';

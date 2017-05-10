@@ -126,7 +126,7 @@
             </tr>
             </tbody>
         </table>
-
+        <div id="dashboard"></div>
         <!--
         <div class="left-half">
             <div class = "row" id ="profile">
