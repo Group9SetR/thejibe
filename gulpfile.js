@@ -1,6 +1,10 @@
-const elixir = require('laravel-elixir');
 
-require('laravel-elixir-vue-2');
+
+//const elixir = require('laravel-elixir');
+var elixir = require('laravel-elixir');
+require('laravel-elixir-webpack-react');
+
+
 
 /*
  |--------------------------------------------------------------------------
