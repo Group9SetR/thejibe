@@ -9,6 +9,7 @@ class Dashboard extends Component {
             tasks: [],
             currentprofile: []
         }
+
         this.startTime = this.startTime.bind(this)
     }
 
@@ -17,7 +18,7 @@ class Dashboard extends Component {
     }
 
     componentDidMount() {
-        var key = "twp_WUI8GI94aBL8p97JiiyXue8epq9A";
+        var key = "twp_sSjnN8X8GtBBozG0OepWU03xa6mx";
         var base64 = new Buffer(key+":xxx").toString("base64");
         var obj = {
             method:"GET",
@@ -44,28 +45,34 @@ class Dashboard extends Component {
             .then(currentprofile => {
                 this.setState({ currentprofile:currentprofile.person });
                 console.log(this.state.currentprofile);
-                var name = this.state.currentprofile.person['first-name'];
-                console.log(name);
             });
     }
 
+
     renderCurrentProfile() {
+        var pic = this.state.currentprofile['avatar-url'];
+        console.log(pic);
         return (
             <tr key={this.state.currentprofile.id}>
                 <th scope="row">
-                    <div>
-                        <div>
-                            <div className = "name">
-
-                                <p>{this.state.currentprofile['first-name']} {this.state.currentprofile['last-name']}</p>
-                            </div>
+                    <div className="profile">
+                        <div className = "col-sm-2">
+                            <img id ="userpic"  src={ this.state.currentprofile['avatar-url']} />
+                        </div>
+                        <div className = "col-sm-8" id = "name" >
+                            <p>{ this.state.currentprofile['first-name'] } {this.state.currentprofile['last-name']}</p>
+                        </div>
+                        <div className = "col-sm-1" id = "expandBtn">
+                            <button type="button" className="btn btn-default btn-sm">
+                                <span className="glyphicon glyphicon-chevron-down"></span>
+                            </button>
                         </div>
                     </div>
                 </th>
+                <td colSpan="10"><div id="scheduledBar"><p id="scheduledText">65h/ 80h(81%) scheduled</p></div></td>
             </tr>
         );
     }
-
 
     renderTasks() {
         return this.state.tasks.map(task => {
@@ -74,12 +81,17 @@ class Dashboard extends Component {
                     <th scope="row">
                         <div >
                             <div>
-                                <div className ="textName">
-                                    { task.description }
+                                <div className ="taskName">
+                                    { task.content }
                                 </div>
                                 {
                                     (task.priority === "") ? <span></span>:
-                                        <button type="button" className="btn btn-warning btn-sm" style={{ "float":"right"}}>{ task.priority }</button>
+                                        (task.priority === "medium") ?
+                                            <button type="button" className="btn btn-warning btn-sm" style={{ "float":"right"}}>{ task.priority }</button>:
+                                            (task.priority === "low") ?
+                                                <button type="button" className="btn btn-success btn-sm" style={{ "float":"right"}}>{ task.priority }</button>:
+                                                <button type="button" className="btn btn-danger btn-sm" style={{ "float":"right"}}>{ task.priority }</button>
+
                                 }
                                 <button onClick={this.startTime} type="button" className="logTimerBtn pull-right">
                                     <span className="glyphicon glyphicon glyphicon-time" aria-hidden="true"></span>
@@ -89,12 +101,10 @@ class Dashboard extends Component {
                                     <span className="glyphicon glyphicon glyphicon-play" aria-hidden="true"></span>
                                 </button>
                             </div>
-
                             <div>
                                 <p className ="projectName">ProjectName:{ task['project-name'] }</p>
                                 <p className ="companyName">{ task['company-name'] }</p>
                             </div>
-
                             <div className="progress" id ="progressBar">
                                 <div className="progress-bar progress-bar-striped active" role="progressbar"
                                      aria-valuenow="40" aria-valuemin="0" aria-valuemax="100" style={{"width":"40%"}}>
