@@ -99,9 +99,10 @@
     <br><br><br>
     <br><br><br>
     <br><br><br>
-    <footer style="position: fixed; bottom: 0; display: block; padding-left: 15px; visibility: hidden;">
+    <footer id="timerbox" style="position: fixed; bottom: 0; display: block; padding-left: 15px; visibility: hidden;">
         <button style="width: 250px;" type="button" data-toggle="collapse" data-target="#demo">TIMER - Pause - Log Time</button>
-        <div class="container" style="background-color: lightblue; width: 250px; text-align: center">
+        <button id="closeTimerbox" class="label-danger">x</button>
+        <div class="container" style="background-color: lightblue; width: 276px; text-align: center">
             <div id="demo" class="collapse">
                 <br>
                 Task: Create time-tracking widget
@@ -123,8 +124,11 @@
     <script src="/js/app.js"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
     <script>
-        $('td > .logTimeBtn').click(function(){
+        $('.logTimeBtn').click(function(){
             $('#timerbox').css('visibility', 'visible');
+        });
+        $('#closeTimerbox').click(function(){
+            $('#timerbox').css('visibility', 'hidden');
         });
     </script>
 </body>
