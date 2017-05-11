@@ -1,4 +1,3 @@
-
 .firstnav {
     background-color: black;
     overflow: hidden;
@@ -15,12 +14,12 @@
 
 #wrapper {
     width:100%;
+    height: 100%;
 }
 /* Pen-specific styles */
 * {
     box-sizing: border-box;
 }
-
 
 section {
     color: black;
@@ -28,11 +27,9 @@ section {
     font-family: "Times New Roman", Times, serif;
 
 }
-
 div {
     height: 100%;
 }
-
 
 /* Pattern styles */
 .container {
@@ -40,29 +37,15 @@ div {
     width: 100%;
 }
 
-.left-half {
-
-    position: absolute;
-    left: 0px;
-    width: 30%;
-}
-
-.right-half {
-    background-color: #ff9e2c;
-    position: absolute;
-    right: 0px;
-    width: 70%;
-}
-
-.firstnav ul a:hover {
+#myFirstnav ul a:hover {
     background-color: black;
 }
 
-.firstnav ul a:link {
+#myFirstnav ul a:link {
     background-color: black;
 }
 
-.firstnav ul a:visited {
+#myFirstnav ul a:visited {
     background-color: black;
 }
 
@@ -75,16 +58,47 @@ div {
     margin-top: 10px;
     padding: auto;
 }
-#wrapper{
-    width: 100%;
-    height: 100%;
-}
 
 table {
     padding: 0;
-    margin-top:10px;
+    margin: 0px;
+
 }
 
 th {
+    text-align:center;
     width: 3%;
+}
+
+
+/* Tasks */
+.textName{
+    font-size : larger;
+}
+.projectName{
+    font-family: "Tahoma";
+    font-size: smaller;
+    color: #2a88bd;
+}
+.companyName{
+    font-family: "Tahoma";
+    color: lightgray;
+    font-weight: lighter;
+}
+
+/* scheduledBar */
+#scheduledBar {
+    background-color: #99b900;
+    height: 50px;
+    border-radius: 3px;
+}
+
+#scheduledText {
+    padding: 15px;
+    color: white;
+    font-weight: bold;
+}
+
+#progressBar{
+    width: 80%;
 }
