@@ -9,4 +9,4 @@ require('./bootstrap');
 
 import Example from './components/Example';
 import Dashboard from './components/Dashboard';
-import TimeTracker from './component/TimeTracker.js';
+import TimeTracker from './components/TimeTracker.js';
