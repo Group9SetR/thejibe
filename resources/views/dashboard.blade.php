@@ -99,7 +99,7 @@
             </tr>
             </tbody>
         </table>
-        <button id="logTimeBtn">Log Time</button>
+
         <div id="dashboard"></div>
 
         <!--

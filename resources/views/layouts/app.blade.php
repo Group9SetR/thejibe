@@ -38,8 +38,6 @@
                         </a>
                     </div>
 
-
-
                     <div class="collapse navbar-collapse" id="app-navbar-collapse">
                         <!-- Right Side Of Navbar -->
                         <ul class="nav navbar-nav navbar-right">
@@ -53,31 +51,50 @@
 
         @yield('content')
 
-        <div id="timerbox" class="chat-box" style="visibility:hidden;">
+        <div id="timerbox" class="timer-box" style="visibility:hidden;">
             <input type="checkbox" />
             <label data-expanded="Timer &nbsp;&and;" data-collapsed="Timer &nbsp;&or;"></label>
-            <div class="chat-box-content">
+            <div class="timer-box-content">
                 Task: Create time-tracking widget
                 <br><br>
                 Log Time
                 <br><br>
                 <textarea>Optional description</textarea>
                 <br><br>
-                <button class="btn btn-success">Save</button>
+                <button class="btn btn-success openTimerConfirmModal" data-toggle="modal" data-target="#confirmTimerModal">Log Time</button>
                 <br><br>
                 <div class="text-center">
                     <button>Pause</button>
                     <button>Log Time</button>
                 </div>
             </div>
-
         </div>
+    </div>
+
+    <div class="modal fade openTimerConfirmModal" id="confirmTimerModal" tabindex="-1" role="dialog">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span></button>
+                    <h4 class="modal-title" id="confirmTimerModalLabel">Timer</h4>
+                </div>
+                <div class="modal-body">
+                    Test
+                </div>
+                <div class="modal-footer">
+                    <input type="submit" placeholder="Save" id="timerSubmit" name="confirmTimerBtn" class="btn btn-success openConfirmTimerModal">
+                    <button type="button" id="closeConfirmTimerBtn" class="btn btn-warning" data-dismiss="modal">Close</button>
+                </div>
+            </div>
+        </div>
+    </div>
 
     <!-- Scripts -->
     <script src="/js/app.js"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
     <script>
-        $('#logTimeBtn').click(function(){
+        $('td > .logTimeBtn').click(function(){
             $('#timerbox').css('visibility', 'visible');
         });
     </script>

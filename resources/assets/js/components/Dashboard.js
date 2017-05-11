@@ -42,7 +42,7 @@ class Dashboard extends Component {
                     }
                     <td>{ task.description }</td>
                     <td>{ task['created-on'] }</td>
-                    <td><button id="logTimeBtn">Log Time</button></td>
+                    <td><button className="logTimeBtn">Log Time</button></td>
                 </tr>
             );
         })

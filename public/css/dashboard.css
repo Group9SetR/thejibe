@@ -89,7 +89,7 @@ th {
     width: 3%;
 }
 
-.chat-box {
+.timer-box {
     font:normal normal 11px/1.4 Tahoma,Verdana,Sans-Serif;
     color:#333;
     width:200px; /* Chatbox width */
@@ -107,7 +107,7 @@ th {
     box-shadow:1px 1px 5px rgba(0,0,0,.2);
 }
 
-.chat-box > input[type="checkbox"] {
+.timer-box > input[type="checkbox"] {
     display:block;
     margin:0 0;
     padding:0 0;
@@ -123,7 +123,7 @@ th {
     filter:alpha(opacity=0);
 }
 
-.chat-box > label {
+.timer-box > label {
     display:block;
     height:24px;
     line-height:24px;
@@ -133,17 +133,17 @@ th {
     padding:0 1em 1px;
 }
 
-.chat-box > label:before {content:attr(data-collapsed)}
+.timer-box > label:before {content:attr(data-collapsed)}
 
-.chat-box .chat-box-content {
+.timer-box .timer-box-content {
     padding:10px;
     display:none;
 }
 
 /* hover state */
-.chat-box > input[type="checkbox"]:hover + label {background-color:#404D5A}
+.timer-box > input[type="checkbox"]:hover + label {background-color:#404D5A}
 
 /* checked state */
-.chat-box > input[type="checkbox"]:checked + label {background-color:#212A35}
-.chat-box > input[type="checkbox"]:checked + label:before {content:attr(data-expanded)}
-.chat-box > input[type="checkbox"]:checked ~ .chat-box-content {display:block}
+.timer-box > input[type="checkbox"]:checked + label {background-color:#212A35}
+.timer-box > input[type="checkbox"]:checked + label:before {content:attr(data-expanded)}
+.timer-box > input[type="checkbox"]:checked ~ .timer-box-content {display:block}
