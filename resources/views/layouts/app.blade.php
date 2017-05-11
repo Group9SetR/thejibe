@@ -50,27 +50,6 @@
         </nav>
 
         @yield('content')
-
-        <!--
-        <div id="timerbox" class="timer-box" style="visibility:hidden;">
-            <input type="checkbox" />
-            <label data-expanded="Timer &nbsp;&and;" data-collapsed="Timer &nbsp;&or;"></label>
-            <div class="timer-box-content">
-                Task: Create time-tracking widget
-                <br><br>
-                Log Time
-                <br><br>
-                <textarea>Optional description</textarea>
-                <br><br>
-                <button class="btn btn-success openTimerConfirmModal" data-toggle="modal" data-target="#confirmTimerModal">Log Time</button>
-                <br><br>
-                <div class="text-center">
-                    <button>Pause</button>
-                    <button>Log Time</button>
-                </div>
-            </div>
-        </div>
-        -->
     </div>
 
     <div class="modal fade openTimerConfirmModal" id="confirmTimerModal" tabindex="-1" role="dialog" style="width:500px; height: 500px;">
@@ -124,6 +103,7 @@
     <script src="/js/app.js"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
     <script>
+        // script to show and hide timerbox visibility
         $('.logTimeBtn').click(function(){
             $('#timerbox').css('visibility', 'visible');
         });
