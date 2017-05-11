@@ -7,7 +7,8 @@ class Dashboard extends Component {
 
         this.state = {
             tasks: [],
-            currentprofile: []
+            currentprofile: [],
+            completion: 0.0
         }
     }
 
@@ -64,6 +65,32 @@ class Dashboard extends Component {
 
     renderTasks() {
         return this.state.tasks.map(task => {
+            var key = "twp_WUI8GI94aBL8p97JiiyXue8epq9A";
+            var base64 = new Buffer(key+":xxx").toString("base64");
+            var obj = {
+                method:"GET",
+                dataType: 'json',
+                headers: {
+                    'Authorization': 'BASIC '+base64,
+                    'Content-Type': 'application/json'
+                }
+            };
+            // ACCOUNT FOR DIVIDE BY ZERO
+/*            fetch("http://thejibe.teamwork.com/tasks/" + task.id + "/time/total.json", obj)
+                .then(response => {
+                    return response.json();
+                })
+                .then(time_entries => {
+                    if (time_entries['projects'][0]['tasklist']['task']['time-estimates']['total-hours-estimated'] != 0) {
+                        var completion = Math.floor(
+                            (time_entries['projects'][0]['tasklist']['task']['time-totals']['total-hours-sum'])
+                            / (time_entries['projects'][0]['tasklist']['task']['time-estimates']['total-hours-estimated']) * 100);
+                        this.setState({completion: completion})
+                        console.log(completion);
+                    }
+                    //console.log(time_entries['projects'][0]['tasklist']['task']['time-totals']['total-hours-sum'])
+                    //console.log(time_entries['projects'][0]['tasklist']['task']['time-estimates']['total-hours-estimated'])
+                });*/
             return (
                 <tr key={task.id}>
                     <th scope="row">
