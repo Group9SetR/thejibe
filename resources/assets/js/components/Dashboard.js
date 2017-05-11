@@ -12,7 +12,7 @@ class Dashboard extends Component {
     }
 
     componentDidMount() {
-        var key = "twp_WUI8GI94aBL8p97JiiyXue8epq9A";
+        var key = "twp_sSjnN8X8GtBBozG0OepWU03xa6mx";
         var base64 = new Buffer(key+":xxx").toString("base64");
         var obj = {
             method:"GET",
@@ -76,11 +76,16 @@ class Dashboard extends Component {
                         <div >
                             <div>
                                 <div className ="taskName">
-                                { task.description }
+                                { task.content }
                                 </div>
                                 {
                                     (task.priority === "") ? <span></span>:
-                                        <button type="button" className="btn btn-warning btn-sm" style={{ "float":"right"}}>{ task.priority }</button>
+                                        (task.priority === "medium") ?
+                                            <button type="button" className="btn btn-warning btn-sm" style={{ "float":"right"}}>{ task.priority }</button>:
+                                            (task.priority === "low") ?
+                                            <button type="button" className="btn btn-success btn-sm" style={{ "float":"right"}}>{ task.priority }</button>:
+                                                <button type="button" className="btn btn-danger btn-sm" style={{ "float":"right"}}>{ task.priority }</button>
+
                                 }
                             </div>
                             <div>
