@@ -51,6 +51,7 @@
 
         @yield('content')
 
+        <!--
         <div id="timerbox" class="timer-box" style="visibility:hidden;">
             <input type="checkbox" />
             <label data-expanded="Timer &nbsp;&and;" data-collapsed="Timer &nbsp;&or;"></label>
@@ -69,9 +70,10 @@
                 </div>
             </div>
         </div>
+        -->
     </div>
 
-    <div class="modal fade openTimerConfirmModal" id="confirmTimerModal" tabindex="-1" role="dialog">
+    <div class="modal fade openTimerConfirmModal" id="confirmTimerModal" tabindex="-1" role="dialog" style="width:500px; height: 500px;">
         <div class="modal-dialog" role="document">
             <div class="modal-content">
                 <div class="modal-header">
@@ -89,6 +91,33 @@
             </div>
         </div>
     </div>
+
+
+    <br><br><br>
+    <br><br><br>
+    <br><br><br>
+    <br><br><br>
+    <br><br><br>
+    <br><br><br>
+    <footer style="position: fixed; bottom: 0; display: block; padding-left: 15px; visibility: hidden;">
+        <button style="width: 250px;" type="button" data-toggle="collapse" data-target="#demo">TIMER - Pause - Log Time</button>
+        <div class="container" style="background-color: lightblue; width: 250px; text-align: center">
+            <div id="demo" class="collapse">
+                <br>
+                Task: Create time-tracking widget
+                <br><br>
+                Log Time
+                <br><br>
+                <textarea>Optional description</textarea>
+                <br><br>
+                <button class="btn btn-success openTimerConfirmModal" data-toggle="modal" data-target="#confirmTimerModal">Log Time</button>
+                <br><br>
+
+                <button>Pause</button>
+                <button>Log Time</button>
+            </div>
+        </div>
+    </footer>
 
     <!-- Scripts -->
     <script src="/js/app.js"></script>
