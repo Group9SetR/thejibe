@@ -9,6 +9,11 @@ class Dashboard extends Component {
             tasks: [],
             currentprofile: []
         }
+        this.startTime = this.startTime.bind(this)
+    }
+
+    startTime() {
+        document.getElementById("timerbox").style.visibility = 'visible';
     }
 
     componentDidMount() {
@@ -76,11 +81,11 @@ class Dashboard extends Component {
                                     (task.priority === "") ? <span></span>:
                                         <button type="button" className="btn btn-warning btn-sm" style={{ "float":"right"}}>{ task.priority }</button>
                                 }
-                                <button type="button" className="logTimeBtn pull-right">
+                                <button onClick={this.startTime} type="button" className="logTimerBtn pull-right">
                                     <span className="glyphicon glyphicon glyphicon-time" aria-hidden="true"></span>
                                 </button>
 
-                                <button type="button" className="logTimeBtn pull-right">
+                                <button onClick={this.startTime} type="button" className="logTimerBtn pull-right">
                                     <span className="glyphicon glyphicon glyphicon-play" aria-hidden="true"></span>
                                 </button>
                             </div>

@@ -102,10 +102,7 @@
     <script src="/js/app.js"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
     <script>
-        // script to show and hide timerbox visibility
-        $('.logTimeBtn').click(function(){
-            $('#timerbox').css('visibility', 'visible');
-        });
+        // script to hide timerbox visibility
         $('#closeTimerbox').click(function(){
             $('#timerbox').css('visibility', 'hidden');
         });
