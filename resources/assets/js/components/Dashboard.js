@@ -6,7 +6,8 @@ class Dashboard extends Component {
         super(props);
 
         this.state = {
-            tasks: []
+            tasks: [],
+            currentprofile: []
         }
     }
 
@@ -21,6 +22,7 @@ class Dashboard extends Component {
                 'Content-Type': 'application/json'
             }
         };
+
         fetch('https://thejibe.teamwork.com/tasks.json', obj)
             .then(response => {
                 return response.json();
@@ -29,7 +31,36 @@ class Dashboard extends Component {
                 console.log(tasks);
                 this.setState({ tasks:tasks['todo-items'] });
             });
+
+        fetch('https://thejibe.teamwork.com/me.json', obj)
+            .then(response => {
+                return response.json();
+            })
+            .then(currentprofile => {
+                this.setState({ currentprofile:currentprofile.person });
+                console.log(this.state.currentprofile);
+                var name = this.state.currentprofile.person['first-name'];
+                console.log(name);
+            });
     }
+
+    renderCurrentProfile() {
+            return (
+                <tr key={this.state.currentprofile.id}>
+                    <th scope="row">
+                        <div>
+                            <div>
+                                <div className = "name">
+
+                                    <p>{this.state.currentprofile['first-name']} {this.state.currentprofile['last-name']}</p>
+                                </div>
+                            </div>
+                        </div>
+                    </th>
+                </tr>
+            );
+    }
+
 
     renderTasks() {
         return this.state.tasks.map(task => {
@@ -66,10 +97,11 @@ class Dashboard extends Component {
         })
     }
 
+
     render() {
         return (
             <div>
-                <table className="table table-bordered" id="task_table">
+                <table className="table table-bordered " id="task_table">
                     <thead >
                         <tr>
                             <th rowSpan="2" style={{"width": "12%"}}></th>
@@ -77,39 +109,20 @@ class Dashboard extends Component {
                             <th className="text-center" colSpan="5"> 16-20 Jan</th>
                         </tr>
                         <tr >
-                            <th >9</th>
-                            <th>10</th>
-                            <th>11</th>
-                            <th>12</th>
-                            <th>13</th>
-                            <th>16</th>
-                            <th>17</th>
-                            <th>18</th>
-                            <th>19</th>
-                            <th>20</th>
+                            <th className="text-center">9</th>
+                            <th className="text-center">10</th>
+                            <th className="text-center">11</th>
+                            <th className="text-center">12</th>
+                            <th className="text-center">13</th>
+                            <th className="text-center">16</th>
+                            <th className="text-center">17</th>
+                            <th className="text-center">18</th>
+                            <th className="text-center">19</th>
+                            <th className="text-center">20</th>
                         </tr>
                     </thead>
                     <tbody>
-                    <tr>
-                        <th scope="row">
-                            <div className = "row" id ="profile">
-                                <div className="col-sm-2">
-                                    <img src="1.png" className="img-circle" alt="profile picture" width="50" height="50"/>
-                                </div>
-                                <div className="col-sm-5" id = "name">
-                                    <p id = "name"><strong>Hansol Lee</strong></p>
-                                </div>
-                                <div className="col-xs-1 pull-right">
-                                    <button type="button" className="btn btn-link">
-                                        <span className="glyphicon glyphicon-chevron-down"> </span>
-                                    </button>
-                                </div>
-                            </div>
-                        </th>
-                        <td colSpan="10"><div id ="scheduledBar">
-                            <p id ="scheduledText">65h/ 80h(81%) scheduled</p>
-                        </div></td>
-                    </tr>
+                    { this.renderCurrentProfile() }
                     { this.renderTasks() }
                     </tbody>
                 </table>
