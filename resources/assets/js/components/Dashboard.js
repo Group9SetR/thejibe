@@ -119,6 +119,31 @@ class Dashboard extends Component {
         })
     }
 
+    renderFooterTimer() {
+        return (
+            <footer id="timerbox" style={{position: 'fixed', bottom: 0, display: 'block', 'padding-left': 5 + 'px', visibility: 'hidden'}}>
+                <button style={{width: 250 + 'px'}} type="button" data-toggle="collapse" data-target="#demo">TIMER - Pause - Log Time</button>
+                <button id="closeTimerbox" className="label-danger">x</button>
+
+                <div className="container" style={{'background-color': 'lightblue', width: 275 + 'px', 'text-align': 'center'}}>
+                    <div id="demo" className="collapse">
+                        <br/>
+                        Task: Create time-tracking widget
+                        <br/><br/>
+                        Log Time
+                        <br/><br/>
+                        <textarea>Optional description</textarea>
+                        <br/><br/>
+                        <button className="btn btn-success openTimerConfirmModal" data-toggle="modal" data-target="#confirmTimerModal">Log Time</button>
+                        <br/><br/>
+
+                        <button>Pause</button>
+                        <button>Log Time</button>
+                    </div>
+                </div>
+            </footer>
+        );
+    }
 
     render() {
         return (
@@ -144,8 +169,9 @@ class Dashboard extends Component {
                     </tr>
                     </thead>
                     <tbody>
-                    { this.renderCurrentProfile() }
-                    { this.renderTasks() }
+                        { this.renderCurrentProfile() }
+                        { this.renderTasks() }
+                        { this.renderFooterTimer() }
                     </tbody>
                 </table>
             </div>

@@ -70,34 +70,6 @@
         </div>
     </div>
 
-
-    <br><br><br>
-    <br><br><br>
-    <br><br><br>
-    <br><br><br>
-    <br><br><br>
-    <br><br><br>
-    <footer id="timerbox" style="position: fixed; bottom: 0; display: block; padding-left: 15px; visibility: hidden;">
-        <button style="width: 250px;" type="button" data-toggle="collapse" data-target="#demo">TIMER - Pause - Log Time</button>
-        <button id="closeTimerbox" class="label-danger">x</button>
-        <div class="container" style="background-color: lightblue; width: 276px; text-align: center">
-            <div id="demo" class="collapse">
-                <br>
-                Task: Create time-tracking widget
-                <br><br>
-                Log Time
-                <br><br>
-                <textarea>Optional description</textarea>
-                <br><br>
-                <button class="btn btn-success openTimerConfirmModal" data-toggle="modal" data-target="#confirmTimerModal">Log Time</button>
-                <br><br>
-
-                <button>Pause</button>
-                <button>Log Time</button>
-            </div>
-        </div>
-    </footer>
-
     <!-- Scripts -->
     <script src="/js/app.js"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
