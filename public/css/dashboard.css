@@ -89,6 +89,11 @@ th {
     text-overflow: ellipsis;
 
 }
+.taskName:hover {
+    text-overflow:inherit;
+    overflow:visible;
+    height:auto;
+}
 .projectName{
     font-family: "Tahoma";
     font-size: smaller;
