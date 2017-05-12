@@ -8,7 +8,6 @@ class Dashboard extends Component {
         this.state = {
             tasks: [],
             currentprofile: [],
-            completion: 0.0
         }
     }
 
@@ -41,6 +40,7 @@ class Dashboard extends Component {
                 this.setState({ currentprofile:currentprofile.person });
                 console.log(this.state.currentprofile);
             });
+
     }
 
 
@@ -69,34 +69,41 @@ class Dashboard extends Component {
             );
     }
 
+    getCompletion() {
+        var xhttp = new XMLHttpRequest();
+        xhttp.open("POST", "Your Rest URL Here", false);
+        xhttp.setRequestHeader("Content-type", "application/json");
+        xhttp.send();
+        var response = JSON.parse(xhttp.responseText);
+    }
+
     renderTasks() {
         return this.state.tasks.map(task => {
             var key = "twp_WUI8GI94aBL8p97JiiyXue8epq9A";
             var base64 = new Buffer(key+":xxx").toString("base64");
-            var obj = {
-                method:"GET",
+            var completion = 0;
+            console.log(task.id);
+            $.ajax({
+                url: 'http://thejibe.teamwork.com/tasks/' + task.id + '/time/total.json',
+                async: false,
+                type: 'GET',
                 dataType: 'json',
-                headers: {
-                    'Authorization': 'BASIC '+base64,
-                    'Content-Type': 'application/json'
-                }
-            };
-            // ACCOUNT FOR DIVIDE BY ZERO
-/*            fetch("http://thejibe.teamwork.com/tasks/" + task.id + "/time/total.json", obj)
-                .then(response => {
-                    return response.json();
-                })
-                .then(time_entries => {
-                    if (time_entries['projects'][0]['tasklist']['task']['time-estimates']['total-hours-estimated'] != 0) {
-                        var completion = Math.floor(
-                            (time_entries['projects'][0]['tasklist']['task']['time-totals']['total-hours-sum'])
-                            / (time_entries['projects'][0]['tasklist']['task']['time-estimates']['total-hours-estimated']) * 100);
-                        this.setState({completion: completion})
-                        console.log(completion);
+                success: function(data) {
+                    if (data['projects'][0]['tasklist']['task']['time-estimates']['total-hours-estimated'] != 0) {
+                        completion = Math.floor(
+                            (data['projects'][0]['tasklist']['task']['time-totals']['total-hours-sum'])
+                            / (data['projects'][0]['tasklist']['task']['time-estimates']['total-hours-estimated']) * 100);
                     }
-                    //console.log(time_entries['projects'][0]['tasklist']['task']['time-totals']['total-hours-sum'])
-                    //console.log(time_entries['projects'][0]['tasklist']['task']['time-estimates']['total-hours-estimated'])
-                });*/
+                },
+                error: function() { console.log('boo!'); },
+                beforeSend: setHeader
+            });
+            console.log(completion);
+
+            function setHeader(xhr) {
+                xhr.setRequestHeader('Authorization', 'BASIC ' + base64);
+                xhr.setRequestHeader('Content-Type', 'application/json');
+            }
             return (
                 <tr key={task.id}>
                     <th scope="row">
@@ -121,8 +128,8 @@ class Dashboard extends Component {
                             </div>
                             <div className="progress" id ="progressBar">
                                 <div className="progress-bar progress-bar-striped active" role="progressbar"
-                                     aria-valuenow="40" aria-valuemin="0" aria-valuemax="100" style={{"width":"40%"}}>
-                                    40%
+                                     aria-valuenow={completion} aria-valuemin="0" aria-valuemax="100" style={{ "width" : completion + "%"}}>
+                                    {completion}%
                                 </div>
                             </div>
                         </div>
