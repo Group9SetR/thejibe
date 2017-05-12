@@ -13,6 +13,7 @@
     <link href="/css/app.css" rel="stylesheet">
     <link href="/css/dashboard.css" rel="stylesheet">
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+    @yield('css')
     <!-- Scripts -->
     <script>
         window.Laravel = <?php echo json_encode([
@@ -46,7 +47,7 @@
                     </div>
                 </div>
             </div>
-            @yield('dashboardnav')
+            @yield('nav')
         </nav>
 
         @yield('content')
@@ -54,5 +55,6 @@
     <!-- Scripts -->
     <script src="/js/app.js"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+    @yield('javascript')
 </body>
 </html>

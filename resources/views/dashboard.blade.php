@@ -1,5 +1,5 @@
 @extends('layouts.app')
-@section('dashboardnav')
+@section('nav')
     <div class="secondnav" id="mySecondnav">
         <div class="form-group">
             <div class="col-sm-2">
@@ -25,13 +25,20 @@
             </div>
             <div id="navbar" class="navbar-collapse collapse">
                 <ul class="nav navbar-nav navbar-right ">
-                    {{ Form::open(['url'=>'/select-date']) }}
+                    {{ Form::open(['url'=>'/select_date']) }}
                     <div class ="form-inline">
-                        {{ Form::date('start-date', '', ['id'=>'start-date', 'class'=>'form-control']) }}
-                        {{ Form::date('end-date', '', ['id'=>'end-date', 'class'=>'form-control']) }}
+                        {{ Form::date('start_date', '', ['id'=>'start_date', 'class'=>'form-control']) }}
+                        {{ Form::date('end_date', '', ['id'=>'end_date', 'class'=>'form-control']) }}
+                        {{ Form::select('date_filter',
+                            ['0'=>'',
+                             '1'=>'Week',
+                             '2'=>'Biweek',
+                             '3'=>'Month',
+                             '4'=>'90-Days'], '',
+                             ['class'=>'form-control',
+                              'id'=>'date_filter']) }}
                     </div>
                     {{ Form::close() }}
-
                 </ul>
             </div><!--/.nav-collapse -->
         </div>
@@ -41,25 +48,5 @@
 @section('content')
     <div class = "container" id="wrapper">
         <div id="dashboard"></div>
-        <!--
-        <div class="left-half">
-            <div class = "row" id ="profile">
-                <div class="col-sm-2">
-                    <img src="1.png" class="img-circle" alt="profile picture" width="50" height="50">
-                </div>
-                <div class="col-sm-5">
-                    <P id = "name"><strong>Hansol Lee</strong></P>
-                </div>
-                <div class="col-xs-1 pull-right">
-                    <button type="button" class="btn btn-link">
-                        <span class="glyphicon glyphicon-chevron-down"></span>
-                    </button>
-                </div>
-            </div>
-        </div>
-        <div class="right-half">
-
-        </div>
-        -->
     </div>
 @endsection
