@@ -13,6 +13,7 @@
     <link href="/css/app.css" rel="stylesheet">
     <link href="/css/dashboard.css" rel="stylesheet">
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+    @yield('css')
     <!-- Scripts -->
     <script>
         window.Laravel = <?php echo json_encode([
@@ -45,7 +46,7 @@
                     </div>
                 </div>
             </div>
-            @yield('dashboardnav')
+            @yield('nav')
         </nav>
 
         @yield('content')
@@ -73,11 +74,33 @@
     <!-- Scripts -->
     <script src="/js/app.js"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
-    <script>
-        // script to hide timerbox visibility
-        $('#closeTimerbox').click(function(){
-            $('#timerbox').css('visibility', 'hidden');
-        });
-    </script>
+    @yield('javascript')
 </body>
+<footer id="timerbox" style="position: fixed; bottom: 0; display: block; padding-left: 5px; visibility: hidden;">
+    <button style="width: 250px;" type="button" data-toggle="collapse" data-target="#demo">TIMER - Pause - Log Time</button>
+    <button id="closeTimerbox" class="label-danger">x</button>
+
+    <div class="container" style="background-color: lightblue; width: 275px; text-align: center;">
+        <div id="demo" class="collapse">
+            <br/>
+            Task: Create time-tracking widget
+            <br/><br/>
+            Log Time
+            <br/><br/>
+            <textarea>Optional description</textarea>
+            <br/><br/>
+            <button class="btn btn-success openTimerConfirmModal" data-toggle="modal" data-target="#confirmTimerModal">Log Time</button>
+            <br/><br/>
+
+            <button>Pause</button>
+            <button>Log Time</button>
+        </div>
+    </div>
+</footer>
+<script>
+    // script to hide timerbox visibility
+    $('#closeTimerbox').click(function(){
+        $('#timerbox').css('visibility', 'hidden');
+    });
+</script>
 </html>

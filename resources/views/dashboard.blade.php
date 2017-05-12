@@ -1,5 +1,5 @@
 @extends('layouts.app')
-@section('dashboardnav')
+@section('nav')
     <div class="secondnav" id="mySecondnav">
         <div class="form-group">
             <div class="col-sm-2">
@@ -28,13 +28,20 @@
 
             <div id="navbar" class="navbar-collapse collapse">
                 <ul class="nav navbar-nav navbar-right ">
-                    {{ Form::open(['url'=>'/select-date']) }}
+                    {{ Form::open(['url'=>'/select_date']) }}
                     <div class ="form-inline">
-                        {{ Form::date('start-date', '', ['id'=>'start-date', 'class'=>'form-control']) }}
-                        {{ Form::date('end-date', '', ['id'=>'end-date', 'class'=>'form-control']) }}
+                        {{ Form::date('start_date', '', ['id'=>'start_date', 'class'=>'form-control']) }}
+                        {{ Form::date('end_date', '', ['id'=>'end_date', 'class'=>'form-control']) }}
+                        {{ Form::select('date_filter',
+                            ['0'=>'',
+                             '1'=>'Week',
+                             '2'=>'Biweek',
+                             '3'=>'Month',
+                             '4'=>'90-Days'], '',
+                             ['class'=>'form-control',
+                              'id'=>'date_filter']) }}
                     </div>
                     {{ Form::close() }}
-
                 </ul>
             </div><!--/.nav-collapse -->
         </div>
@@ -42,7 +49,7 @@
 
 @endsection
 @section('content')
-    <div class = "container" id="wrapper">
+    <div class="container" id="wrapper">
         <div id="dashboard"></div>
     </div>
 @endsection

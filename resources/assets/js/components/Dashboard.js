@@ -1,16 +1,22 @@
 import React, { Component } from 'react';
 import ReactDOM from 'react-dom';
+import Calendar from '../calendar.js';
 
+/**
+ * Manages the task table display of the Dashboard view.
+ */
 class Dashboard extends Component {
+
     constructor(props) {
         super(props);
-
         this.state = {
             tasks: [],
             currentprofile: []
         }
+        this.startTime = this.startTime.bind(this);
+        this.calendar = new Calendar();
+        this.calendar.init();
 
-        this.startTime = this.startTime.bind(this)
     }
 
     startTime() {
@@ -34,7 +40,6 @@ class Dashboard extends Component {
                 return response.json();
             })
             .then(tasks => {
-                console.log(tasks);
                 this.setState({ tasks:tasks['todo-items'] });
             });
 
@@ -46,6 +51,7 @@ class Dashboard extends Component {
                 this.setState({ currentprofile:currentprofile.person });
                 console.log(this.state.currentprofile);
             });
+
     }
 
 
@@ -74,8 +80,49 @@ class Dashboard extends Component {
         );
     }
 
+    getCompletion() {
+        var xhttp = new XMLHttpRequest();
+        xhttp.open("POST", "Your Rest URL Here", false);
+        xhttp.setRequestHeader("Content-type", "application/json");
+        xhttp.send();
+        var response = JSON.parse(xhttp.responseText);
+    }
+
+    /**
+     * Render the individual tasks and time spans.
+     * @returns {Array}
+     */
     renderTasks() {
+        var timespan = [];
+        for(let i=0; i<this.calendar.range.length*5;i++) {
+            timespan.push(<td>span</td>);
+        }
         return this.state.tasks.map(task => {
+            var key = "twp_WUI8GI94aBL8p97JiiyXue8epq9A";
+            var base64 = new Buffer(key+":xxx").toString("base64");
+            var completion = 0;
+            console.log(task.id);
+            $.ajax({
+                url: 'http://thejibe.teamwork.com/tasks/' + task.id + '/time/total.json',
+                async: false,
+                type: 'GET',
+                dataType: 'json',
+                success: function(data) {
+                    if (data['projects'][0]['tasklist']['task']['time-estimates']['total-hours-estimated'] != 0) {
+                        completion = Math.floor(
+                            (data['projects'][0]['tasklist']['task']['time-totals']['total-hours-sum'])
+                            / (data['projects'][0]['tasklist']['task']['time-estimates']['total-hours-estimated']) * 100);
+                    }
+                },
+                error: function() { console.log('boo!'); },
+                beforeSend: setHeader
+            });
+            console.log(completion);
+
+            function setHeader(xhr) {
+                xhr.setRequestHeader('Authorization', 'BASIC ' + base64);
+                xhr.setRequestHeader('Content-Type', 'application/json');
+            }
             return (
                 <tr key={task.id}>
                     <th scope="row">
@@ -107,71 +154,59 @@ class Dashboard extends Component {
                             </div>
                             <div className="progress" id ="progressBar">
                                 <div className="progress-bar progress-bar-striped active" role="progressbar"
-                                     aria-valuenow="40" aria-valuemin="0" aria-valuemax="100" style={{"width":"40%"}}>
-                                    40%
+                                     aria-valuenow={completion} aria-valuemin="0" aria-valuemax="100" style={{ "width" : completion + "%"}}>
+                                    {completion}%
                                 </div>
                             </div>
                         </div>
                     </th>
-                    <td colSpan="10">TIMESPAN</td>
+                    {timespan}
                 </tr>
             );
         })
     }
 
-    renderFooterTimer() {
+    /**
+     * Renders the calendar heading of the Dashboard task display table.
+     * @returns {XML}
+     */
+    renderCalendar() {
+        var headings = [];
+        var dates = [];
+        for(var i=0; i < this.calendar.range.length; i++) {
+            var range = this.calendar.range[i];
+            headings.push(<th className="text-center" colSpan="5">
+                {range[0].day} {this.calendar.Month_Enum.properties[range[0].month]}-
+                {range[4].day} {this.calendar.Month_Enum.properties[range[4].month]}</th>);
+            for(var j=0; j<range.length; j++) {
+                dates.push(<th>{range[j].day}</th>);
+            }
+        }
         return (
-            <footer id="timerbox" style={{position: 'fixed', bottom: 0, display: 'block', 'padding-left': 5 + 'px', visibility: 'hidden'}}>
-                <button style={{width: 250 + 'px'}} type="button" data-toggle="collapse" data-target="#demo">TIMER - Pause - Log Time</button>
-                <button id="closeTimerbox" className="label-danger">x</button>
-
-                <div className="container" style={{'background-color': 'lightblue', width: 275 + 'px', 'text-align': 'center'}}>
-                    <div id="demo" className="collapse">
-                        <br/>
-                        Task: Create time-tracking widget
-                        <br/><br/>
-                        Log Time
-                        <br/><br/>
-                        <textarea>Optional description</textarea>
-                        <br/><br/>
-                        <button className="btn btn-success openTimerConfirmModal" data-toggle="modal" data-target="#confirmTimerModal">Log Time</button>
-                        <br/><br/>
-
-                        <button>Pause</button>
-                        <button>Log Time</button>
-                    </div>
-                </div>
-            </footer>
+            <thead>
+                <tr>
+                    <th rowSpan="2" style={{"width": "12%"}}></th>
+                    {headings}
+                </tr>
+                <tr>
+                    {dates}
+                </tr>
+            </thead>
         );
     }
 
+    /**
+     * Renders the Dashboard task table.
+     * @returns {XML}
+     */
     render() {
         return (
             <div>
                 <table className="table table-bordered " id="task_table">
-                    <thead >
-                    <tr>
-                        <th rowSpan="2" style={{"width": "12%"}}></th>
-                        <th className="text-center" colSpan="5"> 9-13 Jan</th>
-                        <th className="text-center" colSpan="5"> 16-20 Jan</th>
-                    </tr>
-                    <tr >
-                        <th className="text-center">9</th>
-                        <th className="text-center">10</th>
-                        <th className="text-center">11</th>
-                        <th className="text-center">12</th>
-                        <th className="text-center">13</th>
-                        <th className="text-center">16</th>
-                        <th className="text-center">17</th>
-                        <th className="text-center">18</th>
-                        <th className="text-center">19</th>
-                        <th className="text-center">20</th>
-                    </tr>
-                    </thead>
+                    {this.renderCalendar()}
                     <tbody>
                         { this.renderCurrentProfile() }
                         { this.renderTasks() }
-                        { this.renderFooterTimer() }
                     </tbody>
                 </table>
             </div>
