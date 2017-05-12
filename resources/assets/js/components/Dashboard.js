@@ -58,30 +58,14 @@ class Dashboard extends Component {
     renderCurrentProfile() {
         var pic = this.state.currentprofile['avatar-url'];
         console.log(pic);
-<<<<<<< HEAD
-            return (
-                <tr key={this.state.currentprofile.id}>
-                    <th scope="row">
-                        <div className="profile">
-                            <div className = "col-sm-2">
-                                <img id ="userpic"  src={ this.state.currentprofile['avatar-url']} />
-                            </div>
-                            <div className = "col-sm-8" id = "name" >
-                                <p>{ this.state.currentprofile['first-name'] } {this.state.currentprofile['last-name']}</p>
-                            </div>
-                            <div className = "col-sm-1" id = "expandBtn">
-                                <button type="button" className="btn btn-default btn-sm" data-toggle="collapse" data-target="#taskshow" >
-                                    <span className="glyphicon glyphicon-chevron-down"></span>
-                                </button>
-                            </div>
-=======
+
         return (
             <tr key={this.state.currentprofile.id}>
                 <th scope="row">
                     <div className="profile">
                         <div className = "col-sm-2">
                             <img id ="userpic"  src={ this.state.currentprofile['avatar-url']} />
->>>>>>> ce0e941e6beff32e443e329b3e9ee47442877fe1
+
                         </div>
                         <div className = "col-sm-8" id = "name" >
                             <p>{ this.state.currentprofile['first-name'] } {this.state.currentprofile['last-name']}</p>
@@ -150,22 +134,26 @@ class Dashboard extends Component {
                                                 <button type="button" className="btn btn-danger btn-sm" style={{ "float":"right"}}>{ task.priority }</button>
 
                                 }
-                                <button onClick={this.startTime} type="button" className="logTimerBtn pull-right">
-                                    <span className="glyphicon glyphicon glyphicon-time" aria-hidden="true"></span>
-                                </button>
-
-                                <button onClick={this.startTime} type="button" className="logTimerBtn pull-right">
-                                    <span className="glyphicon glyphicon glyphicon-play" aria-hidden="true"></span>
-                                </button>
                             </div>
                             <div>
                                 <p className ="projectName">ProjectName:{ task['project-name'] }</p>
                                 <p className ="companyName">{ task['company-name'] }</p>
                             </div>
-                            <div className="progress" id ="progressBar">
-                                <div className="progress-bar progress-bar-striped active" role="progressbar"
-                                     aria-valuenow={completion} aria-valuemin="0" aria-valuemax="100" style={{ "width" : completion + "%"}}>
-                                    {completion}%
+                            <div className ="row" id = "progressBardiv">
+                                <div className="progress" id ="progressBar" style={{ "float":"left"}}>
+                                    <div className="progress-bar progress-bar-striped active" role="progressbar"
+                                         aria-valuenow={completion} aria-valuemin="0" aria-valuemax="100" style={{ "width" : completion + "%"}}>
+                                        {completion}%
+                                    </div>
+                                </div>
+                                <div className ="col-sm-3" style={{ "float":"right"}}>
+                                    <button onClick={this.startTime} type="button" className="btn btn-default btn-sm pull-right" >
+                                        <span className="glyphicon glyphicon glyphicon-time" aria-hidden="true"></span>
+                                    </button>
+
+                                    <button onClick={this.startTime} type="button" className="btn btn-default btn-sm pull-right">
+                                        <span className="glyphicon glyphicon glyphicon-play" aria-hidden="true"></span>
+                                    </button>
                                 </div>
                             </div>
                         </div>
@@ -215,15 +203,9 @@ class Dashboard extends Component {
                 <table className="table table-bordered " id="task_table">
                     {this.renderCalendar()}
                     <tbody>
-<<<<<<< HEAD
                     { this.renderCurrentProfile() }
-
                     { this.renderTasks() }
 
-=======
-                        { this.renderCurrentProfile() }
-                        { this.renderTasks() }
->>>>>>> ce0e941e6beff32e443e329b3e9ee47442877fe1
                     </tbody>
                 </table>
             </div>

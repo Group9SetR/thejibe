@@ -118,9 +118,12 @@ th {
 }
 
 #progressBar{
-    width: 80%;
+    width: 70%;
 }
 
+#progressBardiv{
+    margin-left: 5px;
+}
 /* Loading page */
 
 #loader {
@@ -173,4 +176,6 @@ th {
     display: none;
     text-align: center;
 }
+
+
 

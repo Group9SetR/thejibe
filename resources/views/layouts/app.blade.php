@@ -12,6 +12,7 @@
     <!-- Styles -->
     <link href="/css/app.css" rel="stylesheet">
     <link href="/css/dashboard.css" rel="stylesheet">
+    <link href="/css/timer.css" rel="stylesheet">
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
     @yield('css')
     <!-- Scripts -->
@@ -23,7 +24,7 @@
         var myVar;
 
         function myFunction() {
-            myVar = setTimeout(showPage, 1000);
+            myVar = setTimeout(showPage, 2000);
         }
 
         function showPage() {
@@ -90,6 +91,7 @@
     @yield('javascript')
     </div>
 </body>
+
 <footer id="timerbox" style="position: fixed; bottom: 0; display: block; padding-left: 5px; visibility: hidden;">
     <button style="width: 250px;" type="button" data-toggle="collapse" data-target="#demo">TIMER - Pause - Log Time</button>
     <button id="closeTimerbox" class="label-danger">x</button>
@@ -111,6 +113,7 @@
         </div>
     </div>
 </footer>
+
 <script>
     // script to hide timerbox visibility
     $('#closeTimerbox').click(function(){
