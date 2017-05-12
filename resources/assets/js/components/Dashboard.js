@@ -49,7 +49,6 @@ class Dashboard extends Component {
             })
             .then(currentprofile => {
                 this.setState({ currentprofile:currentprofile.person });
-                console.log(this.state.currentprofile);
             });
 
     }
@@ -57,8 +56,11 @@ class Dashboard extends Component {
 
     renderCurrentProfile() {
         var pic = this.state.currentprofile['avatar-url'];
+<<<<<<< HEAD
         console.log(pic);
 
+=======
+>>>>>>> 5dba1859f19e8772ed6407dddb3bdec16049ac09
         return (
             <tr key={this.state.currentprofile.id}>
                 <th scope="row">
@@ -95,7 +97,6 @@ class Dashboard extends Component {
             var key = "twp_WUI8GI94aBL8p97JiiyXue8epq9A";
             var base64 = new Buffer(key+":xxx").toString("base64");
             var completion = 0;
-            console.log(task.id);
             $.ajax({
                 url: 'http://thejibe.teamwork.com/tasks/' + task.id + '/time/total.json',
                 async: false,
@@ -108,10 +109,9 @@ class Dashboard extends Component {
                             / (data['projects'][0]['tasklist']['task']['time-estimates']['total-hours-estimated']) * 100);
                     }
                 },
-                error: function() { console.log('boo!'); },
+                error: function() { console.log('GET request to time totals failed'); },
                 beforeSend: setHeader
             });
-            console.log(completion);
 
             function setHeader(xhr) {
                 xhr.setRequestHeader('Authorization', 'BASIC ' + base64);
