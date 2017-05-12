@@ -171,6 +171,7 @@ class Dashboard extends Component {
             }
         }
         return (
+
             <thead>
                 <tr>
                     <th rowSpan="2" style={{"width": "12%"}}></th>
@@ -190,9 +191,22 @@ class Dashboard extends Component {
      * @returns {XML}
      */
     render() {
+        var columns = [];
+        for(var i=0; i < this.calendar.range.length; i++) {
+            var range = this.calendar.range[i];
+            for(var j=0; j<range.length; j++) {
+                var col = (range[j].day == new Date().getDate()) ?
+                    <col className="currentDate"></col>:<col></col>;
+                columns.push(col);
+            }
+        }
         return (
             <div>
                 <table className="table table-bordered " id="task_table">
+                    <colgroup>
+                        <col></col>
+                        {columns}
+                    </colgroup>
                     {this.renderCalendar()}
                     <tbody>
                     { this.renderCurrentProfile() }

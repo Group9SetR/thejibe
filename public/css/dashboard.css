@@ -122,5 +122,9 @@ th {
     width: 80%;
 }
 
+/* calendar date */
+.currentDate {
+    background-color:#5bc0de;
+}
 
 
