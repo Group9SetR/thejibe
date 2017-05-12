@@ -1,5 +1,5 @@
 .firstnav {
-    background-color: black;
+    background-color: #696969;
     overflow: hidden;
     margin: 0;
     padding:10px;
@@ -22,7 +22,7 @@
 }
 
 section {
-    color: black;
+    color: #696969;
     font-size: 20px;
     font-family: "Times New Roman", Times, serif;
 
@@ -38,15 +38,15 @@ div {
 }
 
 #myFirstnav ul a:hover {
-    background-color: black;
+    background-color: #696969;
 }
 
 #myFirstnav ul a:link {
-    background-color: black;
+    background-color: #696969;
 }
 
 #myFirstnav ul a:visited {
-    background-color: black;
+    background-color: #696969;
 }
 
 
