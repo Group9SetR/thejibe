@@ -1,13 +1,18 @@
 import React, { Component } from 'react';
 import ReactDOM from 'react-dom';
-
+import Calendar from '../calendar.js';
+/**
+ * Manages the task table display of the Dashboard view.
+ */
 class Dashboard extends Component {
     constructor(props) {
         super(props);
-
         this.state = {
-            tasks: []
-        }
+            tasks: [],
+            default: true
+        };
+        this.calendar = new Calendar();
+        this.calendar.init();
     }
 
     componentDidMount() {
@@ -26,11 +31,14 @@ class Dashboard extends Component {
                 return response.json();
             })
             .then(tasks => {
-                console.log(tasks);
                 this.setState({ tasks:tasks['todo-items'] });
             });
     }
 
+    /**
+     * Render the individual tasks and time spans.
+     * @returns {Array}
+     */
     renderTasks() {
         return this.state.tasks.map(task => {
             return (
@@ -57,29 +65,46 @@ class Dashboard extends Component {
         })
     }
 
+    /**
+     * Renders the calendar heading of the Dashboard task display table.
+     * @returns {XML}
+     */
+    renderCalendar() {
+        var headings = [];
+        var dates = [];
+        for(var i=0; i < this.calendar.range.length; i++) {
+            var range = this.calendar.range[i];
+            headings.push(<th className="text-center" colSpan="5">
+                {range[0].day} {this.calendar.Month_Enum.properties[range[0].month]}-
+                {range[4].day} {this.calendar.Month_Enum.properties[range[4].month]}</th>);
+            for(var j=0; j<range.length; j++) {
+                dates.push(<th>{range[j].day}</th>);
+            }
+        }
+        return (
+            <thead>
+                <tr>
+                    <th rowSpan="2" style={{"width": "12%"}}></th>
+                    {headings}
+                </tr>
+                <tr>
+                    {dates}
+                </tr>
+            </thead>
+        );
+    }
+
+
+
+    /**
+     * Renders the Dashboard task table.
+     * @returns {XML}
+     */
     render() {
         return (
             <div>
                 <table className="table table-bordered" id="task_table">
-                    <thead>
-                        <tr>
-                            <th rowSpan="2" style={{"width": "12%"}}></th>
-                            <th className="text-center" colSpan="5"> 9-13 Jan</th>
-                            <th className="text-center" colSpan="5"> 16-20 Jan</th>
-                        </tr>
-                        <tr>
-                            <th>9</th>
-                            <th>10</th>
-                            <th>11</th>
-                            <th>12</th>
-                            <th>13</th>
-                            <th>16</th>
-                            <th>17</th>
-                            <th>18</th>
-                            <th>19</th>
-                            <th>20</th>
-                        </tr>
-                    </thead>
+                    { this.renderCalendar() }
                     <tbody>
                     <tr>
                         <th scope="row">
@@ -108,7 +133,7 @@ class Dashboard extends Component {
 }
 
 export default Dashboard;
-
 if (document.getElementById('dashboard')) {
+
     ReactDOM.render(<Dashboard />, document.getElementById('dashboard'));
 }
