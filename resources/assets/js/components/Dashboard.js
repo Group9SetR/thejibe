@@ -12,10 +12,15 @@ class Dashboard extends Component {
         this.state = {
             tasks: [],
             currentprofile: []
-        };
+        }
+        this.startTime = this.startTime.bind(this);
         this.calendar = new Calendar();
         this.calendar.init();
 
+    }
+
+    startTime() {
+        document.getElementById("timerbox").style.visibility = 'visible';
     }
 
     componentDidMount() {
@@ -53,6 +58,7 @@ class Dashboard extends Component {
     renderCurrentProfile() {
         var pic = this.state.currentprofile['avatar-url'];
         console.log(pic);
+<<<<<<< HEAD
             return (
                 <tr key={this.state.currentprofile.id}>
                     <th scope="row">
@@ -68,11 +74,28 @@ class Dashboard extends Component {
                                     <span className="glyphicon glyphicon-chevron-down"></span>
                                 </button>
                             </div>
+=======
+        return (
+            <tr key={this.state.currentprofile.id}>
+                <th scope="row">
+                    <div className="profile">
+                        <div className = "col-sm-2">
+                            <img id ="userpic"  src={ this.state.currentprofile['avatar-url']} />
+>>>>>>> ce0e941e6beff32e443e329b3e9ee47442877fe1
                         </div>
-                    </th>
-                    <td colSpan="10"><div id="scheduledBar"><p id="scheduledText">65h/ 80h(81%) scheduled</p></div></td>
-                </tr>
-            );
+                        <div className = "col-sm-8" id = "name" >
+                            <p>{ this.state.currentprofile['first-name'] } {this.state.currentprofile['last-name']}</p>
+                        </div>
+                        <div className = "col-sm-1" id = "expandBtn">
+                            <button type="button" className="btn btn-default btn-sm">
+                                <span className="glyphicon glyphicon-chevron-down"></span>
+                            </button>
+                        </div>
+                    </div>
+                </th>
+                <td colSpan="10"><div id="scheduledBar"><p id="scheduledText">65h/ 80h(81%) scheduled</p></div></td>
+            </tr>
+        );
     }
 
     /**
@@ -116,17 +139,24 @@ class Dashboard extends Component {
                         <div >
                             <div>
                                 <div className ="taskName">
-                                { task.content }
+                                    { task.content }
                                 </div>
                                 {
                                     (task.priority === "") ? <span></span>:
                                         (task.priority === "medium") ?
                                             <button type="button" className="btn btn-warning btn-sm" style={{ "float":"right"}}>{ task.priority }</button>:
                                             (task.priority === "low") ?
-                                            <button type="button" className="btn btn-success btn-sm" style={{ "float":"right"}}>{ task.priority }</button>:
+                                                <button type="button" className="btn btn-success btn-sm" style={{ "float":"right"}}>{ task.priority }</button>:
                                                 <button type="button" className="btn btn-danger btn-sm" style={{ "float":"right"}}>{ task.priority }</button>
 
                                 }
+                                <button onClick={this.startTime} type="button" className="logTimerBtn pull-right">
+                                    <span className="glyphicon glyphicon glyphicon-time" aria-hidden="true"></span>
+                                </button>
+
+                                <button onClick={this.startTime} type="button" className="logTimerBtn pull-right">
+                                    <span className="glyphicon glyphicon glyphicon-play" aria-hidden="true"></span>
+                                </button>
                             </div>
                             <div>
                                 <p className ="projectName">ProjectName:{ task['project-name'] }</p>
@@ -175,8 +205,6 @@ class Dashboard extends Component {
         );
     }
 
-
-
     /**
      * Renders the Dashboard task table.
      * @returns {XML}
@@ -187,10 +215,15 @@ class Dashboard extends Component {
                 <table className="table table-bordered " id="task_table">
                     {this.renderCalendar()}
                     <tbody>
+<<<<<<< HEAD
                     { this.renderCurrentProfile() }
 
                     { this.renderTasks() }
 
+=======
+                        { this.renderCurrentProfile() }
+                        { this.renderTasks() }
+>>>>>>> ce0e941e6beff32e443e329b3e9ee47442877fe1
                     </tbody>
                 </table>
             </div>

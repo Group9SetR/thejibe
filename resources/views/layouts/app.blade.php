@@ -63,6 +63,26 @@
         </nav>
 
         @yield('content')
+    </div>
+
+    <div class="modal fade openTimerConfirmModal" id="confirmTimerModal" tabindex="-1" role="dialog" style="width:500px; height: 500px;">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span></button>
+                    <h4 class="modal-title" id="confirmTimerModalLabel">Timer</h4>
+                </div>
+                <div class="modal-body">
+                    Test
+                </div>
+                <div class="modal-footer">
+                    <input type="submit" placeholder="Save" id="timerSubmit" name="confirmTimerBtn" class="btn btn-success openConfirmTimerModal">
+                    <button type="button" id="closeConfirmTimerBtn" class="btn btn-warning" data-dismiss="modal">Close</button>
+                </div>
+            </div>
+        </div>
+    </div>
 
     <!-- Scripts -->
     <script src="/js/app.js"></script>
@@ -70,4 +90,31 @@
     @yield('javascript')
     </div>
 </body>
+<footer id="timerbox" style="position: fixed; bottom: 0; display: block; padding-left: 5px; visibility: hidden;">
+    <button style="width: 250px;" type="button" data-toggle="collapse" data-target="#demo">TIMER - Pause - Log Time</button>
+    <button id="closeTimerbox" class="label-danger">x</button>
+
+    <div class="container" style="background-color: lightblue; width: 275px; text-align: center;">
+        <div id="demo" class="collapse">
+            <br/>
+            Task: Create time-tracking widget
+            <br/><br/>
+            Log Time
+            <br/><br/>
+            <textarea>Optional description</textarea>
+            <br/><br/>
+            <button class="btn btn-success openTimerConfirmModal" data-toggle="modal" data-target="#confirmTimerModal">Log Time</button>
+            <br/><br/>
+
+            <button>Pause</button>
+            <button>Log Time</button>
+        </div>
+    </div>
+</footer>
+<script>
+    // script to hide timerbox visibility
+    $('#closeTimerbox').click(function(){
+        $('#timerbox').css('visibility', 'hidden');
+    });
+</script>
 </html>
