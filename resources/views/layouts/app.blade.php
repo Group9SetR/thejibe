@@ -35,14 +35,13 @@
                         </button>
                         <!-- Branding Image -->
                         <a class="navbar-brand" href="{{ url('/') }}">
-                            {{ config('app.name', 'Laravel') }}
+                            <font color="white">{{ config('app.name', 'Laravel') }}</font>
                         </a>
                     </div>
-
                     <div class="collapse navbar-collapse" id="app-navbar-collapse">
                         <!-- Right Side Of Navbar -->
                         <ul class="nav navbar-nav navbar-right">
-                            <li color = "white"><a href="#"><font color="white">My Account</font></a></li>
+                            <li><a href="#"><font color="white">My Account</font></a></li>
                         </ul>
                     </div>
                 </div>

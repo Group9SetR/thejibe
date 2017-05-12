@@ -46,7 +46,7 @@
 
 @endsection
 @section('content')
-    <div class = "container" id="wrapper">
+    <div class="container" id="wrapper">
         <div id="dashboard"></div>
     </div>
 @endsection
