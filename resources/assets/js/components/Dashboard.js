@@ -75,14 +75,6 @@ class Dashboard extends Component {
             );
     }
 
-    getCompletion() {
-        var xhttp = new XMLHttpRequest();
-        xhttp.open("POST", "Your Rest URL Here", false);
-        xhttp.setRequestHeader("Content-type", "application/json");
-        xhttp.send();
-        var response = JSON.parse(xhttp.responseText);
-    }
-
     /**
      * Render the individual tasks and time spans.
      * @returns {Array}
