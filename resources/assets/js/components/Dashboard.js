@@ -56,11 +56,6 @@ class Dashboard extends Component {
 
     renderCurrentProfile() {
         var pic = this.state.currentprofile['avatar-url'];
-<<<<<<< HEAD
-        console.log(pic);
-
-=======
->>>>>>> 5dba1859f19e8772ed6407dddb3bdec16049ac09
         return (
             <tr key={this.state.currentprofile.id}>
                 <th scope="row">
