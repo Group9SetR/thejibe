@@ -64,7 +64,7 @@ class Dashboard extends Component {
                                 <p>{ this.state.currentprofile['first-name'] } {this.state.currentprofile['last-name']}</p>
                             </div>
                             <div className = "col-sm-1" id = "expandBtn">
-                                <button type="button" className="btn btn-default btn-sm">
+                                <button type="button" className="btn btn-default btn-sm" data-toggle="collapse" data-target="#taskshow" >
                                     <span className="glyphicon glyphicon-chevron-down"></span>
                                 </button>
                             </div>
@@ -167,7 +167,7 @@ class Dashboard extends Component {
                 {range[0].day} {this.calendar.Month_Enum.properties[range[0].month]}-
                 {range[4].day} {this.calendar.Month_Enum.properties[range[4].month]}</th>);
             for(var j=0; j<range.length; j++) {
-                dates.push(<th>{range[j].day}</th>);
+                dates.push(<th className="text-center">{range[j].day}</th>);
             }
         }
         return (
@@ -196,7 +196,9 @@ class Dashboard extends Component {
                     {this.renderCalendar()}
                     <tbody>
                     { this.renderCurrentProfile() }
+
                     { this.renderTasks() }
+
                     </tbody>
                 </table>
             </div>
