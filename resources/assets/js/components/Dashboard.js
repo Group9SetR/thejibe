@@ -12,10 +12,15 @@ class Dashboard extends Component {
         this.state = {
             tasks: [],
             currentprofile: []
-        };
+        }
+        this.startTime = this.startTime.bind(this);
         this.calendar = new Calendar();
         this.calendar.init();
 
+    }
+
+    startTime() {
+        document.getElementById("timerbox").style.visibility = 'visible';
     }
 
     componentDidMount() {
@@ -44,7 +49,6 @@ class Dashboard extends Component {
             })
             .then(currentprofile => {
                 this.setState({ currentprofile:currentprofile.person });
-                console.log(this.state.currentprofile);
             });
 
     }
@@ -52,35 +56,27 @@ class Dashboard extends Component {
 
     renderCurrentProfile() {
         var pic = this.state.currentprofile['avatar-url'];
-        console.log(pic);
-            return (
-                <tr key={this.state.currentprofile.id}>
-                    <th scope="row">
-                        <div className="profile">
-                            <div className = "col-sm-2">
-                                <img id ="userpic"  src={ this.state.currentprofile['avatar-url']} />
-                            </div>
-                            <div className = "col-sm-8" id = "name" >
-                                <p>{ this.state.currentprofile['first-name'] } {this.state.currentprofile['last-name']}</p>
-                            </div>
-                            <div className = "col-sm-1" id = "expandBtn">
-                                <button type="button" className="btn btn-default btn-sm">
-                                    <span className="glyphicon glyphicon-chevron-down"></span>
-                                </button>
-                            </div>
-                        </div>
-                    </th>
-                    <td colSpan="10"><div id="scheduledBar"><p id="scheduledText">65h/ 80h(81%) scheduled</p></div></td>
-                </tr>
-            );
-    }
+        return (
+            <tr key={this.state.currentprofile.id}>
+                <th scope="row">
+                    <div className="profile">
+                        <div className = "col-sm-2">
+                            <img id ="userpic"  src={ this.state.currentprofile['avatar-url']} />
 
-    getCompletion() {
-        var xhttp = new XMLHttpRequest();
-        xhttp.open("POST", "Your Rest URL Here", false);
-        xhttp.setRequestHeader("Content-type", "application/json");
-        xhttp.send();
-        var response = JSON.parse(xhttp.responseText);
+                        </div>
+                        <div className = "col-sm-8" id = "name" >
+                            <p>{ this.state.currentprofile['first-name'] } {this.state.currentprofile['last-name']}</p>
+                        </div>
+                        <div className = "col-sm-1" id = "expandBtn">
+                            <button type="button" className="btn btn-default btn-sm">
+                                <span className="glyphicon glyphicon-chevron-down"></span>
+                            </button>
+                        </div>
+                    </div>
+                </th>
+                <td colSpan="10"><div id="scheduledBar"><p id="scheduledText">65h/ 80h(81%) scheduled</p></div></td>
+            </tr>
+        );
     }
 
     /**
@@ -96,7 +92,6 @@ class Dashboard extends Component {
             var key = "twp_WUI8GI94aBL8p97JiiyXue8epq9A";
             var base64 = new Buffer(key+":xxx").toString("base64");
             var completion = 0;
-            console.log(task.id);
             $.ajax({
                 url: 'http://thejibe.teamwork.com/tasks/' + task.id + '/time/total.json',
                 async: false,
@@ -109,10 +104,9 @@ class Dashboard extends Component {
                             / (data['projects'][0]['tasklist']['task']['time-estimates']['total-hours-estimated']) * 100);
                     }
                 },
-                error: function() { console.log('boo!'); },
+                error: function() { console.log('GET request to time totals failed'); },
                 beforeSend: setHeader
             });
-            console.log(completion);
 
             function setHeader(xhr) {
                 xhr.setRequestHeader('Authorization', 'BASIC ' + base64);
@@ -124,14 +118,14 @@ class Dashboard extends Component {
                         <div >
                             <div>
                                 <div className ="taskName">
-                                { task.content }
+                                    { task.content }
                                 </div>
                                 {
                                     (task.priority === "") ? <span></span>:
                                         (task.priority === "medium") ?
                                             <button type="button" className="btn btn-warning btn-sm" style={{ "float":"right"}}>{ task.priority }</button>:
                                             (task.priority === "low") ?
-                                            <button type="button" className="btn btn-success btn-sm" style={{ "float":"right"}}>{ task.priority }</button>:
+                                                <button type="button" className="btn btn-success btn-sm" style={{ "float":"right"}}>{ task.priority }</button>:
                                                 <button type="button" className="btn btn-danger btn-sm" style={{ "float":"right"}}>{ task.priority }</button>
 
                                 }
@@ -140,10 +134,21 @@ class Dashboard extends Component {
                                 <p className ="projectName">ProjectName:{ task['project-name'] }</p>
                                 <p className ="companyName">{ task['company-name'] }</p>
                             </div>
-                            <div className="progress" id ="progressBar">
-                                <div className="progress-bar progress-bar-striped active" role="progressbar"
-                                     aria-valuenow={completion} aria-valuemin="0" aria-valuemax="100" style={{ "width" : completion + "%"}}>
-                                    {completion}%
+                            <div className ="row" id = "progressBardiv">
+                                <div className="progress" id ="progressBar" style={{ "float":"left"}}>
+                                    <div className="progress-bar progress-bar-striped active" role="progressbar"
+                                         aria-valuenow={completion} aria-valuemin="0" aria-valuemax="100" style={{ "width" : completion + "%"}}>
+                                        {completion}%
+                                    </div>
+                                </div>
+                                <div className ="col-sm-3" style={{ "float":"right"}}>
+                                    <button onClick={this.startTime} type="button" className="btn btn-default btn-sm pull-right" >
+                                        <span className="glyphicon glyphicon glyphicon-time" aria-hidden="true"></span>
+                                    </button>
+
+                                    <button onClick={this.startTime} type="button" className="btn btn-default btn-sm pull-right">
+                                        <span className="glyphicon glyphicon glyphicon-play" aria-hidden="true"></span>
+                                    </button>
                                 </div>
                             </div>
                         </div>
@@ -167,7 +172,7 @@ class Dashboard extends Component {
                 {range[0].day} {this.calendar.Month_Enum.properties[range[0].month]}-
                 {range[4].day} {this.calendar.Month_Enum.properties[range[4].month]}</th>);
             for(var j=0; j<range.length; j++) {
-                dates.push(<th>{range[j].day}</th>);
+                dates.push(<th className="text-center">{range[j].day}</th>);
             }
         }
         return (
@@ -183,8 +188,6 @@ class Dashboard extends Component {
             </thead>
         );
     }
-
-
 
     /**
      * Renders the Dashboard task table.
@@ -211,6 +214,7 @@ class Dashboard extends Component {
                     <tbody>
                     { this.renderCurrentProfile() }
                     { this.renderTasks() }
+
                     </tbody>
                 </table>
             </div>
