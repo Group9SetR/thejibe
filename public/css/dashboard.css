@@ -186,8 +186,15 @@ th {
     text-align: center;
 }
 
+
 #priorityBtn {
     width: 70px;
+}
+
+
+/* calendar date */
+.currentDate {
+    background-color:#5bc0de;
 }
 
 
