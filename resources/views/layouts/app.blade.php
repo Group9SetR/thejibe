@@ -32,10 +32,6 @@
             document.getElementById("loader").style.display = "none";
             document.getElementById("myDiv").style.display = "block";
         }
-
-
-
-
     </script>
 </head>
 <body onload="myFunction()" style="margin:0;">
@@ -97,26 +93,34 @@
     </div>
 </body>
 
-<footer id="timerbox" style="position: fixed; bottom: 0; display: block; padding-left: 5px; visibility: hidden;">
-    <button style="width: 250px;" type="button" data-toggle="collapse" data-target="#demo">TIMER - Pause - Log Time</button>
-    <button id="closeTimerbox" class="label-danger">x</button>
+<footer id="timerbox" style="position: fixed; bottom: 0; display: block; width: 300px; visibility: hidden;">
+    <div class="panel-group" id="accordion">
+        <div class="panel panel-default">
+            <div class="panel-heading">
+                <h4 class="panel-title">
+                    <a class="accordion-toggle" data-toggle="collapse" data-parent="#accordion" href="#collapseOne">
+                        TIMER - Pause - Log Time
+                    </a>
+                </h4>
+            </div>
+            <div id="collapseOne" class="panel-collapse collapse in">
+                <div class="panel-body" style=" width: 300px;">
+                    <div id="demo">
+                        <p>Task: Create time-tracking widget</p>
+                        <div class="form-group">
+                            <textarea class="form-control " rows="1"  id="description" ></textarea>
+                        </div>
 
-    <div class="container" style="background-color: lightblue; width: 275px; text-align: center;">
-        <div id="demo" class="collapse">
-            <br/>
-            Task: Create time-tracking widget
-            <br/><br/>
-            Log Time
-            <br/><br/>
-            <textarea>Optional description</textarea>
-            <br/><br/>
-            <button class="btn btn-success openTimerConfirmModal" data-toggle="modal" data-target="#confirmTimerModal">Log Time</button>
-            <br/><br/>
+                            <button class="btn btn-success openTimerConfirmModal col-sm-4" data-toggle="modal" data-target="#confirmTimerModal">Log Time</button>
+                            <button class="btn" style="float: right;">Delete</button>
 
-            <button>Pause</button>
-            <button>Log Time</button>
+                    </div>
+                </div>
+            </div>
         </div>
+
     </div>
+
 </footer>
 
 <script>
