@@ -93,35 +93,6 @@
     </div>
 </body>
 
-<footer id="timerbox" style="position: fixed; bottom: 0; display: block; width: 300px; visibility: hidden;">
-    <div class="panel-group" id="accordion">
-        <div class="panel panel-default">
-            <div class="panel-heading">
-                <h4 class="panel-title">
-                    <a class="accordion-toggle" data-toggle="collapse" data-parent="#accordion" href="#collapseOne">
-                        TIMER - Pause - Log Time
-                    </a>
-                </h4>
-            </div>
-            <div id="collapseOne" class="panel-collapse collapse in">
-                <div class="panel-body" style=" width: 300px;">
-                    <div id="demo">
-                        <p>Task: Create time-tracking widget</p>
-                        <div class="form-group">
-                            <textarea class="form-control " placeholder="Optional Description" rows="1"  id="description" ></textarea>
-                        </div>
-                            <button class="btn btn-success openTimerConfirmModal col-sm-4" data-toggle="modal" data-target="#confirmTimerModal">Log Time</button>
-                        <div class ="deleteBtn" style="float: right; padding-top: 10px;">
-                            <a style="color: #CC0000;">Delete</a>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-
-</footer>
-
 <script>
     // script to hide timerbox visibility
     $('#closeTimerbox').click(function(){
