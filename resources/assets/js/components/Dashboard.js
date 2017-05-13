@@ -12,7 +12,8 @@ class Dashboard extends Component {
         this.state = {
             tasks: [],
             currentprofile: [],
-            seconds: 0
+            seconds: 0,
+            value: 'Optional Description'
         }
         this.calendar = new Calendar();
         this.calendar.init();
@@ -23,6 +24,8 @@ class Dashboard extends Component {
         this.handle_clear = this.handle_clear.bind(this);
         this.handle_pause = this.handle_pause.bind(this);
         this.log_time = this.log_time.bind(this);
+        this.handle_descChange = this.handle_descChange.bind(this);
+        this.handle_logTimeSubmit = this.handle_logTimeSubmit.bind(this);
     }
 
     startTime() {
@@ -62,6 +65,14 @@ class Dashboard extends Component {
         });
     }
 
+    handle_descChange(event) {
+        this.setState({value: event.target.value});
+    }
+
+    handle_logTimeSubmit() {
+        // send to teamwork?
+    }
+
     render_footer() {
         return (
             <footer id="timerbox" style={{position: 'fixed', bottom : 0, display: 'block', width: 300 + 'px', visibility: 'hidden'}}>
@@ -91,13 +102,20 @@ class Dashboard extends Component {
                             <div className="panel-body" style={{width: 300 + 'px'}}>
                                 <div id="demo">
                                     <p>Task: Create time-tracking widget</p>
-                                    <div className="form-group">
-                                        <textarea class="form-control " placeholder="Optional Description" rows="1"  id="description" ></textarea>
-                                    </div>
-                                    <button className="btn btn-success openTimerConfirmModal col-sm-4" data-toggle="modal" data-target="#confirmTimerModal">Log Time</button>
-                                    <div class ="deleteBtn" style={{float: 'right', 'padding-top': 10 + 'px'}}>
-                                        <a style={{color: '#CC0000'}}>Delete</a>
-                                    </div>
+                                    <form onSubmit={this.handle_logTimeSubmit}>
+                                        <div className="form-group">
+                                            <textarea name="description" className="form-control" placeholder={this.state.value} value="" onChange={this.handle_descChange} rows="3"/>
+                                            <br/>
+                                            <span className="pull-left">
+                                                <input name="billable" type="checkbox"/>&nbsp;Billable
+                                            </span>
+                                        </div>
+                                        <br/>
+                                        <button className="btn btn-success openTimerConfirmModal col-sm-4" data-toggle="modal" data-target="#confirmTimerModal">Log Time</button>
+                                        <button className="btn btn-danger pull-right">
+                                            Delete
+                                        </button>
+                                    </form>
                                 </div>
                             </div>
                         </div>
