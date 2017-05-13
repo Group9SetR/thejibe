@@ -1,5 +1,5 @@
 .firstnav {
-    background-color: #696969;
+    background-color: #404040;
     overflow: hidden;
     margin: 0;
     padding:10px;
@@ -38,15 +38,15 @@ div {
 }
 
 #myFirstnav ul a:hover {
-    background-color: #696969;
+    background-color: #404040;
 }
 
 #myFirstnav ul a:link {
-    background-color: #696969;
+    background-color: #404040;
 }
 
 #myFirstnav ul a:visited {
-    background-color: #696969;
+    background-color: #404040;
 }
 
 
@@ -124,6 +124,15 @@ th {
 #progressBardiv{
     margin-left: 5px;
 }
+
+#sliderBardiv{
+    margin-left: 5px;
+}
+/* sliderBar */
+#sliderBar{
+    width: 70%;
+    padding:0px;
+}
 /* Loading page */
 
 #loader {
@@ -175,6 +184,10 @@ th {
 #myDiv {
     display: none;
     text-align: center;
+}
+
+#priorityBtn {
+    width: 70px;
 }
 
 

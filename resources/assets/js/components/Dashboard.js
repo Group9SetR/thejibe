@@ -61,7 +61,7 @@ class Dashboard extends Component {
                 <th scope="row">
                     <div className="profile">
                         <div className = "col-sm-2">
-                            <img id ="userpic"  src={ this.state.currentprofile['avatar-url']} />
+                            <img id ="userpic"  alt = "Profile picture" src={ this.state.currentprofile['avatar-url']} />
 
                         </div>
                         <div className = "col-sm-8" id = "name" >
@@ -84,6 +84,7 @@ class Dashboard extends Component {
      * @returns {Array}
      */
     renderTasks() {
+
         var timespan = [];
         for(let i=0; i<this.calendar.range.length*5;i++) {
             timespan.push(<td>span</td>);
@@ -123,10 +124,10 @@ class Dashboard extends Component {
                                 {
                                     (task.priority === "") ? <span></span>:
                                         (task.priority === "medium") ?
-                                            <button type="button" className="btn btn-warning btn-sm" style={{ "float":"right"}}>{ task.priority }</button>:
+                                            <button type="button" id = "priorityBtn" className="btn btn-warning btn-sm" style={{ "float":"right"}}><bold>Medium</bold></button>:
                                             (task.priority === "low") ?
-                                                <button type="button" className="btn btn-success btn-sm" style={{ "float":"right"}}>{ task.priority }</button>:
-                                                <button type="button" className="btn btn-danger btn-sm" style={{ "float":"right"}}>{ task.priority }</button>
+                                                <button type="button" id = "priorityBtn" className="btn btn-success btn-sm" style={{ "float":"right" }}><bold>Low</bold></button>:
+                                                <button type="button" id = "priorityBtn" className="btn btn-danger btn-sm" style={{ "float":"right"}}><bold>High</bold></button>
 
                                 }
                             </div>
@@ -134,14 +135,27 @@ class Dashboard extends Component {
                                 <p className ="projectName">ProjectName:{ task['project-name'] }</p>
                                 <p className ="companyName">{ task['company-name'] }</p>
                             </div>
+
+
+                            <div className = "row" id = "sliderBardiv">
+                                <div id = "sliderBar" style={{ "float":"left"}}>
+                                    <input type="range"  min="0" max="100" />
+                                </div>
+                                <div className="col-sm-3" style={{ "float":"right"}}>
+                                    <p>4.32h/ 10h</p>
+                                </div>
+
+                            </div>
+
                             <div className ="row" id = "progressBardiv">
                                 <div className="progress" id ="progressBar" style={{ "float":"left"}}>
-                                    <div className="progress-bar progress-bar-striped active" role="progressbar"
+                                    <div className="progress-bar  " role="progressbar"
                                          aria-valuenow={completion} aria-valuemin="0" aria-valuemax="100" style={{ "width" : completion + "%"}}>
                                         {completion}%
                                     </div>
                                 </div>
                                 <div className ="col-sm-3" style={{ "float":"right"}}>
+
                                     <button onClick={this.startTime} type="button" className="btn btn-default btn-sm pull-right" >
                                         <span className="glyphicon glyphicon glyphicon-time" aria-hidden="true"></span>
                                     </button>
@@ -150,6 +164,7 @@ class Dashboard extends Component {
                                         <span className="glyphicon glyphicon glyphicon-play" aria-hidden="true"></span>
                                     </button>
                                 </div>
+
                             </div>
                         </div>
                     </th>
