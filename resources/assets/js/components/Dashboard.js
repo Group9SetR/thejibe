@@ -69,25 +69,34 @@ class Dashboard extends Component {
                     <div className="panel panel-default">
                         <div className="panel-heading">
                             <h4 className="panel-title">
+                                <button onClick={this.handle_start} className="btn btn-default btn-sm">
+                                    <span className="glyphicon glyphicon glyphicon-play" aria-hidden="true"></span>
+                                </button>
+                                <button onClick={this.handle_pause} className="btn btn-default btn-sm">
+                                    <span className="glyphicon glyphicon glyphicon-pause" aria-hidden="true"></span>
+                                </button>
+                                <button onClick={this.handle_clear} className="btn btn-default btn-sm">
+                                    <span className="glyphicon glyphicon glyphicon-stop" aria-hidden="true"></span>
+                                </button>
+                                <button onClick={this.log_time} className="btn btn-default btn-sm">
+                                    <span className="glyphicon glyphicon glyphicon-time" aria-hidden="true"></span>
+                                </button>
+                                &nbsp;&nbsp;&nbsp;
+                                {this.get_hours()}:{this.get_minutes()}:{this.get_seconds()}
                                 <a className="accordion-toggle" data-toggle="collapse" data-parent="#accordion" href="#collapseOne">
-                                    <button onClick={this.handle_start}>Start</button>
-                                    <button onClick={this.handle_pause}>Pause</button>
-                                    <button onClick={this.handle_clear}>Reset</button>
-                                    <button onClick={this.log_time}>Log Time</button>
                                 </a>
                             </h4>
                         </div>
                         <div id="collapseOne" className="panel-collapse collapse in">
                             <div className="panel-body" style={{width: 300 + 'px'}}>
                                 <div id="demo">
-                                    <h1>{this.get_hours()}:{this.get_minutes()}:{this.get_seconds()}</h1>
                                     <p>Task: Create time-tracking widget</p>
                                     <div className="form-group">
                                         <textarea class="form-control " placeholder="Optional Description" rows="1"  id="description" ></textarea>
                                     </div>
                                     <button className="btn btn-success openTimerConfirmModal col-sm-4" data-toggle="modal" data-target="#confirmTimerModal">Log Time</button>
                                     <div class ="deleteBtn" style={{float: 'right', 'padding-top': 10 + 'px'}}>
-                                        <a style={{color: '#CC000'}}>Delete</a>
+                                        <a style={{color: '#CC0000'}}>Delete</a>
                                     </div>
                                 </div>
                             </div>
