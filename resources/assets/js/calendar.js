@@ -34,37 +34,38 @@ export default function Calendar()
         NOVEMBER:10,
         DECEMBER:11,
         properties: {
-            0: "January",
-            1: "February",
-            2: "March",
-            3: "April",
+            0: "Jan",
+            1: "Feb",
+            2: "Mar",
+            3: "Apr",
             4: "May",
-            5: "June",
-            6: "July",
-            7: "August",
-            8: "September",
-            9: "October",
-            10: "November",
-            11: "December"
+            5: "Jun",
+            6: "Jul",
+            7: "Aug",
+            8: "Sep",
+            9: "Oct",
+            10: "Nov",
+            11: "Dec"
         }
 
     });
     this.custom = "";
     this.default = this.Type_Enum.BIWEEK;
     this.start = getWeekStart(new Date());
-    //this.end = "";
+    this.end = "";
     this.type = "";
     this.range = [];
     this.init = function(type) { //initialize range of dates
-        /*TODO check if type is set via date filter*/
+        this.range = [];
         this.type = (type === undefined) ? this.default : type;
-        console.log("Type changed: "+ this.type);
         var current = this.start;
         for(let i=0; i<this.Type_Enum.properties[this.type].weeks; i++) {
             var next = new Date(current.getFullYear(), current.getMonth(), current.getDate()+7);
             this.range.push(getWeekDates(current));
             current = next;
         }
+        var last = this.range[this.range.length-1][4];
+        this.end = new Date(last.year, last.month, last.day);
     };
 }
 
@@ -90,6 +91,8 @@ function getWeekDates(date) {
     }
     return range;
 }
+
+
 
 /**
  * Derive the date of the start of a week given a Date object.

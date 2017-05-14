@@ -12,11 +12,11 @@ class Dashboard extends Component {
         this.state = {
             tasks: [],
             currentprofile: []
-        }
+        };
         this.startTime = this.startTime.bind(this);
+        this.filterDate = this.filterDate.bind(this);
         this.calendar = new Calendar();
         this.calendar.init();
-
     }
 
     startTime() {
@@ -52,7 +52,6 @@ class Dashboard extends Component {
             });
 
     }
-
 
     renderCurrentProfile() {
         var pic = this.state.currentprofile['avatar-url'];
@@ -185,9 +184,9 @@ class Dashboard extends Component {
             var range = this.calendar.range[i];
             headings.push(<th className="text-center" colSpan="5">
                 {range[0].day} {this.calendar.Month_Enum.properties[range[0].month]}-
-                {range[4].day} {this.calendar.Month_Enum.properties[range[4].month]}</th>);
+                 {range[4].day} {this.calendar.Month_Enum.properties[range[4].month]}</th>);
             for(var j=0; j<range.length; j++) {
-                dates.push(<th className="text-center">{range[j].day}</th>);
+                dates.push(<th className="text-center calendar-day-headers">{range[j].day}</th>);
             }
         }
         return (
@@ -204,6 +203,96 @@ class Dashboard extends Component {
         );
     }
 
+    renderNav() {
+        var calendar = this.calendar;
+        var startDate = calendar.start.toISOString().substr(0,10);
+        var endDate = calendar.end.toISOString().substr(0,10);
+        return (
+            <div>
+                <div className="secondnav" id="mySecondnav">
+                    <div className="form-group">
+                        <div className="col-sm-2">
+                            <select className="form-control" id="client">
+                                <option>All Clients</option>
+                                <option>client 1</option>
+                                <option>client 2</option>
+                            </select>
+                        </div>
+                        <div className="col-sm-2">
+                            <select className="form-control" id="project">
+                                <option>All Projects</option>
+                                <option>project 1</option>
+                                <option>project 2</option>
+                            </select>
+                        </div>
+                        <div className="col-sm-2">
+                            <select className="form-control" id="priority">
+                                <option>All Priorities</option>
+                                <option>Priorities 1</option>
+                                <option>Priorities 2</option>
+                            </select>
+                        </div>
+
+
+
+                        <div id="navbar" className="navbar-collapse collapse">
+                            <ul className="nav navbar-nav navbar-right ">
+                                <form>
+                                    <div className ="form-inline">
+                                        <input type="date" name="start_date" id="start_date" className="form-control"
+                                            defaultValue={startDate} />
+                                        <input type="date" name="end_date" id="end_date" className="form-control"
+                                            defaultValue={endDate} />
+                                        <select className="form-control" id="date_filter"
+                                                defaultValue={this.calendar.default} onChange={this.filterDate}>
+                                            <option value="1">Week</option>
+                                            <option value="2">Biweek</option>
+                                            <option value="3">Month</option>
+                                            <option value="4">90-days</option>
+                                        </select>
+                                    </div>
+                                </form>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        );
+    }
+
+    filterDate(e) {
+        var key = "twp_sSjnN8X8GtBBozG0OepWU03xa6mx";
+        var base64 = new Buffer(key+":xxx").toString("base64");
+        var obj = {
+            method:"GET",
+            dataType: 'json',
+            headers: {
+                'Authorization': 'BASIC '+base64,
+                'Content-Type': 'application/json'
+            }
+        };
+
+        this.calendar.init(e.target.value);
+        //TODO change parameters of tasks called
+
+
+        fetch('https://thejibe.teamwork.com/tasks.json', obj)
+            .then(response => {
+                return response.json();
+            })
+            .then(tasks => {
+                this.setState({ tasks:tasks['todo-items'] });
+            });
+    }
+
+    setDateStart(e) {
+
+    }
+
+    setDateEnd(e) {
+
+    }
+
     /**
      * Renders the Dashboard task table.
      * @returns {XML}
@@ -213,25 +302,30 @@ class Dashboard extends Component {
         for(var i=0; i < this.calendar.range.length; i++) {
             var range = this.calendar.range[i];
             for(var j=0; j<range.length; j++) {
-                var col = (range[j].day == new Date().getDate()) ?
+                var col = (range[j].full == new Date().toDateString()) ?
                     <col className="currentDate"></col>:<col></col>;
                 columns.push(col);
             }
         }
         return (
             <div>
-                <table className="table table-bordered " id="task_table">
-                    <colgroup>
-                        <col></col>
-                        {columns}
-                    </colgroup>
-                    {this.renderCalendar()}
-                    <tbody>
-                    { this.renderCurrentProfile() }
-                    { this.renderTasks() }
+                {this.renderNav()}
 
-                    </tbody>
-                </table>
+                <div className="container" id="wrapper">
+
+                    <table className="table table-bordered " id="task_table">
+                        <colgroup>
+                            <col className="task_table_header"></col>
+                            {columns}
+                        </colgroup>
+                            {this.renderCalendar()}
+                        <tbody>
+                            { this.renderCurrentProfile() }
+                            { this.renderTasks() }
+
+                        </tbody>
+                    </table>
+                </div>
             </div>
         );
     }
