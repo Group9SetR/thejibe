@@ -1,6 +1,6 @@
 @extends('layouts.app')
 @section('nav')
-    <div class="secondnav" id="mySecondnav">
+    <!--<div class="secondnav" id="mySecondnav">
         <div class="form-group">
             <div class="col-sm-2">
                 <select class="form-control" id="client">
@@ -43,13 +43,11 @@
                     </div>
                     {{ Form::close() }}
                 </ul>
-            </div><!--/.nav-collapse -->
+            </div>
         </div>
-    </div>
+    </div>-->
 
 @endsection
 @section('content')
-    <div class="container" id="wrapper">
-        <div id="dashboard"></div>
-    </div>
+    <div id="dashboard"></div>
 @endsection
