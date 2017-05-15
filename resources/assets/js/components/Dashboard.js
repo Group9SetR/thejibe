@@ -92,6 +92,8 @@ class Dashboard extends Component {
             var key = "twp_WUI8GI94aBL8p97JiiyXue8epq9A";
             var base64 = new Buffer(key+":xxx").toString("base64");
             var completion = 0;
+            var totalhours = 0;
+            var estimated = 0;
             $.ajax({
                 url: 'http://thejibe.teamwork.com/tasks/' + task.id + '/time/total.json',
                 async: false,
@@ -99,9 +101,11 @@ class Dashboard extends Component {
                 dataType: 'json',
                 success: function(data) {
                     if (data['projects'][0]['tasklist']['task']['time-estimates']['total-hours-estimated'] != 0) {
+                        estimated = (data['projects'][0]['tasklist']['task']['time-estimates']['total-hours-estimated']);
+                        totalhours = (data['projects'][0]['tasklist']['task']['time-totals']['total-hours-sum']);
                         completion = Math.floor(
-                            (data['projects'][0]['tasklist']['task']['time-totals']['total-hours-sum'])
-                            / (data['projects'][0]['tasklist']['task']['time-estimates']['total-hours-estimated']) * 100);
+                            totalhours
+                            / estimated * 100);
                     }
                 },
                 error: function() { console.log('GET request to time totals failed'); },
@@ -137,21 +141,21 @@ class Dashboard extends Component {
 
 
                             <div className = "row" id = "sliderBardiv">
-                                <div id = "sliderBar" style={{ "float":"left"}}>
-                                    <input type="range"  min="0" max="100" />
-                                </div>
-                                <div className="col-sm-3" style={{ "float":"right"}}>
-                                    <p>4.32h/ 10h</p>
-                                </div>
-
-                            </div>
-
-                            <div className ="row" id = "progressBardiv">
                                 <div className="progress" id ="progressBar" style={{ "float":"left"}}>
                                     <div className="progress-bar  " role="progressbar"
                                          aria-valuenow={completion} aria-valuemin="0" aria-valuemax="100" style={{ "width" : completion + "%"}}>
                                         {completion}%
                                     </div>
+                                </div>
+                                <div className="col-sm-3" style={{ "float":"right"}}>
+                                    <p>{totalhours}/{estimated}</p>
+                                </div>
+
+                            </div>
+
+                            <div className ="row" id = "progressBardiv">
+                                <div id = "sliderBar" style={{ "float":"left"}}>
+                                    <input type="range"  min="0" max="100" defaultValue={task.progress}/> {task.progress}%
                                 </div>
                                 <div className ="col-sm-3" style={{ "float":"right"}}>
 
