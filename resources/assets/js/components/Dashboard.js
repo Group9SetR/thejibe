@@ -55,6 +55,7 @@ class Dashboard extends Component {
 
     renderCurrentProfile() {
         var pic = this.state.currentprofile['avatar-url'];
+        var utilization = this.calendar.range.length * 5;
         return (
             <tr key={this.state.currentprofile.id}>
                 <th scope="row">
@@ -73,7 +74,12 @@ class Dashboard extends Component {
                         </div>
                     </div>
                 </th>
-                <td colSpan="10"><div id="scheduledBar"><p id="scheduledText">65h/ 80h(81%) scheduled</p></div></td>
+                <td colSpan={utilization} className="nohover">
+                    <div>
+                        <div id="scheduledBar"><p id="scheduledText">65h/ 80h(81%) scheduled</p></div>
+                        <div></div>
+                    </div>
+                </td>
             </tr>
         );
     }
@@ -84,10 +90,7 @@ class Dashboard extends Component {
      */
     renderTasks() {
 
-        var timespan = [];
-        for(let i=0; i<this.calendar.range.length*5;i++) {
-            timespan.push(<td>span</td>);
-        }
+
         return this.state.tasks.map(task => {
             var key = "twp_WUI8GI94aBL8p97JiiyXue8epq9A";
             var base64 = new Buffer(key+":xxx").toString("base64");
@@ -111,6 +114,36 @@ class Dashboard extends Component {
             function setHeader(xhr) {
                 xhr.setRequestHeader('Authorization', 'BASIC ' + base64);
                 xhr.setRequestHeader('Content-Type', 'application/json');
+            }
+
+            function convertTeamworkDate(datestring) {
+                var year = datestring.substr(0,4);
+                var month = datestring.substr(4,2);
+                var day = datestring.substr(6,2);
+                var temp = new Date(year, month, 1);
+                temp.setMonth(temp.getMonth()-1);
+                temp.setDate(day);
+                return temp;
+            }
+
+            var timespan = [];
+            for(let i=0; i<this.calendar.range.length; i++) {
+                for(let j=0; j<5; j++) {
+                    if(task['start-date'] !== "" && task['due-date'] !== "") {
+                        var startdate = convertTeamworkDate(task['start-date']);
+                        var duedate = convertTeamworkDate(task['due-date']);
+
+                        var rangedate = this.calendar.range[i][j];
+                        var current = new Date(rangedate.year, rangedate.month, rangedate.day);
+                        if(current >= startdate && current <= duedate) {
+                            timespan.push(<td><div className="taskSpan"></div></td>);
+                        } else {
+                            timespan.push(<td>NO</td>);
+                        }
+                    } else {
+                        timespan.push(<td>NO</td>);
+                    }
+                }
             }
             return (
                 <tr key={task.id}>
@@ -180,15 +213,16 @@ class Dashboard extends Component {
     renderCalendar() {
         var headings = [];
         var dates = [];
+
         for(var i=0; i < this.calendar.range.length; i++) {
             var range = this.calendar.range[i];
             headings.push(<th className="text-center" colSpan="5">
-                {range[0].day} {this.calendar.Month_Enum.properties[range[0].month]}-
-                 {range[4].day} {this.calendar.Month_Enum.properties[range[4].month]}</th>);
-            for(var j=0; j<range.length; j++) {
+                {range[0].day} {this.calendar.Month_Enum.properties[range[0].month]} - {range[range.length - 1].day} {this.calendar.Month_Enum.properties[range[range.length - 1].month]}</th>);
+            for (var j = 0; j < range.length; j++) {
                 dates.push(<th className="text-center calendar-day-headers">{range[j].day}</th>);
             }
         }
+
         return (
 
             <thead>
@@ -245,10 +279,10 @@ class Dashboard extends Component {
                                             defaultValue={endDate} />
                                         <select className="form-control" id="date_filter"
                                                 defaultValue={this.calendar.default} onChange={this.filterDate}>
-                                            <option value="1">Week</option>
-                                            <option value="2">Biweek</option>
-                                            <option value="3">Month</option>
-                                            <option value="4">90-days</option>
+                                            <option value={this.calendar.Type_Enum.WEEK}>Week</option>
+                                            <option value={this.calendar.Type_Enum.BIWEEK}>Biweek</option>
+                                            <option value={this.calendar.Type_Enum.MONTH}>Month</option>
+                                            <option value={this.calendar.Type_Enum.TRIMONTH}>90-days</option>
                                         </select>
                                     </div>
                                 </form>
@@ -271,11 +305,8 @@ class Dashboard extends Component {
                 'Content-Type': 'application/json'
             }
         };
-
         this.calendar.init(e.target.value);
         //TODO change parameters of tasks called
-
-
         fetch('https://thejibe.teamwork.com/tasks.json', obj)
             .then(response => {
                 return response.json();
@@ -303,7 +334,7 @@ class Dashboard extends Component {
             var range = this.calendar.range[i];
             for(var j=0; j<range.length; j++) {
                 var col = (range[j].full == new Date().toDateString()) ?
-                    <col className="currentDate"></col>:<col></col>;
+                    <col className="currentDate success"></col>:<col></col>;
                 columns.push(col);
             }
         }
@@ -313,7 +344,7 @@ class Dashboard extends Component {
 
                 <div className="container" id="wrapper">
 
-                    <table className="table table-bordered " id="task_table">
+                    <table className="table table-bordered" id="task_table">
                         <colgroup>
                             <col className="task_table_header"></col>
                             {columns}

@@ -47,26 +47,63 @@ export default function Calendar()
             10: "Nov",
             11: "Dec"
         }
-
     });
     this.custom = "";
     this.default = this.Type_Enum.BIWEEK;
-    this.start = getWeekStart(new Date());
+    this.start = "";
     this.end = "";
     this.type = "";
     this.range = [];
     this.init = function(type) { //initialize range of dates
         this.range = [];
-        this.type = (type === undefined) ? this.default : type;
-        var current = this.start;
-        for(let i=0; i<this.Type_Enum.properties[this.type].weeks; i++) {
-            var next = new Date(current.getFullYear(), current.getMonth(), current.getDate()+7);
-            this.range.push(getWeekDates(current));
-            current = next;
-        }
+        this.type = (type === undefined) ? this.default : this.getType(type);
+        this.start = getStart(this.type, this.Type_Enum);
+        this.setRange();
         var last = this.range[this.range.length-1][4];
         this.end = new Date(last.year, last.month, last.day);
     };
+    this.setRange = function () {
+        var current = new Date();
+        current.setTime(this.start.getTime());
+        if(this.type === this.Type_Enum.WEEK || this.type === this.Type_Enum.BIWEEK) {
+            for(let i=0; i<this.Type_Enum.properties[this.type].weeks; i++) {
+                var next = new Date(current.getFullYear(), current.getMonth(), current.getDate()+7);
+                this.range.push(getWeekDates(current));
+                current = next;
+            }
+        } else if(this.type === this.Type_Enum.MONTH) {
+            while(current.getMonth() == this.start.getMonth()) {
+                var next = new Date(current.getFullYear(), current.getMonth(), current.getDate()+7);
+                this.range.push(getWeekDates(current));
+                current = next;
+            }
+        } else if(this.type === this.Type_Enum.TRIMONTH) {
+            var temp = new Date();
+            temp.setTime(this.start.getTime());
+            temp.setMonth(temp.getMonth()+3);
+            while(current.getMonth() != temp.getMonth()) {
+                var next = new Date(current.getFullYear(), current.getMonth(), current.getDate()+7);
+                this.range.push(getWeekDates(current));
+                current = next;
+            }
+        }
+    };
+    this.getType = function (type) {
+        if(type == this.Type_Enum.WEEK) {
+            return this.Type_Enum.WEEK;
+        } else if(type == this.Type_Enum.BIWEEK) {
+            return this.Type_Enum.BIWEEK;
+        } else if (type == this.Type_Enum.MONTH) {
+            return this.Type_Enum.MONTH;
+        } else if (type == this.Type_Enum.TRIMONTH) {
+            return this.Type_Enum.TRIMONTH;
+        } else if (type == this.Type_Enum.DEFAULT) {
+            return this.Type_Enum.DEFAULT;
+        } else if (type == this.Type_Enum.CUSTOM) {
+            return this.Type_Enum.CUSTOM;
+        }
+
+    }
 }
 
 /*
@@ -92,8 +129,6 @@ function getWeekDates(date) {
     return range;
 }
 
-
-
 /**
  * Derive the date of the start of a week given a Date object.
  * @param date a Date object
@@ -106,6 +141,20 @@ function getWeekStart(date) {
     if(day_of_week !== 1) { //set current to Monday of that week
         current.setHours(-24 * (day_of_week-1));
     }
-
     return current;
+}
+
+function getMonthStart(date) {
+    return new Date(date.getFullYear(), date.getMonth(), 1);
+}
+
+function getStart(type, typeenum) {
+    var current = new Date();
+    if(type == typeenum.WEEK || type == typeenum.BIWEEK) {
+        return getWeekStart(current);
+    } else if (type == typeenum.MONTH || type == typeenum.TRIMONTH) {
+        return getMonthStart(current);
+    } else {
+        return current;
+    }
 }
