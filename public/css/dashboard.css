@@ -119,7 +119,7 @@ th:hover::after {
     white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;
-
+    word-wrap:break-word;
 }
 .taskName:hover {
     text-overflow:inherit;
@@ -138,9 +138,15 @@ th:hover::after {
 }
 
 .taskSpan {
+    padding-left:0px;
+    padding-right:0px;
     width:100%;
+}
+
+.taskSpan > div{
     height:40px;
     background-color: lightblue;
+    width:100%;
 }
 
 /* scheduledBar */
@@ -156,19 +162,20 @@ th:hover::after {
     font-weight: bold;
 }
 
-#progressBar{
+.progressBar{
     width: 70%;
+    margin-bottom:0 !important;
 }
 
-#progressBardiv{
+.progressBardiv{
     margin-left: 5px;
 }
 
-#sliderBardiv{
+.sliderBardiv{
     margin-left: 5px;
 }
 /* sliderBar */
-#sliderBar{
+.sliderBar{
     width: 70%;
     padding:0px;
 }
@@ -226,16 +233,19 @@ th:hover::after {
 }
 
 
-#priorityBtn {
+.priorityBtn {
     width: 70px;
 }
 
 
 /* calendar date */
-.currentDate {
+.currentDate{
     background-color:#5bc0de;
 }
 
+.nohighlight {
+    background-color:white;
+}
 
 .panel-heading .accordion-toggle:after {
     /* symbol for "opening" panels */
