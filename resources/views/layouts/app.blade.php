@@ -12,15 +12,31 @@
     <!-- Styles -->
     <link href="/css/app.css" rel="stylesheet">
     <link href="/css/dashboard.css" rel="stylesheet">
+    <link href="/css/timer.css" rel="stylesheet">
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://cdnjs.com/libraries/bootstrap-slider">
+    @yield('css')
     <!-- Scripts -->
     <script>
         window.Laravel = <?php echo json_encode([
             'csrfToken' => csrf_token(),
         ]); ?>
+
+        var myVar;
+
+        function myFunction() {
+            myVar = setTimeout(showPage, 3000);
+        }
+
+        function showPage() {
+            document.getElementById("loader").style.display = "none";
+            document.getElementById("myDiv").style.display = "block";
+        }
     </script>
 </head>
-<body>
+<body onload="myFunction()" style="margin:0;">
+<div id="loader"></div>
+<div style="display:none;" id="myDiv">
     <div id="app">
         <nav>
             <div class="firstnav" id="myFirstnav">
@@ -34,25 +50,82 @@
                         </button>
                         <!-- Branding Image -->
                         <a class="navbar-brand" href="{{ url('/') }}">
-                            {{ config('app.name', 'Laravel') }}
+                            <font color="white">{{ config('app.name', 'Laravel') }}</font>
                         </a>
                     </div>
-
                     <div class="collapse navbar-collapse" id="app-navbar-collapse">
                         <!-- Right Side Of Navbar -->
                         <ul class="nav navbar-nav navbar-right">
-                            <li color = "white"><a href="#"><font color="white">My Account</font></a></li>
+                            <li><a href="#"><font color="white">My Account</font></a></li>
                         </ul>
                     </div>
                 </div>
             </div>
-            @yield('dashboardnav')
+            @yield('nav')
         </nav>
 
         @yield('content')
+    </div>
+
+    <div class="modal fade openTimerConfirmModal" id="confirmTimerModal" tabindex="-1" role="dialog" style="width:500px; height: 500px;">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span></button>
+                    <h4 class="modal-title" id="confirmTimerModalLabel">Timer</h4>
+                </div>
+                <div class="modal-body">
+                    Test
+                </div>
+                <div class="modal-footer">
+                    <input type="submit" placeholder="Save" id="timerSubmit" name="confirmTimerBtn" class="btn btn-success openConfirmTimerModal">
+                    <button type="button" id="closeConfirmTimerBtn" class="btn btn-warning" data-dismiss="modal">Close</button>
+                </div>
+            </div>
+        </div>
+    </div>
 
     <!-- Scripts -->
     <script src="/js/app.js"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+    @yield('javascript')
+    </div>
 </body>
+
+<footer id="timerbox" style="position: fixed; bottom: 0; display: block; width: 300px; visibility: hidden;">
+    <div class="panel-group" id="accordion">
+        <div class="panel panel-default">
+            <div class="panel-heading">
+                <h4 class="panel-title">
+                    <a class="accordion-toggle" data-toggle="collapse" data-parent="#accordion" href="#collapseOne">
+                        TIMER - Pause - Log Time
+                    </a>
+                </h4>
+            </div>
+            <div id="collapseOne" class="panel-collapse collapse in">
+                <div class="panel-body" style=" width: 300px;">
+                    <div id="demo">
+                        <p>Task: Create time-tracking widget</p>
+                        <div class="form-group">
+                            <textarea class="form-control " placeholder="Optional Description" rows="1"  id="description" ></textarea>
+                        </div>
+                            <button class="btn btn-success openTimerConfirmModal col-sm-4" data-toggle="modal" data-target="#confirmTimerModal">Log Time</button>
+                        <div class ="deleteBtn" style="float: right; padding-top: 10px;">
+                            <a style="color: #CC0000;">Delete</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</footer>
+
+<script>
+    // script to hide timerbox visibility
+    $('#closeTimerbox').click(function(){
+        $('#timerbox').css('visibility', 'hidden');
+    });
+</script>
 </html>

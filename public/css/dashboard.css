@@ -1,6 +1,5 @@
-
 .firstnav {
-    background-color: black;
+    background-color: #404040;
     overflow: hidden;
     margin: 0;
     padding:10px;
@@ -15,18 +14,26 @@
 
 #wrapper {
     width:100%;
+    height: 100%;
 }
+
+#wrapper table {
+    max-width:100%;
+    table-layout:fixed;
+}
+
 /* Pen-specific styles */
 * {
     box-sizing: border-box;
 }
 
-body {
-    color: black;
+
+
+section {
+    color: #696969;
     font-size: 20px;
     font-family: "Times New Roman", Times, serif;
 }
-
 div {
     height: 100%;
 }
@@ -37,31 +44,120 @@ div {
     width: 100%;
 }
 
+
 .firstnav ul a:hover {
     background-color: black;
 }
-
-.firstnav ul a:link {
-    background-color: black;
+#myFirstnav ul a:hover {
+    background-color: #404040;
 }
 
-.firstnav ul a:visited {
-    background-color: black;
+#myFirstnav ul a:link {
+    background-color: #404040;
 }
 
-#wrapper{
+#myFirstnav ul a:visited {
+    background-color: #404040;
+}
+
+
+/*Table style*/
+table {
+    padding: 0;
+    margin: 0px;
+    overflow:hidden;
+
+}
+
+.task_table_header {
+    width:401px;
+}
+
+td, th {
+    position: relative;
+}
+
+
+
+thead th:not(:empty):hover::after,
+td:focus::after,
+thead th:not(:empty):focus::after {
+    content: '';
+    height: 10000px;
+    left: 0;
+    position: absolute;
+    top: -5000px;
     width: 100%;
-    height: 100%;
+    z-index: -1;
 }
+
+td:not(.nohover):hover::after,
+th:hover::after {
+    background-color: lightgray;
+}
+
+.calendar-day-headers {
+    text-align:center;
+    width: 3%;
+}
+
+/* user Profile */
+.profile {
+    margin: 10px;
+>>>>>>> 051276e0fc87fb0c60dc1ac6f9c34761ad2678cd
+    width: 100%;
+    height: 50px;
+}
+#name{
+    margin-top: 10px;
+    font-size: larger;
+}
+#userpic{
+    margin:0;
+    width: 50px;
+    height:50px;
+    border-radius: 50%;
+}
+
 /* table */
 table {
     padding: 0;
-    margin-top:10px;
+    margin-top: 10px;
 }
 
-th {
-    width: 3%;
+/* Tasks */
+.taskName{
+    font-family: Arial, Helvetica, sans-serif;
+    font-size: medium;
+    width: 210px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+
 }
+.taskName:hover {
+    text-overflow:inherit;
+    overflow:visible;
+    height:auto;
+}
+.projectName{
+    font-family: "Tahoma";
+    font-size: smaller;
+    color: #2a88bd;
+}
+.companyName{
+    font-family: "Tahoma";
+    color: lightgray;
+    font-weight: lighter;
+
+}
+
+.taskSpan {
+    width:100%;
+    height:40px;
+    background-color: lightblue;
+}
+
 
 /* profile */
 #profile {
@@ -106,4 +202,108 @@ th {
 }
 
 
+/* scheduledBar */
+#scheduledBar {
+    background-color: #99b900;
+    height: 60px;
+    border-radius: 3px;
+}
 
+
+#scheduledText {
+    padding: 15px;
+    color: white;
+    font-weight: bold;
+}
+
+#progressBar{
+    width: 70%;
+}
+
+#progressBardiv{
+    margin-left: 5px;
+}
+
+#sliderBardiv{
+    margin-left: 5px;
+}
+/* sliderBar */
+#sliderBar{
+    width: 70%;
+    padding:0px;
+}
+/* Loading page */
+
+#loader {
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    z-index: 1;
+    width: 150px;
+    height: 150px;
+    margin: -75px 0 0 -75px;
+    border: 16px solid #f3f3f3;
+    border-radius: 50%;
+    border-top: 16px solid #99b900;
+    width: 120px;
+    height: 120px;
+    -webkit-animation: spin 2s linear infinite;
+    animation: spin 2s linear infinite;
+}
+
+@-webkit-keyframes spin {
+    0% { -webkit-transform: rotate(0deg); }
+    100% { -webkit-transform: rotate(360deg); }
+}
+
+@keyframes spin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+}
+
+/* Add animation to "page content" */
+.animate-bottom {
+    position: relative;
+    -webkit-animation-name: animatebottom;
+    -webkit-animation-duration: 1s;
+    animation-name: animatebottom;
+    animation-duration: 1s
+}
+
+@-webkit-keyframes animatebottom {
+    from { bottom:-100px; opacity:0 }
+    to { bottom:0px; opacity:1 }
+}
+
+@keyframes animatebottom {
+    from{ bottom:-100px; opacity:0 }
+    to{ bottom:0; opacity:1 }
+}
+
+#myDiv {
+    display: none;
+    text-align: center;
+}
+
+
+#priorityBtn {
+    width: 70px;
+}
+
+
+/* calendar date */
+.currentDate {
+    background-color:#F0F8FF;
+}
+
+
+.panel-heading .accordion-toggle:after {
+    /* symbol for "opening" panels */
+    font-family: 'Glyphicons Halflings';
+    content: "\e114";
+    float: right;
+    color: grey;
+}
+.panel-heading .accordion-toggle.collapsed:after {
+    content: "\e080";
+}
