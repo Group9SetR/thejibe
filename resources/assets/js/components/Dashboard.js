@@ -19,6 +19,7 @@ class Dashboard extends Component {
         this.calendar.init();
 
         this.timer = null;
+        this.filterDate = this.filterDate.bind(this);
         this.startTime = this.startTime.bind(this);
         this.handle_start = this.handle_start.bind(this);
         this.handle_clear = this.handle_clear.bind(this);
@@ -479,7 +480,7 @@ class Dashboard extends Component {
             <div>
                 { this.renderNav() }
                 <div className="container" id="wrapper">
-                    <table className="table table-bordered " id="task_table" style={{"border-collapse":"collapse"}}>
+                    <table className="table table-bordered " id="task_table">
                         <colgroup>
                             <col className="task_table_header"></col>
                             {columns}
