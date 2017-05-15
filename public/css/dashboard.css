@@ -22,9 +22,6 @@
     table-layout:fixed;
 }
 
-.task_table_header {
-   width:401px;
-}
 /* Pen-specific styles */
 * {
     box-sizing: border-box;
@@ -60,11 +57,37 @@ div {
 }
 
 
-
+/*Table style*/
 table {
     padding: 0;
     margin: 0px;
+    overflow:hidden;
+}
 
+.task_table_header {
+    width:401px;
+}
+
+td, th {
+    position: relative;
+}
+
+td:hover::after,
+thead th:not(:empty):hover::after,
+td:focus::after,
+thead th:not(:empty):focus::after {
+    content: '';
+    height: 10000px;
+    left: 0;
+    position: absolute;
+    top: -5000px;
+    width: 100%;
+    z-index: -1;
+}
+
+td:not(.nohover):hover::after,
+th:hover::after {
+    background-color: lightgray;
 }
 
 .calendar-day-headers {
@@ -113,6 +136,12 @@ table {
     font-family: "Tahoma";
     color: lightgray;
     font-weight: lighter;
+}
+
+.taskSpan {
+    width:100%;
+    height:40px;
+    background-color: lightblue;
 }
 
 /* scheduledBar */
