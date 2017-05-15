@@ -289,7 +289,7 @@ class Dashboard extends Component {
                                         <div className ="taskName">
                                             { task.content }
                                             <div>
-                                                <p className ="projectName">ProjectName:{ task['project-name'] }</p>
+                                                <p className ="projectName">{task['company-name']}</p>
                                             </div>
                                         </div>
                                     </div>
