@@ -56,7 +56,7 @@ class Dashboard extends Component {
     renderCurrentProfile() {
         var pic = this.state.currentprofile['avatar-url'];
         return (
-            <tr key={this.state.currentprofile.id}>
+            <tr key={this.state.currentprofile.id} data-toggle="collapse" data-target="#tasks" className="accordion-toggle">
                 <th scope="row">
                     <div className="profile">
                         <div className = "col-sm-2">
@@ -117,9 +117,9 @@ class Dashboard extends Component {
                 xhr.setRequestHeader('Content-Type', 'application/json');
             }
             return (
-                <tr key={task.id}>
+                <tr key={task.id} >
                     <th scope="row">
-                        <div >
+                        <div>
                             <div>
                                 <div className ="taskName">
                                     { task.content }
@@ -317,7 +317,7 @@ class Dashboard extends Component {
 
                 <div className="container" id="wrapper">
 
-                    <table className="table table-bordered " id="task_table">
+                    <table className="table table-bordered " id="task_table" style={{"border-collapse":"collapse"}}>
                         <colgroup>
                             <col className="task_table_header"></col>
                             {columns}
@@ -325,7 +325,10 @@ class Dashboard extends Component {
                             {this.renderCalendar()}
                         <tbody>
                             { this.renderCurrentProfile() }
-                            { this.renderTasks() }
+
+                             { this.renderTasks() }
+
+
 
                         </tbody>
                     </table>
