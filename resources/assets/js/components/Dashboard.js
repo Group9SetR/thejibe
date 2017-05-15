@@ -56,7 +56,7 @@ class Dashboard extends Component {
     renderCurrentProfile() {
         var pic = this.state.currentprofile['avatar-url'];
         return (
-            <tr key={this.state.currentprofile.id} data-toggle="collapse" data-target="#tasks" className="accordion-toggle">
+            <tr key={this.state.currentprofile.id} data-toggle="collapse" data-target=".tasks" className="accordion-toggle">
                 <th scope="row">
                     <div className="profile">
                         <div className = "col-sm-2">
@@ -83,7 +83,6 @@ class Dashboard extends Component {
      * @returns {Array}
      */
     renderTasks() {
-
         var timespan = [];
         for(let i=0; i<this.calendar.range.length*5;i++) {
             timespan.push(<td>span</td>);
@@ -113,7 +112,8 @@ class Dashboard extends Component {
                 xhr.setRequestHeader('Content-Type', 'application/json');
             }
             return (
-                <tr key={task.id} >
+
+                <tr key={task.id} className="collapse tasks">
                     <th scope="row">
                         <div>
                             <div>
@@ -158,17 +158,16 @@ class Dashboard extends Component {
                                     <button onClick={this.startTime} type="button" className="btn btn-default btn-sm pull-right" >
                                         <span className="glyphicon glyphicon glyphicon-time" aria-hidden="true"></span>
                                     </button>
-
                                     <button onClick={this.startTime} type="button" className="btn btn-default btn-sm pull-right">
                                         <span className="glyphicon glyphicon glyphicon-play" aria-hidden="true"></span>
                                     </button>
                                 </div>
-
                             </div>
                         </div>
                     </th>
                     {timespan}
                 </tr>
+
             );
         })
     }
@@ -312,7 +311,6 @@ class Dashboard extends Component {
                 {this.renderNav()}
 
                 <div className="container" id="wrapper">
-
                     <table className="table table-bordered " id="task_table" style={{"border-collapse":"collapse"}}>
                         <colgroup>
                             <col className="task_table_header"></col>
@@ -322,11 +320,9 @@ class Dashboard extends Component {
                         <tbody>
                             { this.renderCurrentProfile() }
 
-                             { this.renderTasks() }
+                            { this.renderTasks() }
+                            </tbody>
 
-
-
-                        </tbody>
                     </table>
                 </div>
             </div>
