@@ -8,10 +8,15 @@ class TimeTracker extends Component {
             seconds: 0
         };
         this.timer = null;
+        this.startTime = this.startTime.bind(this);
         this.handle_start = this.handle_start.bind(this);
         this.handle_clear = this.handle_clear.bind(this);
         this.handle_pause = this.handle_pause.bind(this);
         this.log_time = this.log_time.bind(this);
+    }
+
+    startTime() {
+        document.getElementById("timerbox").style.visibility = 'visible';
     }
 
     get_hours() {
@@ -46,6 +51,36 @@ class TimeTracker extends Component {
         this.setState({
             seconds: 0
         });
+    }
+
+    render_footer() {
+        return (
+            <footer id="timerbox" style={{position: 'fixed', bottom : 0, display: 'block', width: 300 + 'px', visibility: 'visible'}}>
+                <div className="panel-group" id="accordion">
+                    <div className="panel panel-default">
+                        <div className="panel-heading">
+                            <h4 className="panel-title">
+                                <a className="accordion-toggle" data-toggle="collapse" data-parent="#accordion" href="#collapseOne">
+                                    TIMER - Pause - Log Time
+                                </a>
+                            </h4>
+                        </div>
+                        <div id="collapseOne" className="panel-collapse collapse in">
+                            <div className="panel-body" style={{width: 300 + 'px'}}>
+                                <div id="demo">
+                                    <p>Task: Create time-tracking widget</p>
+                                    <div className="form-group">
+                                        <textarea className="form-control " rows="1"  id="description" ></textarea>
+                                    </div>
+                                    <button className="btn btn-success openTimerConfirmModal col-sm-4" data-toggle="modal" data-target="#confirmTimerModal">Log Time</button>
+                                    <button className="btn" style={{float: 'right'}}>Delete</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </footer>
+        );
     }
 
     log_time() {
@@ -85,7 +120,7 @@ class TimeTracker extends Component {
     }
 }
 
-export default TimeTracker;
+export default app;
 
 if (document.getElementById('time')) {
     ReactDOM.render(<TimeTracker />, document.getElementById('time'));
