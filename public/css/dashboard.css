@@ -27,12 +27,14 @@
     box-sizing: border-box;
 }
 
+
+
 section {
     color: #696969;
     font-size: 20px;
     font-family: "Times New Roman", Times, serif;
-
 }
+
 div {
     height: 100%;
 }
@@ -43,6 +45,10 @@ div {
     width: 100%;
 }
 
+
+.firstnav ul a:hover {
+    background-color: black;
+}
 #myFirstnav ul a:hover {
     background-color: #404040;
 }
@@ -61,6 +67,7 @@ table {
     padding: 0;
     margin: 0px;
     overflow:hidden;
+
 }
 
 .task_table_header {
@@ -71,7 +78,6 @@ td, th {
     position: relative;
 }
 
-td:hover::after,
 thead th:not(:empty):hover::after,
 td:focus::after,
 thead th:not(:empty):focus::after {
@@ -111,6 +117,12 @@ th:hover::after {
     border-radius: 50%;
 }
 
+/* table */
+table {
+    padding: 0;
+    margin-top: 10px;
+}
+
 /* Tasks */
 .taskName{
     font-family: Arial, Helvetica, sans-serif;
@@ -135,6 +147,7 @@ th:hover::after {
     font-family: "Tahoma";
     color: lightgray;
     font-weight: lighter;
+
 }
 
 .taskSpan {
@@ -149,12 +162,57 @@ th:hover::after {
     width:100%;
 }
 
+
+/* profile */
+#profile {
+    width: 100%;
+    height: 10%;
+}
+
+#propileName {
+    padding: 15px;
+    font-size: larger;
+    font-family: "Georgia";
+}
+
+/* scheduledBar */
+#scheduledBar {
+    background-color: #99b900;
+    height: 50px;
+    border-radius: 3px;
+}
+
+#scheduledText {
+    padding: 15px;
+    color: white;
+    font-weight: bold;
+}
+
+/* TaskedBar */
+#task {
+    margin: auto;
+    padding: auto;
+    width :100%;
+}
+#companyName{
+    font-family: "Tahoma";
+    color: lightgray;
+    font-weight: lighter;
+}
+#taskBar {
+    background-color: #f4ce42;
+    height: 90px;
+    border-radius: 3px;
+}
+
+
 /* scheduledBar */
 #scheduledBar {
     background-color: #99b900;
     height: 60px;
     border-radius: 3px;
 }
+
 
 #scheduledText {
     padding: 15px;
@@ -186,8 +244,6 @@ th:hover::after {
     left: 50%;
     top: 50%;
     z-index: 1;
-    width: 150px;
-    height: 150px;
     margin: -75px 0 0 -75px;
     border: 16px solid #f3f3f3;
     border-radius: 50%;
@@ -239,8 +295,8 @@ th:hover::after {
 
 
 /* calendar date */
-.currentDate{
-    background-color:#5bc0de;
+.currentDate {
+    background-color:#F0F8FF;
 }
 
 .nohighlight {
@@ -257,3 +313,4 @@ th:hover::after {
 .panel-heading .accordion-toggle.collapsed:after {
     content: "\e080";
 }
+
