@@ -437,20 +437,21 @@ class Dashboard extends Component {
         }
         return (
             <div>
-
-                <table className="table table-bordered " id="task_table">
-                    <colgroup>
-                        <col></col>
-                        {columns}
-                    </colgroup>
-                    {this.renderCalendar()}
-                    <tbody>
-                    { this.renderCurrentProfile() }
-                    { this.renderTasks() }
-                    </tbody>
-                </table>
-                {this.render_footer()}
-
+                { this.renderNav() }
+                <div className="container" id="wrapper">
+                    <table className="table table-bordered " id="task_table" style={{"border-collapse":"collapse"}}>
+                        <colgroup>
+                            <col className="task_table_header"></col>
+                            {columns}
+                        </colgroup>
+                        { this.renderCalendar() }
+                        <tbody>
+                        { this.renderCurrentProfile() }
+                        { this.renderTasks() }
+                        </tbody>
+                    </table>
+                    { this.render_footer() }
+                </div>
             </div>
         );
     }
