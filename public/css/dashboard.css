@@ -204,7 +204,9 @@ table {
 
 /* calendar date */
 .currentDate {
-    background-color:#5bc0de;
+    opacity: 0.5;
+    background-color:#F0F8FF;
+
 }
 
 
@@ -218,3 +220,4 @@ table {
 .panel-heading .accordion-toggle.collapsed:after {
     content: "\e080";
 }
+
