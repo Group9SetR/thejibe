@@ -268,7 +268,7 @@ class Dashboard extends Component {
                         var rangedate = this.calendar.range[i][j];
                         var current = new Date(rangedate.year, rangedate.month, rangedate.day);
                         if(current >= startdate && current <= duedate) {
-                            timespan.push(<td><div className="taskSpan"></div></td>);
+                            timespan.push(<td style={{ "padding":"0"}}><div className="taskSpan"></div></td>);
                         } else {
                             timespan.push(<td>NO</td>);
                         }
@@ -398,9 +398,7 @@ class Dashboard extends Component {
                                 <option>Priorities 2</option>
                             </select>
                         </div>
-
-
-
+                        
                         <div id="navbar" className="navbar-collapse collapse">
                             <ul className="nav navbar-nav navbar-right ">
                                 <form>

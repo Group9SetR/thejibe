@@ -27,8 +27,6 @@
     box-sizing: border-box;
 }
 
-
-
 section {
     color: #696969;
     font-size: 20px;
@@ -45,10 +43,6 @@ div {
     width: 100%;
 }
 
-
-.firstnav ul a:hover {
-    background-color: black;
-}
 #myFirstnav ul a:hover {
     background-color: #404040;
 }
@@ -78,8 +72,6 @@ td, th {
     position: relative;
 }
 
-
-
 thead th:not(:empty):hover::after,
 td:focus::after,
 thead th:not(:empty):focus::after {
@@ -105,7 +97,6 @@ th:hover::after {
 /* user Profile */
 .profile {
     margin: 10px;
->>>>>>> 051276e0fc87fb0c60dc1ac6f9c34761ad2678cd
     width: 100%;
     height: 50px;
 }
@@ -155,8 +146,15 @@ table {
 
 .taskSpan {
     width:100%;
-    height:40px;
-    background-color: lightblue;
+    padding: 0;
+    margin-top: 30px;
+    margin-bottom: 30px;
+    margin-right: 0px;
+    margin-left: 0px;
+    height:110px;
+    background-color: #FF8C00;
+    opacity: 0.6;
+    border-radius: 2px;
 }
 
 
