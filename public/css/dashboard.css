@@ -142,6 +142,11 @@ thead th:not(.nohover):hover::after {
     width:100%;
 }
 
+.timer-btn {
+    width:100%;
+    height:100%;
+}
+
 
 /* profile */
 #profile {
