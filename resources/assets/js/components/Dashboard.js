@@ -179,6 +179,10 @@ class Dashboard extends Component {
 
     }
 
+    generateKey(key) {
+        return new Buffer(key+":xxx").toString("base64");
+    }
+
     sliderChange(id) {
         var key = "twp_WUI8GI94aBL8p97JiiyXue8epq9A";
         var base64 = new Buffer(key+":xxx").toString("base64");
