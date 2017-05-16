@@ -479,7 +479,7 @@ class Timer extends Component {
         }
         var current = this.props.timer;
         return (
-            <div className="logtimer" style={{visibility: 'visible'}} value={current.id}>
+            <div className="logtimer" style={{visibility: 'visible', position: 'fixed', width: 300 + 'px', height: 300 + 'px', bottom: 0}} value={current.id}>
                 <div className="panel-group" id="accordion">
                     <div className="panel panel-default">
                         <div className="panel-heading" style={{"height":"50px"}}>
@@ -498,31 +498,28 @@ class Timer extends Component {
                                 </button>
                                 &nbsp;&nbsp;&nbsp;
                                 {this.get_hours()}:{this.get_minutes()}:{this.get_seconds()}
-                                <a className="accordion-toggle" data-toggle="collapse" data-parent="#accordion" href="#collapseOne">
-                                </a>
+                                <a className="accordion-toggle" data-toggle="collapse" data-parent="#accordion" href="#collapseOne"></a>
                             </h4>
                         </div>
-                        <div id="collapseOne" className="panel-collapse collapse in">
-                            <div className="panel-body" style={{width: 300 + 'px'}}>
-                                <div id="demo">
-                                    <p>Task: { current.content }</p>
-                                    <form onSubmit={this.handle_logTimeSubmit}>
-                                        <div className="form-group">
-                                            <textarea name="description" className="form-control" value="" onChange={this.handle_descChange} rows="3"/>
-                                            <br/>
-                                            <span className="pull-left">
-                                                    <input name="billable" type="checkbox"/>&nbsp;Billable
-                                                </span>
-                                        </div>
+                        <div id="collapseOne" className="panel-body panel-collapse collapse in">
+                            <div id="demo">
+                                <p>Task: { current.content }</p>
+                                <form onSubmit={this.handle_logTimeSubmit}>
+                                    <div className="form-group">
+                                        <textarea name="description" className="form-control" value="" onChange={this.handle_descChange} rows="3"/>
                                         <br/>
-                                        <button className="btn btn-success openTimerConfirmModal col-sm-4" data-toggle="modal" data-target="#confirmTimerModal">
-                                            Log Time
-                                        </button>
-                                        <button className="btn btn-danger pull-right">
-                                            Delete
-                                        </button>
-                                    </form>
-                                </div>
+                                        <span className="pull-left">
+                                                <input name="billable" type="checkbox"/>&nbsp;Billable
+                                            </span>
+                                    </div>
+                                    <br/>
+                                    <button className="btn btn-success openTimerConfirmModal col-sm-4" data-toggle="modal" data-target="#confirmTimerModal">
+                                        Log Time
+                                    </button>
+                                    <button className="btn btn-danger pull-right">
+                                        Delete
+                                    </button>
+                                </form>
                             </div>
                         </div>
                     </div>
