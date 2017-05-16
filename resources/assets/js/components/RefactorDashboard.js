@@ -11,6 +11,7 @@ class RefactorDashboard extends Component {
             currentprofile: [],
             calendar: []
         }
+        this.timer = "";
         this.state.calendar = new Calendar();
         this.state.calendar.init();
         this.taskList = this.taskList.bind(this);
@@ -99,7 +100,9 @@ class RefactorDashboard extends Component {
                                 profile={this.state.currentprofile}/>
                         <Tasks
                             calendar={this.state.calendar}
-                            tasks={this.state.tasks}/>
+                            tasks={this.state.tasks}
+                            onTimerChange={this.manageTimer}/>
+                        <Timer current={this.timer}/>
                     </table>
                 </div>
             </div>
@@ -377,8 +380,60 @@ class Timer extends Component {
         super(props);
     }
     render() {
+        if(this.props.timer == "") {
+            return (<div></div>);
+        }
+        var current = this.props.timer;
         return (
-            <footer></footer>
+            <div className="logtimer" style={{visibility: 'hidden'}} value={current.id}>
+                <div className="panel-group" id="accordion">
+                    <div className="panel panel-default">
+                        <div className="panel-heading" style={{"height":"50px"}}>
+                            <h4 className="panel-title">
+                                <button onClick={this.handle_start} className="btn btn-default btn-sm">
+                                    <span className="glyphicon glyphicon glyphicon-play" aria-hidden="true"></span>
+                                </button>
+                                <button onClick={this.handle_pause} className="btn btn-default btn-sm">
+                                    <span className="glyphicon glyphicon glyphicon-pause" aria-hidden="true"></span>
+                                </button>
+                                <button onClick={this.handle_clear} className="btn btn-default btn-sm">
+                                    <span className="glyphicon glyphicon glyphicon-stop" aria-hidden="true"></span>
+                                </button>
+                                <button onClick={this.log_time} className="btn btn-default btn-sm">
+                                    <span className="glyphicon glyphicon glyphicon-time" aria-hidden="true"></span>
+                                </button>
+                                &nbsp;&nbsp;&nbsp;
+                                {this.get_hours()}:{this.get_minutes()}:{this.get_seconds()}
+                                <a className="accordion-toggle" data-toggle="collapse" data-parent="#accordion" href="#collapseOne">
+                                </a>
+                            </h4>
+                        </div>
+                        <div id="collapseOne" className="panel-collapse collapse in">
+                            <div className="panel-body" style={{width: 300 + 'px'}}>
+                                <div id="demo">
+                                    <p>Task: { current.content }</p>
+                                    <form onSubmit={this.handle_logTimeSubmit}>
+                                        <div className="form-group">
+                                            <textarea name="description" className="form-control" value="" onChange={this.handle_descChange} rows="3"/>
+                                            <br/>
+                                            <span className="pull-left">
+                                                    <input name="billable" type="checkbox"/>&nbsp;Billable
+                                                </span>
+                                        </div>
+                                        <br/>
+                                        <button className="btn btn-success openTimerConfirmModal col-sm-4" data-toggle="modal" data-target="#confirmTimerModal">
+                                            Log Time
+                                        </button>
+                                        <button className="btn btn-danger pull-right">
+                                            Delete
+                                        </button>
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
         );
     }
 
