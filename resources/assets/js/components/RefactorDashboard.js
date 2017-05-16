@@ -376,7 +376,18 @@ class Tasks extends Component {
     }
 }
 
-//class Timer extends Component {}
+class Timer extends Component {
+    constructor(props) {
+        super(props);
+    }
+    render() {
+        return (
+            <footer></footer>
+        );
+    }
+
+}
+
 class Profile extends Component {
 
     constructor(props) {
@@ -416,7 +427,6 @@ class Profile extends Component {
             </tr>
         );
     }
-
 }
 
 export default RefactorDashboard;
