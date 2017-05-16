@@ -281,7 +281,6 @@ class Dashboard extends Component {
                 }
             }
             return (
-
                 <tr key={task.id} className="collapse tasks">
                     <th scope="row">
                         <div>
@@ -378,35 +377,39 @@ class Dashboard extends Component {
     }
 
     renderNav() {
-        var calendar = this.calendar;
-        var startDate = calendar.start.toISOString().substr(0,10);
-        var endDate = calendar.end.toISOString().substr(0,10);
+
+            var calendar = this.calendar;
+            var startDate = calendar.start.toISOString().substr(0,10);
+            var endDate = calendar.end.toISOString().substr(0,10);
+
+
+        console.log(this.state.tasks['company-name']);
         return (
-            <div>
+            <div >
                 <div className="secondnav" id="mySecondnav">
                     <div className="form-group">
                         <div className="col-sm-2">
                             <select className="form-control" id="client">
                                 <option>All Clients</option>
-                                <option>client 1</option>
-                                <option>client 2</option>
+                                <option>{this.state.tasks['company-name']}</option>
+
+
                             </select>
                         </div>
                         <div className="col-sm-2">
                             <select className="form-control" id="project">
                                 <option>All Projects</option>
-                                <option>project 1</option>
-                                <option>project 2</option>
                             </select>
                         </div>
                         <div className="col-sm-2">
                             <select className="form-control" id="priority">
                                 <option>All Priorities</option>
-                                <option>Priorities 1</option>
-                                <option>Priorities 2</option>
+                                <option>High</option>
+                                <option>Medium</option>
+                                <option>Low</option>
                             </select>
                         </div>
-                        
+
                         <div id="navbar" className="navbar-collapse collapse">
                             <ul className="nav navbar-nav navbar-right ">
                                 <form>
@@ -431,6 +434,9 @@ class Dashboard extends Component {
             </div>
         );
     }
+
+
+
 
     filterDate(e) {
         var key = "twp_sSjnN8X8GtBBozG0OepWU03xa6mx";
