@@ -215,11 +215,6 @@ class Dashboard extends Component {
      * @returns {Array}
      */
     renderTasks() {
-        var timespan = [];
-        for(let i=0; i<this.calendar.range.length*5;i++) {
-            timespan.push(<td>span</td>);
-        }
-
         return this.state.tasks.map(task => {
             var key = "twp_WUI8GI94aBL8p97JiiyXue8epq9A";
             var base64 = new Buffer(key+":xxx").toString("base64");
@@ -497,6 +492,7 @@ class Dashboard extends Component {
         );
     }
 }
+
 
 export default Dashboard;
 
