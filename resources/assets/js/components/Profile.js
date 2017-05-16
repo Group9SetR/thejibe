@@ -10,23 +10,21 @@ class Profile extends Component {
         this.handleTabChange = this.handleTabChange.bind(this);
     }
     componentDidMount() {
-        this.setState({currenttab:'selection'});
+        this.setState({currenttab:'Schedule'});
     }
 
     handleTabChange(selection) {
-
+        this.setState({currenttab:selection});
     }
 
     render() {
         return (
-            <div id="wrapper">
-                <div class="row">
-                    <div class="col-md-3">
-                        <Sidebar onTabChange={this.handleTabChange}/>
-                    </div>
-                    <div class="col-md-9">
-                        <Content current={this.state.currenttab}/>
-                    </div>
+            <div className="row">
+                <div className="col-md-3">
+                    <Sidebar onTabChange={this.handleTabChange}/>
+                </div>
+                <div className="col-md-9">
+                    <Content current={this.state.currenttab}/>
                 </div>
             </div>
         );
@@ -40,11 +38,11 @@ class Content extends Component {
     render() {
         var current = this.props.current || 'Schedule';
         return(
-            <div class="panel panel-default content">
-                <div class="panel-heading">
+            <div className="panel panel-default content">
+                <div className="panel-heading">
                     {current}
                 </div>
-                <div class="panel-body"></div>
+                <div className="panel-body"></div>
             </div>
         );
     }
@@ -56,12 +54,12 @@ class Sidebar extends Component {
     }
     render() {
         return(
-            <ul class="list-group">
-                <li class="list-group-item">Schedule</li>
-                <li class="list-group-item">Preferences</li>
-                <li class="list-group-item disabled">Nothing here</li>
-                <li class="list-group-item disabled">Nothing here</li>
-                <li class="list-group-item disabled">Nothing here</li>
+            <ul className="list-group">
+                <li className="list-group-item">Schedule</li>
+                <li className="list-group-item">Preferences</li>
+                <li className="list-group-item disabled">Nothing here</li>
+                <li className="list-group-item disabled">Nothing here</li>
+                <li className="list-group-item disabled">Nothing here</li>
             </ul>
         );
     }
@@ -69,6 +67,6 @@ class Sidebar extends Component {
 
 export default Profile;
 
-if (document.getElementById('dashboard')) {
-    ReactDOM.render(<Profile />, document.getElementById('content'));
+if (document.getElementById('wrapper')) {
+    ReactDOM.render(<Profile />, document.getElementById('wrapper'));
 }
