@@ -19,3 +19,4 @@ Auth::routes();
 
 Route::get('/home', 'HomeController@index');
 Route::get('/dashboard', 'DashboardController@index');
+Route::get('/profile', 'PagesController@profile');
