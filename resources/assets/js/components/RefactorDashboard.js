@@ -372,8 +372,7 @@ class Tasks extends Component {
 
                                         <button type="button" onClick={this.startTimer}
                                                 data-task-id={task.id} data-task-desc={task.content}
-                                                className="btn btn-default btn-sm pull-right" >
-                                            <span className="glyphicon glyphicon glyphicon-time timer-btn" aria-hidden="true"></span>
+                                                className="btn btn-default btn-sm pull-right glyphicon glyphicon-time timer-btn">
                                         </button>
                                     </div>
                                 </div>
