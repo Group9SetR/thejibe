@@ -112,9 +112,10 @@ th:hover::after {
 }
 
 /* table */
-table {
+#task_table {
     padding: 0;
     margin-top: 10px;
+    border-collapse:collapse;
 }
 
 /* Tasks */
@@ -125,7 +126,7 @@ table {
     white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;
-
+    word-wrap:break-word;
 }
 .taskName:hover {
     text-overflow:inherit;
@@ -145,6 +146,8 @@ table {
 }
 
 .taskSpan {
+    padding-left:0px;
+    padding-right:0px;
     width:100%;
     padding: 0;
     margin-top: 30px;
@@ -155,6 +158,14 @@ table {
     background-color: #FF8C00;
     opacity: 0.6;
     border-radius: 2px;
+
+}
+
+.taskSpan > div{
+    height:40px;
+    background-color: lightblue;
+    width:100%;
+
 }
 
 
@@ -215,19 +226,20 @@ table {
     font-weight: bold;
 }
 
-#progressBar{
+.progressBar{
     width: 70%;
+    margin-bottom:0 !important;
 }
 
-#progressBardiv{
+.progressBardiv{
     margin-left: 5px;
 }
 
-#sliderBardiv{
+.sliderBardiv{
     margin-left: 5px;
 }
 /* sliderBar */
-#sliderBar{
+.sliderBar{
     width: 70%;
     padding:0px;
 }
@@ -238,8 +250,6 @@ table {
     left: 50%;
     top: 50%;
     z-index: 1;
-    width: 150px;
-    height: 150px;
     margin: -75px 0 0 -75px;
     border: 16px solid #f3f3f3;
     border-radius: 50%;
@@ -285,7 +295,7 @@ table {
 }
 
 
-#priorityBtn {
+.priorityBtn {
     width: 70px;
 }
 
@@ -295,6 +305,9 @@ table {
     background-color:#F0F8FF;
 }
 
+.nohighlight {
+    background-color:white;
+}
 
 .panel-heading .accordion-toggle:after {
     /* symbol for "opening" panels */

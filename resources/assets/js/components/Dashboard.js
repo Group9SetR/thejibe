@@ -19,6 +19,7 @@ class Dashboard extends Component {
         this.calendar.init();
 
         this.timer = null;
+        this.filterDate = this.filterDate.bind(this);
         this.startTime = this.startTime.bind(this);
         this.handle_start = this.handle_start.bind(this);
         this.handle_clear = this.handle_clear.bind(this);
@@ -199,7 +200,7 @@ class Dashboard extends Component {
                         </div>
                     </div>
                 </th>
-                <td colSpan={utilization} className="nohover">
+                <td colSpan={utilization} className="nohover nohighlight">
                     <div>
                         <div id="scheduledBar"><p id="scheduledText">65h/ 80h(81%) scheduled</p></div>
                         <div></div>
@@ -268,7 +269,9 @@ class Dashboard extends Component {
                         var rangedate = this.calendar.range[i][j];
                         var current = new Date(rangedate.year, rangedate.month, rangedate.day);
                         if(current >= startdate && current <= duedate) {
+
                             timespan.push(<td style={{ "padding":"0"}}><div className="taskSpan"></div></td>);
+
                         } else {
                             timespan.push(<td>NO</td>);
                         }
@@ -283,50 +286,55 @@ class Dashboard extends Component {
                     <th scope="row">
                         <div>
                             <div>
-                                <div className ="taskName">
-                                    { task.content }
-                                </div>
-                                {
-                                    (task.priority === "") ? <span></span>:
-                                        (task.priority === "medium") ?
-                                            <button type="button" id = "priorityBtn" className="btn btn-warning btn-sm" style={{ "float":"right"}}><bold>Medium</bold></button>:
-                                            (task.priority === "low") ?
-                                                <button type="button" id = "priorityBtn" className="btn btn-success btn-sm" style={{ "float":"right" }}><bold>Low</bold></button>:
-                                                <button type="button" id = "priorityBtn" className="btn btn-danger btn-sm" style={{ "float":"right"}}><bold>High</bold></button>
+                                <div className="row">
+                                    <div className="col-sm-9">
+                                        <div className ="taskName">
+                                            { task.content }
+                                            <div>
+                                                <p className ="projectName">{task['company-name']}</p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div className="col-sm-3">
+                                        {
+                                            (task.priority === "") ? <span></span>:
+                                                (task.priority === "medium") ?
+                                                    <button type="button" className="priorityBtn btn btn-warning btn-sm" style={{ "float":"right"}}><bold>Medium</bold></button>:
+                                                    (task.priority === "low") ?
+                                                        <button type="button" className= "priorityBtn btn btn-success btn-sm" style={{ "float":"right" }}><bold>Low</bold></button>:
+                                                        <button type="button" className= "priorityBtn btn btn-danger btn-sm" style={{ "float":"right"}}><bold>High</bold></button>
 
-                                }
-                            </div>
-                            <div>
-                                <p className ="projectName">ProjectName:{ task['project-name'] }</p>
-                                <p className ="companyName">{ task['company-name'] }</p>
-                            </div>
-
-
-                            <div className = "row" id = "sliderBardiv">
-                                <div className="progress" id ="progressBar" style={{ "float":"left"}}>
-                                    <div className="progress-bar  " role="progressbar"
-                                         aria-valuenow={completion} aria-valuemin="0" aria-valuemax="100" style={{ "width" : completion + "%"}}>
-                                        {completion}%
+                                        }
                                     </div>
                                 </div>
-                                <div className="col-sm-3" style={{ "float":"right"}}>
-                                    <p>{totalhours}/{estimated}</p>
+                                <div className = "row sliderBardiv">
+                                    <div className="col-sm-9">
+                                        <div className="sliderBar" style={{ "float":"left"}}>
+                                            <input type="range"  min="0" max="100" />
+                                        </div>
+
+                                    </div>
+                                    <div className="col-sm-3" style={{ "float":"right"}}>
+                                        <p>{totalhours}/{estimated}</p>
+                                    </div>
                                 </div>
+                                <div className ="row progressBardiv">
+                                    <div className="col-sm-9 progress progressBar" style={{ "float":"left"}}>
+                                        <div className="progress-bar  " role="progressbar"
+                                             aria-valuenow={completion} aria-valuemin="0" aria-valuemax="100" style={{ "width" : completion + "%"}}>
+                                            {completion}%
+                                        </div>
+                                    </div>
+                                    <div className ="col-sm-3" style={{ "float":"right"}}>
 
-                            </div>
+                                        <button onClick={this.startTime} type="button" className="btn btn-default btn-sm pull-right" >
+                                            <span className="glyphicon glyphicon glyphicon-time" aria-hidden="true"></span>
+                                        </button>
 
-                            <div className ="row" id = "progressBardiv">
-                                <div id = "sliderBar" style={{ "float":"left"}}>
-                                    <input type="range"  min="0" max="100" defaultValue={task.progress}/> {task.progress}%
-                                </div>
-                                <div className ="col-sm-3" style={{ "float":"right"}}>
-
-                                    <button onClick={this.startTime} type="button" className="btn btn-default btn-sm pull-right">
-                                        <span className="glyphicon glyphicon glyphicon-time" aria-hidden="true"></span>
-                                    </button>
-                                    <button onClick={this.startTime} type="button" className="btn btn-default btn-sm pull-right">
-                                        <span className="glyphicon glyphicon glyphicon-play" aria-hidden="true"></span>
-                                    </button>
+                                        <button onClick={this.startTime} type="button" className="btn btn-default btn-sm pull-right">
+                                            <span className="glyphicon glyphicon glyphicon-play" aria-hidden="true"></span>
+                                        </button>
+                                    </div>
                                 </div>
                             </div>
                         </div>
@@ -472,7 +480,7 @@ class Dashboard extends Component {
             <div>
                 { this.renderNav() }
                 <div className="container" id="wrapper">
-                    <table className="table table-bordered " id="task_table" style={{"border-collapse":"collapse"}}>
+                    <table className="table table-bordered " id="task_table">
                         <colgroup>
                             <col className="task_table_header"></col>
                             {columns}
