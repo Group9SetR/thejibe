@@ -342,7 +342,7 @@ class Dashboard extends Component {
                             <div className ="row" id = "progressBardiv">
                                 <div id = "sliderBar" style={{ "float":"left"}}>
                                     <input type="range"  min="0" step="10" max="100" id={task.id + "slider"} onChange={this.sliderChange.bind(this, task.id)} defaultValue={task.progress}/>
-                                    <span id={task.id + "display"}>{task.progress}</span>
+                                    <span id={task.id + "display"}>{task.progress}%</span>
                                 </div>
                                 <div className ="col-sm-3" style={{ "float":"right"}}>
 
