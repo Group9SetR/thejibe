@@ -355,12 +355,8 @@ class Tasks extends Component {
                                     </div>
                                     <div className ="col-sm-3" style={{ "float":"right"}}>
 
-                                        <button type="button" className="btn btn-default btn-sm pull-right" >
+                                        <button type="button" onclick={} data-task-id={task.id} className="btn btn-default btn-sm pull-right" >
                                             <span className="glyphicon glyphicon glyphicon-time" aria-hidden="true"></span>
-                                        </button>
-
-                                        <button type="button" className="btn btn-default btn-sm pull-right">
-                                            <span className="glyphicon glyphicon glyphicon-play" aria-hidden="true"></span>
                                         </button>
                                     </div>
                                 </div>
