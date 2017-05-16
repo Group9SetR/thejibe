@@ -91,7 +91,7 @@ thead th:not(:empty):focus::after {
 }
 
 td:not(.nohover):hover::after,
-th:hover::after {
+thead th:not(.nohover):hover::after {
     background-color: lightgray;
 }
 

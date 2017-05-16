@@ -16,16 +16,22 @@ class RefactorDashboard extends Component {
         this.taskList = this.taskList.bind(this);
         this.currentProfile  = this.currentProfile.bind(this);
         this.header = this.header.bind(this);
+        this.handleFilter = this.handleFilter.bind(this);
     }
 
     componentDidMount() {
-
         this.taskList();
         this.currentProfile();
     }
 
+    //https://thejibe.teamwork.com/tasks.json?startdate=20170515&enddate=20170519&responsible-party-ids=173890
     taskList() {
-        fetch('https://thejibe.teamwork.com/tasks.json', this.header())
+        //TODO Read id from current profile
+        var startdate = this.state.calendar.convertToTeamworkDate(this.state.calendar.start);
+        var enddate = this.state.calendar.convertToTeamworkDate(this.state.calendar.end);
+        var request = 'https://thejibe.teamwork.com/tasks.json'+'?startdate='+startdate
+            +'&enddate='+enddate+'&responsible-party-ids='+'173890';
+        fetch(request, this.header())
             .then(response => {
                 return response.json();
             })
@@ -34,6 +40,9 @@ class RefactorDashboard extends Component {
             });
     }
 
+    /**
+     * The current profile should actually be stored upon login.
+     */
     currentProfile() {
         fetch('https://thejibe.teamwork.com/me.json', this.header())
             .then(response => {
@@ -42,7 +51,6 @@ class RefactorDashboard extends Component {
             .then(currentprofile => {
                 this.setState({ currentprofile:currentprofile.person });
             });
-
     }
 
     header() {
@@ -59,54 +67,35 @@ class RefactorDashboard extends Component {
         return obj;
     }
 
-    handleDateFilter(type) {
-        var key = "twp_sSjnN8X8GtBBozG0OepWU03xa6mx";
-        var base64 = new Buffer(key+":xxx").toString("base64");
-        var obj = {
-            method:"GET",
-            dataType: 'json',
-            headers: {
-                'Authorization': 'BASIC '+base64,
-                'Content-Type': 'application/json'
-            }
-        };
-        fetch('https://thejibe.teamwork.com/tasks.json', obj)
-            .then(response => {
-                return response.json();
-            })
-            .then(tasks => {
-                this.setState({ tasks:tasks['todo-items'] });
-            });
-
-        var temp = new Calendar();
-        temp.init(type);
-        this.setState({calendar:temp});
+    handleFilter(filter) {
+        switch(filter.type) {
+            case "date":
+                var temp = new Calendar();
+                temp.init(filter.value);
+                this.setState({calendar:temp});
+                this.taskList();
+                break;
+            case "project":
+                break;
+            case "priority":
+                break;
+            case "company":
+                break;
+        }
     }
 
     render() {
-        var columns = [];
-        const calendar = this.state.calendar;
-        for(var i=0; i < calendar.range.length; i++) {
-            var range = calendar.range[i];
-            for(var j=0; j<range.length; j++) {
-                var col = (range[j].full == new Date().toDateString()) ?
-                    <col key={"col-"+i+"-"+j} className="currentDate success"></col>:<col key={"col-"+i+"-"+j}></col>;
-                columns.push(col);
-            }
-        }
         return (
             <div>
                 <FilterBar
                     calendar={this.state.calendar}
-                    onDateFilterChange={this.handleDateFilter}/>
+                    tasks={this.state.tasks}
+                    onFilterChange={this.handleFilter}/>
                 <div className="container" id="wrapper">
                     <table className="table table-bordered " id="task_table">
+                        <ColumnHeader calendar={this.state.calendar} />
 
-                        <colgroup>
-                            <col className="task_table_header"></col>
-                            {columns}
-                        </colgroup>
-                        <Header calendar={this.state.calendar}
+                        <TableHeader calendar={this.state.calendar}
                                 profile={this.state.currentprofile}/>
                         <Tasks
                             calendar={this.state.calendar}
@@ -118,7 +107,32 @@ class RefactorDashboard extends Component {
     }
 }
 
-class Header extends Component {
+class ColumnHeader extends Component {
+    constructor(props) {
+        super(props);
+    }
+    render() {
+        var columns = [];
+        const calendar = this.props.calendar;
+        for(var i=0; i < calendar.range.length; i++) {
+            var range = calendar.range[i];
+            for(var j=0; j<range.length; j++) {
+                var col = (range[j].full == new Date().toDateString()) ?
+                    <col key={"col-"+i+"-"+j} className="currentDate success"></col>:<col key={"col-"+i+"-"+j}></col>;
+                columns.push(col);
+            }
+        }
+        return (
+            <colgroup>
+                <col className="task_table_header"></col>
+                {columns}
+            </colgroup>
+        );
+    }
+}
+
+
+class TableHeader extends Component {
     constructor(props) {
         super(props);
     }
@@ -158,28 +172,12 @@ class Header extends Component {
 class FilterBar extends Component {
     constructor(props) {
         super(props);
+        this.handleDateFilterChange = this.handleDateFilterChange.bind(this);
     }
 
     handleDateFilterChange(e) {
-        var key = "twp_sSjnN8X8GtBBozG0OepWU03xa6mx";
-        var base64 = new Buffer(key+":xxx").toString("base64");
-        var obj = {
-            method:"GET",
-            dataType: 'json',
-            headers: {
-                'Authorization': 'BASIC '+base64,
-                'Content-Type': 'application/json'
-            }
-        };
-        this.props.onDateFilterChange(e.target.value);
-        //TODO change parameters of tasks called
-        fetch('https://thejibe.teamwork.com/tasks.json', obj)
-            .then(response => {
-                return response.json();
-            })
-            .then(tasks => {
-                this.setState({ tasks:tasks['todo-items'] });
-            });
+        console.log("filter bar changed date filter");
+        this.props.onFilterChange({"type":"date", "value":e.target.value});
     }
 
     handleProjectFilterChange(e) {
@@ -292,22 +290,12 @@ class Tasks extends Component {
                 xhr.setRequestHeader('Content-Type', 'application/json');
             }
 
-            function convertTeamworkDate(datestring) {
-                var year = datestring.substr(0,4);
-                var month = datestring.substr(4,2);
-                var day = datestring.substr(6,2);
-                var temp = new Date(year, month, 1);
-                temp.setMonth(temp.getMonth()-1);
-                temp.setDate(day);
-                return temp;
-            }
-
             var timespan = [];
             for(let i=0; i<calendar.range.length; i++) {
                 for(let j=0; j<5; j++) {
                     if(task['start-date'] !== "" && task['due-date'] !== "") {
-                        var startdate = convertTeamworkDate(task['start-date']);
-                        var duedate = convertTeamworkDate(task['due-date']);
+                        var startdate = calendar.convertFromTeamworkDate(task['start-date']);
+                        var duedate = calendar.convertFromTeamworkDate(task['due-date']);
 
                         var rangedate = calendar.range[i][j];
                         var current = new Date(rangedate.year, rangedate.month, rangedate.day);
@@ -403,7 +391,7 @@ class Profile extends Component {
         const utilization = this.props.calendar.range.length * 5;
         return (
             <tr key={profile.id} >
-                <th scope="row">
+                <th scope="row" className="nohover">
                     <div className="profile">
                         <div className = "col-sm-2">
                             <img id ="userpic"  alt = "Profile picture" src={ profile['avatar-url']} />
