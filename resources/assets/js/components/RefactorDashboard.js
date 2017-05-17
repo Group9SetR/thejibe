@@ -74,8 +74,7 @@ class RefactorDashboard extends Component {
             case "date":
                 var temp = new Calendar();
                 temp.init(filter.value);
-                this.setState({calendar:temp});
-                this.taskList();
+                this.setState({calendar:temp}, this.taskList);
                 break;
             case "project":
                 break;
@@ -184,7 +183,6 @@ class FilterBar extends Component {
     }
 
     handleDateFilterChange(e) {
-        console.log("filter bar changed date filter");
         this.props.onFilterChange({"type":"date", "value":e.target.value});
     }
 
@@ -274,7 +272,6 @@ class Tasks extends Component {
         if(Array.isArray(this.props.tasks) && !this.props.tasks.length) {
             return (<tbody><tr></tr></tbody>);
         }
-
         const calendar = this.props.calendar;
         const tasks = this.props.tasks;
         var elements = tasks.map(task => {
