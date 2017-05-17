@@ -265,7 +265,7 @@ class Tasks extends Component {
         const calendar = this.props.calendar;
         const tasks = this.props.tasks;
         var elements = tasks.map(task => {
-            var key = "twp_WUI8GI94aBL8p97JiiyXue8epq9A";
+            var key = auth_api_token;
             var base64 = new Buffer(key+":xxx").toString("base64");
             var completion = 0;
             var totalhours = 0;
