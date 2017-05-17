@@ -8,10 +8,10 @@
 @endsection
 @section('script')
     <script>
-        document.ready=startTimer();
+        document.ready=startLoader();
         var myVar;
 
-        function startTimer() {
+        function startLoader() {
             myVar = setTimeout(showPage, 3000);
         }
 
