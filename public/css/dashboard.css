@@ -276,6 +276,7 @@ thead th:not(.nohover):hover::after {
 
 .logtimer {
     visibility: visible;
+    height: auto;
     position: sticky;
     width: 300px;
     bottom: 0;
