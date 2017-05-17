@@ -257,6 +257,30 @@ class Tasks extends Component {
         super(props);
     }
 
+    sliderChange(id) {
+        var key = "twp_WUI8GI94aBL8p97JiiyXue8epq9A";
+        var base64 = new Buffer(key+":xxx").toString("base64");
+        var progress = $('#' + id + 'slider').val();
+        var progressjson = {"todo-item": { "progress": progress } };
+        $.ajax({
+            url: 'https://thejibe.teamwork.com/tasks/' + id + '.json',
+            type: 'PUT',
+            dataType: 'json',
+            data: JSON.stringify(progressjson),
+            success: function(data) {
+                console.log("prog changed")
+            },
+            error: function() { console.log('GET request to time totals failed'); },
+            beforeSend: setHeader
+        });
+        $('#' + id + 'display').text(progress + "%");
+
+        function setHeader(xhr) {
+            xhr.setRequestHeader('Authorization', 'BASIC ' + base64);
+            xhr.setRequestHeader('Content-Type', 'application/json');
+        }
+    }
+
     render() {
         if(Array.isArray(this.props.tasks) && !this.props.tasks.length) {
             return (<tbody><tr></tr></tbody>);
@@ -338,11 +362,9 @@ class Tasks extends Component {
                                     </div>
                                 </div>
                                 <div className = "row sliderBardiv">
-                                    <div className="col-sm-9">
-                                        <div className="sliderBar" style={{ "float":"left"}}>
-                                            <input type="range"  min="0" max="100" />
-                                        </div>
-
+                                    <div id = "sliderBar" style={{ "float":"left"}}>
+                                        <input type="range"  min="0" step="10" max="100" id={task.id + "slider"} onChange={this.sliderChange.bind(this, task.id)} defaultValue={task.progress}/>
+                                        <span id={task.id + "display"}>{task.progress}%</span>
                                     </div>
                                     <div className="col-sm-3" style={{ "float":"right"}}>
                                         <p>{totalhours}/{estimated}</p>
