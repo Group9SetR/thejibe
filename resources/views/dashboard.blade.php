@@ -13,7 +13,6 @@
         var auth_last_name = "{{$auth['last_name']}}";
         var auth_api_token = "{{$auth['api_token']}}";
         var auth_user_name = "{{$auth['user_name']}}";
-        document.ready=startTimer();
         document.ready=startLoader();
         var myVar;
 
