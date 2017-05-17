@@ -180,6 +180,34 @@ class Dashboard extends Component {
 
     }
 
+    generateKey(key) {
+        return new Buffer(key+":xxx").toString("base64");
+    }
+
+    sliderChange(id) {
+        var key = "twp_WUI8GI94aBL8p97JiiyXue8epq9A";
+        var base64 = new Buffer(key+":xxx").toString("base64");
+        var progress = $('#' + id + 'slider').val();
+        var progressjson = {"todo-item": { "progress": progress } };
+        $.ajax({
+            url: 'https://thejibe.teamwork.com/tasks/' + id + '.json',
+            type: 'PUT',
+            dataType: 'json',
+            data: JSON.stringify(progressjson),
+            success: function(data) {
+                console.log("prog changed")
+            },
+            error: function() { console.log('GET request to time totals failed'); },
+            beforeSend: setHeader
+        });
+        $('#' + id + 'display').text(progress + "%");
+
+        function setHeader(xhr) {
+            xhr.setRequestHeader('Authorization', 'BASIC ' + base64);
+            xhr.setRequestHeader('Content-Type', 'application/json');
+        }
+    }
+
     renderCurrentProfile() {
         var pic = this.state.currentprofile['avatar-url'];
         var utilization = this.calendar.range.length * 5;
@@ -215,11 +243,6 @@ class Dashboard extends Component {
      * @returns {Array}
      */
     renderTasks() {
-        var timespan = [];
-        for(let i=0; i<this.calendar.range.length*5;i++) {
-            timespan.push(<td>span</td>);
-        }
-
         return this.state.tasks.map(task => {
             var key = "twp_WUI8GI94aBL8p97JiiyXue8epq9A";
             var base64 = new Buffer(key+":xxx").toString("base64");
@@ -325,18 +348,23 @@ class Dashboard extends Component {
                                             {completion}%
                                         </div>
                                     </div>
-                                    <div className ="col-sm-3" style={{ "float":"right"}}>
+                                </div>
+                            <div className ="row" id = "progressBardiv">
+                                <div id = "sliderBar" style={{ "float":"left"}}>
+                                    <input type="range"  min="0" step="10" max="100" id={task.id + "slider"} onChange={this.sliderChange.bind(this, task.id)} defaultValue={task.progress}/>
+                                    <span id={task.id + "display"}>{task.progress}%</span>
+                                </div>
+                                <div className ="col-sm-3" style={{ "float":"right"}}>
 
-                                        <button onClick={this.startTime} type="button" className="btn btn-default btn-sm pull-right" >
-                                            <span className="glyphicon glyphicon glyphicon-time" aria-hidden="true"></span>
-                                        </button>
-
-                                        <button onClick={this.startTime} type="button" className="btn btn-default btn-sm pull-right">
-                                            <span className="glyphicon glyphicon glyphicon-play" aria-hidden="true"></span>
-                                        </button>
-                                    </div>
+                                    <button onClick={this.startTime} type="button" className="btn btn-default btn-sm pull-right">
+                                        <span className="glyphicon glyphicon glyphicon-time" aria-hidden="true"></span>
+                                    </button>
+                                    <button onClick={this.startTime} type="button" className="btn btn-default btn-sm pull-right">
+                                        <span className="glyphicon glyphicon glyphicon-play" aria-hidden="true"></span>
+                                    </button>
                                 </div>
                             </div>
+                        </div>
                         </div>
                     </th>
                     {timespan}
@@ -497,6 +525,7 @@ class Dashboard extends Component {
         );
     }
 }
+
 
 export default Dashboard;
 

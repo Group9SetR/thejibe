@@ -7,39 +7,28 @@
 
     <!-- CSRF Token -->
     <meta name="csrf-token" content="{{ csrf_token() }}">
-    <title>{{ config('app.name', 'Laravel') }}</title>
+    @yield('title')
 
     <!-- Styles -->
-    <link href="/css/app.css" rel="stylesheet">
-    <link href="/css/dashboard.css" rel="stylesheet">
-    <link href="/css/timer.css" rel="stylesheet">
+    <link href="{{asset('css/app.css')}}" rel="stylesheet">
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
     <link rel="stylesheet" href="https://cdnjs.com/libraries/bootstrap-slider">
     @yield('css')
+    <link rel="stylesheet" href="{{asset('css/application-level.css')}}">
     <!-- Scripts -->
     <script>
         window.Laravel = <?php echo json_encode([
             'csrfToken' => csrf_token(),
         ]); ?>
-
-        var myVar;
-
-        function myFunction() {
-            myVar = setTimeout(showPage, 3000);
-        }
-
-        function showPage() {
-            document.getElementById("loader").style.display = "none";
-            document.getElementById("myDiv").style.display = "block";
-        }
     </script>
+
+    @yield('script')
 </head>
-<body onload="myFunction()" style="margin:0;">
-<div id="loader"></div>
-<div style="display:none;" id="myDiv">
+<body>
+    <div id="loader"></div>
     <div id="app">
         <nav>
-            <div class="firstnav" id="myFirstnav">
+            <div class="top-nav-bar" id="top-nav-bar">
                 <div class="container-fluid">
                     <div class="navbar-header">
                         <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
@@ -56,7 +45,7 @@
                     <div class="collapse navbar-collapse" id="app-navbar-collapse">
                         <!-- Right Side Of Navbar -->
                         <ul class="nav navbar-nav navbar-right">
-                            <li><a href="#"><font color="white">My Account</font></a></li>
+                            <li><a href="{{url('/profile')}}"><font color="white">My Account</font></a></li>
                         </ul>
                     </div>
                 </div>
@@ -89,7 +78,6 @@
     <script src="/js/app.js"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
     @yield('javascript')
-    </div>
 </body>
 
 <script>
