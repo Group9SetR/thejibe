@@ -555,10 +555,7 @@ class Profile extends Component {
                     </div>
                 </th>
                 <td colSpan={utilization} className="nohover nohighlight">
-                    <div>
-                        <div id="scheduledBar"><p id="scheduledText">65h/ 80h(81%) scheduled</p></div>
-                        <div></div>
-                    </div>
+                    <div id="scheduledBar"><p id="scheduledText">65h/ 80h(81%) scheduled</p></div>
                 </td>
             </tr>
         );

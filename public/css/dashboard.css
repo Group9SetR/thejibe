@@ -184,19 +184,6 @@ thead th:not(.nohover):hover::after {
     border-radius: 3px;
 }
 
-/* scheduledBar */
-#scheduledBar {
-    background-color: #99b900;
-    height: 60px;
-    border-radius: 3px;
-}
-
-#scheduledText {
-    padding: 15px;
-    color: white;
-    font-weight: bold;
-}
-
 .progressBar{
     width: 70%;
     margin-bottom:0 !important;
