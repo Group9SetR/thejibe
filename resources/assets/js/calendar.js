@@ -102,6 +102,27 @@ export default function Calendar()
         } else if (type == this.Type_Enum.CUSTOM) {
             return this.Type_Enum.CUSTOM;
         }
+    };
+    this.convertFromTeamworkDate = function (datestring){
+        var year = datestring.substr(0,4);
+        var month = datestring.substr(4,2);
+        var day = datestring.substr(6,2);
+        var temp = new Date(year, month, 1);
+        temp.setMonth(temp.getMonth()-1);
+        temp.setDate(day);
+        return temp;
+    };
+    this.convertToTeamworkDate = function(dateobj) {
+        var year = dateobj.getFullYear().toString();
+        var month = (dateobj.getMonth()+1).toString();
+        if(month.length == 1) {
+            month = '0'+month;
+        }
+        var day = dateobj.getDate().toString();
+        if(day.length == 1) {
+            day = '0'+day;
+        }
+        return year+month+day;
 
     }
 }

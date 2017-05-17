@@ -1,0 +1,22 @@
+.top-nav-bar {
+    background-color: #404040;
+    overflow: hidden;
+    margin: 0;
+    padding:10px;
+    color: white;
+}
+
+.top-nav-bar ul a:hover {
+    background-color: black;
+}
+#top-nav-bar ul a:hover {
+    background-color: #404040;
+}
+
+#top-nav-bar ul a:link {
+    background-color: #404040;
+}
+
+#top-nav-bar ul a:visited {
+    background-color: #404040;
+}
