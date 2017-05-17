@@ -79,22 +79,7 @@ thead th:not(.nohover):hover::after {
     width: 3%;
 }
 
-/* user Profile */
-.profile {
-    margin: 10px;
-    width: 100%;
-    height: 50px;
-}
-#name{
-    margin-top: 10px;
-    font-size: larger;
-}
-#userpic{
-    margin:0;
-    width: 50px;
-    height:50px;
-    border-radius: 50%;
-}
+
 
 /* table */
 #task_table {
@@ -104,6 +89,11 @@ thead th:not(.nohover):hover::after {
 }
 
 /* Tasks */
+
+.tasks {
+    height:140px;
+}
+
 .taskName{
     font-family: Arial, Helvetica, sans-serif;
     font-size: medium;
@@ -130,18 +120,16 @@ thead th:not(.nohover):hover::after {
 
 }
 
-
-
 .taskSpan > div{
     padding-left:0px;
     padding-right:0px;
     width:100%;
     padding: 0;
-    margin-top: 40px;
-    margin-bottom: 40px;
+    margin-top: 20px;
+    margin-bottom: 20px;
     margin-right: 0px;
     margin-left: 0px;
-    height:90px;
+    height:100px;
     background-color: #FF6347;
     opacity: 0.6;
     border-radius: 2px;
@@ -152,23 +140,29 @@ thead th:not(.nohover):hover::after {
     height:100%;
 }
 
-
-/* profile */
-#profile {
+/* user Profile */
+.profile {
+    margin: 10px;
     width: 100%;
-    height: 10%;
+    height: 60px;
 }
-
-#propileName {
-    padding: 15px;
+#name{
+    margin-top: 10px;
     font-size: larger;
-    font-family: "Georgia";
+}
+#userpic{
+    margin:0;
+    width: 50px;
+    height:50px;
+    border-radius: 50%;
 }
 
 /* scheduledBar */
 #scheduledBar {
     background-color: #99b900;
-    height: 50px;
+    height: 70px;
+    margin-top:10px;
+    margin-bottom:10px;
     border-radius: 3px;
 }
 
@@ -178,12 +172,7 @@ thead th:not(.nohover):hover::after {
     font-weight: bold;
 }
 
-/* TaskedBar */
-#task {
-    margin: auto;
-    padding: auto;
-    width :100%;
-}
+/* TaskBar */
 #companyName{
     font-family: "Tahoma";
     color: lightgray;
@@ -195,14 +184,12 @@ thead th:not(.nohover):hover::after {
     border-radius: 3px;
 }
 
-
 /* scheduledBar */
 #scheduledBar {
     background-color: #99b900;
     height: 60px;
     border-radius: 3px;
 }
-
 
 #scheduledText {
     padding: 15px;
