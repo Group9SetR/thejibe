@@ -14,9 +14,10 @@
         var auth_api_token = "{{$auth['api_token']}}";
         var auth_user_name = "{{$auth['user_name']}}";
         document.ready=startTimer();
+        document.ready=startLoader();
         var myVar;
 
-        function startTimer() {
+        function startLoader() {
             myVar = setTimeout(showPage, 3000);
         }
 
