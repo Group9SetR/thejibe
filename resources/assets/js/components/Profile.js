@@ -5,12 +5,11 @@ class Profile extends Component {
     constructor(){
         super();
         this.state = {
-            currenttab:[]
+            currenttab:""
         };
         this.handleTabChange = this.handleTabChange.bind(this);
     }
     componentDidMount() {
-        this.setState({currenttab:'Schedule'});
     }
 
     handleTabChange(selection) {
@@ -40,7 +39,8 @@ class Content extends Component {
     handleAvailabilityForm() {}
     handleHolidaysForm() {}
     render() {
-        var current = this.props.current || 'Schedule';
+        var current = this.props.current || "Schedule";
+        console.log(current);
         return(
             <div className="panel panel-default content">
                 <div className="panel-heading">
@@ -55,16 +55,20 @@ class Content extends Component {
                         </div>
                         <div className="form-group">
                             <table className= "table table-striped table-bordered table-hover table-condensed">
-                                <tr className="info">
-                                    <th>Mon</th><th>Tues</th><th>Wed</th><th>Thurs</th><th>Fri</th>
-                                </tr>
-                                <tr>
-                                    <td><input type="checkbox" name="mon"/></td>
-                                    <td><input type="checkbox" name="tues"/></td>
-                                    <td><input type="checkbox" name="wed"/></td>
-                                    <td><input type="checkbox" name="thurs"/></td>
-                                    <td><input type="checkbox" name="fri"/></td>
-                                </tr>
+                                <thead>
+                                    <tr className="info">
+                                        <th>Mon</th><th>Tues</th><th>Wed</th><th>Thurs</th><th>Fri</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td><input type="checkbox" name="mon"/></td>
+                                        <td><input type="checkbox" name="tues"/></td>
+                                        <td><input type="checkbox" name="wed"/></td>
+                                        <td><input type="checkbox" name="thurs"/></td>
+                                        <td><input type="checkbox" name="fri"/></td>
+                                    </tr>
+                                </tbody>
                             </table>
                         </div>
                         <input className="btn btn-primary" type="submit" value="Save"/>
@@ -124,12 +128,18 @@ class Content extends Component {
 class Sidebar extends Component {
     constructor(props){
         super(props);
+        this.changeContent = this.changeContent.bind(this);
     }
+
+    changeContent(e) {
+        this.props.onTabChange(e.target.dataset.section);
+    }
+
     render() {
         return(
             <ul className="list-group">
-                <li className="list-group-item">Schedule</li>
-                <li className="list-group-item">Preferences</li>
+                <li className="list-group-item" data-section="Schedule" onClick={this.changeContent}>Schedule</li>
+                <li className="list-group-item" data-section="Preferences" onClick={this.changeContent}>Preferences</li>
                 <li className="list-group-item disabled">Nothing here</li>
                 <li className="list-group-item disabled">Nothing here</li>
                 <li className="list-group-item disabled">Nothing here</li>
