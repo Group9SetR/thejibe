@@ -130,16 +130,21 @@ thead th:not(.nohover):hover::after {
 
 }
 
-.taskSpan {
+
+
+.taskSpan > div{
     padding-left:0px;
     padding-right:0px;
     width:100%;
-}
-
-.taskSpan > div{
-    height:40px;
-    background-color: lightblue;
-    width:100%;
+    padding: 0;
+    margin-top: 40px;
+    margin-bottom: 40px;
+    margin-right: 0px;
+    margin-left: 0px;
+    height:90px;
+    background-color: #FF6347;
+    opacity: 0.6;
+    border-radius: 2px;
 }
 
 .timer-btn {
@@ -298,5 +303,12 @@ thead th:not(.nohover):hover::after {
 }
 .panel-heading .accordion-toggle.collapsed:after {
     content: "\e080";
+}
+
+.logtimer {
+    visibility: visible;
+    position: sticky;
+    width: 300px;
+    bottom: 0;
 }
 

@@ -223,12 +223,11 @@ class FilterBar extends Component {
                         <div className="col-sm-2">
                             <select className="form-control" id="priority" onChange={this.handlePriorityFilterChange}>
                                 <option>All Priorities</option>
-                                <option>Priorities 1</option>
-                                <option>Priorities 2</option>
+                                <option>High</option>
+                                <option>Medium</option>
+                                <option>Low</option>
                             </select>
                         </div>
-
-
 
                         <div id="navbar" className="navbar-collapse collapse">
                             <ul className="nav navbar-nav navbar-right ">
@@ -312,12 +311,12 @@ class Tasks extends Component {
                         var rangedate = calendar.range[i][j];
                         var current = new Date(rangedate.year, rangedate.month, rangedate.day);
                         if(current >= startdate && current <= duedate) {
-                            timespan.push(<td key={task.id+"-"+i+"-"+j} className="taskSpan"><div></div></td>);
+                            timespan.push(<td style={{ "padding":"0"}} key={task.id+"-"+i+"-"+j} className="taskSpan"><div></div></td>);
                         } else {
-                            timespan.push(<td key={task.id+"-"+i+"-"+j}>NO</td>);
+                            timespan.push(<td key={task.id+"-"+i+"-"+j}></td>);
                         }
                     } else {
-                        timespan.push(<td key={task.id+"-"+i+"-"+j}>NO</td>);
+                        timespan.push(<td key={task.id+"-"+i+"-"+j}></td>);
                     }
                 }
             }
@@ -476,10 +475,10 @@ class Timer extends Component {
         }
         var current = this.props.timer;
         return (
-            <div className="logtimer" style={{visibility: 'visible', position: 'fixed', width: 300 + 'px', height: 300 + 'px', bottom: 0}} value={current.id}>
+            <div className="logtimer" style={{visibility: 'visible', position: 'sticky', width: 300 + 'px', bottom: 0}} value={current.id}>
                 <div className="panel-group" id="accordion">
                     <div className="panel panel-default">
-                        <div className="panel-heading" style={{"height":"50px"}}>
+                        <div className="panel-heading">
                             <h4 className="panel-title">
                                 <button onClick={this.handle_start} className="btn btn-default btn-sm">
                                     <span className="glyphicon glyphicon glyphicon-play" aria-hidden="true"></span>
@@ -498,7 +497,7 @@ class Timer extends Component {
                                 <a className="accordion-toggle" data-toggle="collapse" data-parent="#accordion" href="#collapseOne"></a>
                             </h4>
                         </div>
-                        <div id="collapseOne" className="panel-body panel-collapse collapse in">
+                        <div id="collapseOne" className="panel-body panel-collapse collapse">
                             <div id="demo">
                                 <p>Task: { current.content }</p>
                                 <form onSubmit={this.handle_logTimeSubmit}>
