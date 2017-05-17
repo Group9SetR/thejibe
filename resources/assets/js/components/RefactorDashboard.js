@@ -2,8 +2,6 @@ import React, { Component } from 'react';
 import ReactDOM from 'react-dom';
 import Calendar from '../calendar.js';
 
-const api_token = auth_apitoken;
-console.log(api_token);
 
 class RefactorDashboard extends Component {
 
@@ -33,7 +31,7 @@ class RefactorDashboard extends Component {
         var startdate = this.state.calendar.convertToTeamworkDate(this.state.calendar.start);
         var enddate = this.state.calendar.convertToTeamworkDate(this.state.calendar.end);
         var request = 'https://thejibe.teamwork.com/tasks.json'+'?startdate='+startdate
-            +'&enddate='+enddate+'&responsible-party-ids='+'173890';
+            +'&enddate='+enddate+'&responsible-party-ids='+auth_id;
         fetch(request, this.header())
             .then(response => {
                 return response.json();
@@ -57,7 +55,8 @@ class RefactorDashboard extends Component {
     }
 
     header() {
-        var key = "twp_sSjnN8X8GtBBozG0OepWU03xa6mx";
+        var key = auth_api_token;
+        console.log(auth_api_token);
         var base64 = new Buffer(key+":xxx").toString("base64");
         var obj = {
             method:"GET",

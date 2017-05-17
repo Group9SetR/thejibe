@@ -4,18 +4,18 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\User;
+use Illuminate\Support\Facades\Auth;
 
 class DashboardController extends Controller
 {
     public function index()
     {
-        JavaScript::put([
-            'auth_id' => Auth::User()->id,
-            'auth_firstname' => Auth::User()->first_name,
-            'auth_lastname' => Auth::User()->last_name,
-            'auth_apitoken' => Auth::User()->api_token,
-            'auth_username' => Auth::User()->user_name,
-        ]);
-        return view('dashboard');
+            $auth = array (
+                'id'            => Auth::User()->id,
+                'first_name'    => Auth::User()->first_name,
+                'last_name'     => Auth::User()->last_name,
+                'api_token'     => Auth::User()->api_token,
+                'user_name'     => Auth::User()->username);
+        return view('dashboard', compact('auth'));
     }
 }
