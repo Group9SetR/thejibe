@@ -31,7 +31,7 @@ class AuthController extends Controller
         $user = User::getOrCreateFromTW($input['api_token']);
         if ($user) {
             \Auth::login($user);
-            return \Redirect::to('/home');
+            return \Redirect::to('/dashboard');
         } else {
             Session::flash("error", "Failed Login");
             return \Redirect::to('login');

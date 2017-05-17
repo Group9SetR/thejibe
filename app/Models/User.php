@@ -142,10 +142,10 @@ class User extends Model implements AuthenticatableContract, CanResetPasswordCon
             return false;
         }
         $user = self::create([
-            'id' => $teamWorkUser['person']['id'],
-            'api_token'         => $api_token,
+            'id'                => $teamWorkUser['person']['id'],
+            'api_token'         => str_replace("`","",$api_token),
             'company_id'        => $account->company_id,   
-            'account_id'        => $account->id,   
+            'account_id'        => $account->id,
             'first_name'        => $teamWorkUser['person']['first-name'],    
             'last_name'         => $teamWorkUser['person']['last-name'],   
             'username'          => $teamWorkUser['person']['user-name'],   

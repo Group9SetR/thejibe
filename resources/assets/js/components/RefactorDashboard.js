@@ -2,6 +2,9 @@ import React, { Component } from 'react';
 import ReactDOM from 'react-dom';
 import Calendar from '../calendar.js';
 
+const api_token = auth_apitoken;
+console.log(api_token);
+
 class RefactorDashboard extends Component {
 
     constructor() {
