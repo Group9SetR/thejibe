@@ -479,10 +479,10 @@ class Timer extends Component {
         }
         var current = this.props.timer;
         return (
-            <div className="logtimer" style={{visibility: 'visible', position: 'fixed', width: 300 + 'px', height: 300 + 'px', bottom: 0}} value={current.id}>
+            <div className="logtimer" style={{visibility: 'visible', position: 'sticky', width: 300 + 'px', bottom: 0}} value={current.id}>
                 <div className="panel-group" id="accordion">
                     <div className="panel panel-default">
-                        <div className="panel-heading" style={{"height":"50px"}}>
+                        <div className="panel-heading">
                             <h4 className="panel-title">
                                 <button onClick={this.handle_start} className="btn btn-default btn-sm">
                                     <span className="glyphicon glyphicon glyphicon-play" aria-hidden="true"></span>
@@ -501,7 +501,7 @@ class Timer extends Component {
                                 <a className="accordion-toggle" data-toggle="collapse" data-parent="#accordion" href="#collapseOne"></a>
                             </h4>
                         </div>
-                        <div id="collapseOne" className="panel-body panel-collapse collapse in">
+                        <div id="collapseOne" className="panel-body panel-collapse collapse">
                             <div id="demo">
                                 <p>Task: { current.content }</p>
                                 <form onSubmit={this.handle_logTimeSubmit}>

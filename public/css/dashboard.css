@@ -300,3 +300,10 @@ thead th:not(.nohover):hover::after {
     content: "\e080";
 }
 
+.logtimer {
+    visibility: visible;
+    position: sticky;
+    width: 300px;
+    bottom: 0;
+}
+
