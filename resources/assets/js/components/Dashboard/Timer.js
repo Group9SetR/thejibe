@@ -20,28 +20,55 @@ export default class Timer extends Component {
         this.handle_descChange = this.handle_descChange.bind(this);
         this.handle_logTimeSubmit = this.handle_logTimeSubmit.bind(this);
     }
-    log_time() {
+
+    log_time(id) {
+        this.handle_pause();
         var key = "twp_29i8q9BH4BGyLykU4jSMZVkj1OnI";
         var base64 = new Buffer(key + ":xxx").toString("base64");
         var date = new Date();
-        fetch('https://thejibe.teamwork.com/tasks/7576391/time_entries.json', {
-            method: 'POST',
-            headers: {
-                'Authorization': "BASIC " + base64,
-                'Content-Type': 'application/json',
+        var hours = this.get_hours();
+        var minutes = this.get_minutes();
+
+        if (minutes == 0) {
+            minutes = 1;
+        }
+
+        console.log('id passed ' + id);
+        console.log('person-id ' + auth_id);
+        console.log("hours:" + this.get_hours() + "  minutes:" + this.get_minutes() + "  seconds:" + this.get_seconds() + "  = logged time");
+        console.log('date  ' + date.getFullYear() + ("0" + (date.getMonth() + 1)).slice(-2) + ("0" + date.getDate()).slice(-2));
+        console.log('time  ' + date.getHours() + ":" + date.getMinutes());
+
+        var entry = {
+            "time-entry": {
+                "description": "Testing Dates",
+                "person-id": auth_id,
+                "date": date.getFullYear() + ("0" + (date.getMonth() + 1)).slice(-2) + ("0" + date.getDate()).slice(-2),
+                "time": date.getHours() + ":" + date.getMinutes(),
+                "hours": hours,
+                "minutes": minutes,
+                "isbillable": "1"
+            }
+        };
+        console.log(entry);
+
+        $.ajax({
+            url: 'https://thejibe.teamwork.com/tasks/' + id + '/time_entries.json',
+            type: 'POST',
+            dataType: 'json',
+            data: JSON.stringify(entry),
+            success: function(data) {
+                this.handle_clear();
+                console.log("time logged");
             },
-            body: JSON.stringify({
-                "time-entry": {
-                    "description": "Testing Dates",
-                    "person-id": "173892",
-                    "date": date.getFullYear() + ("0" + (date.getMonth() + 1)).slice(-2) + ("0" + date.getDate()).slice(-2),
-                    "time": date.getHours() + ":" + date.getMinutes(),
-                    "hours": "2",
-                    "minutes": "00",
-                    "isbillable": "1"
-                }
-            })
-        })
+            error: function() { console.log('GET request to time totals failed'); },
+            beforeSend: setHeader
+        });
+
+        function setHeader(xhr) {
+            xhr.setRequestHeader('Authorization', 'BASIC ' + base64);
+            xhr.setRequestHeader('Content-Type', 'application/json');
+        }
     }
 
     get_hours() {
@@ -109,7 +136,7 @@ export default class Timer extends Component {
                                 <button onClick={this.handle_clear} className="btn btn-default btn-sm">
                                     <span className="glyphicon glyphicon glyphicon-stop" aria-hidden="true"></span>
                                 </button>
-                                <button onClick={this.log_time} className="btn btn-default btn-sm">
+                                <button onClick={this.log_time.bind(this, current.id)} className="btn btn-default btn-sm">
                                     <span className="glyphicon glyphicon glyphicon-time" aria-hidden="true"></span>
                                 </button>
                                 &nbsp;
