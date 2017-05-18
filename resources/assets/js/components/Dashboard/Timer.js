@@ -1,12 +1,30 @@
 import React, { Component } from 'react';
+import Modal from 'react-modal';
 
+const customStyles = {
+    content : {
+        top                   : '50%',
+        left                  : '50%',
+        right                 : 'auto',
+        bottom                : 'auto',
+        marginRight           : '-50%',
+        transform             : 'translate(-50%, -50%)',
+        height                : '204px',
+        width                 : '430px',
+        padding               : '0px',
+        margin                : '0px'
+    }
+
+};
 export default class Timer extends Component {
+
 
     constructor(props) {
         super(props);
         this.state={
             current: [],
-            seconds: 0
+            seconds: 0,
+            modalIsOpen: false
         };
         this.timer = null;
         this.log_time = this.log_time.bind(this);
@@ -19,6 +37,9 @@ export default class Timer extends Component {
         this.handle_clear = this.handle_clear.bind(this);
         this.handle_descChange = this.handle_descChange.bind(this);
         this.handle_logTimeSubmit = this.handle_logTimeSubmit.bind(this);
+        this.openModal = this.openModal.bind(this);
+        this.afterOpenModal = this.afterOpenModal.bind(this);
+        this.closeModal = this.closeModal.bind(this);
     }
     log_time() {
         var key = "twp_29i8q9BH4BGyLykU4jSMZVkj1OnI";
@@ -84,6 +105,18 @@ export default class Timer extends Component {
     handle_logTimeSubmit() {
         // send to teamwork?
     }
+    openModal() {
+        this.setState({modalIsOpen: true});
+    }
+
+    afterOpenModal() {
+        // references are now sync'd and can be accessed.
+        this.subtitle.style.color = '#f00';
+    }
+
+    closeModal() {
+        this.setState({modalIsOpen: false});
+    }
 
     render() {
         if(Array.isArray(this.props.timer) && !this.props.timer.length) {
@@ -129,12 +162,40 @@ export default class Timer extends Component {
                                         </span>
                                     </div>
                                     <br/>
-                                    <button className="btn btn-success openTimerConfirmModal col-sm-4" data-toggle="modal" data-target="#confirmTimerModal">
+                                    <button className="btn btn-success openTimerConfirmModal col-sm-4" onClick={this.openModal}>
                                         Log Time
                                     </button>
                                     <button className="btn btn-danger pull-right">
                                         Delete
                                     </button>
+
+                                    <Modal
+                                        isOpen={this.state.modalIsOpen}
+                                        onAfterOpen={this.afterOpenModal}
+                                        onRequestClose={this.closeModal}
+                                        style={customStyles}
+                                        contentLabel="Example Modal"
+                                    >
+                                        <div className ="modalContainer">
+                                            <div className="modalHeader">
+                                                <h3 className="col-sm-7" style={{"float":"left"}}>Log This Time?</h3>
+                                                <button className="col-sm-1 btn btn-default" id ="closeBtn" style={{"float":"right"}}
+                                                        onClick={this.closeModal}><strong>X</strong></button>
+                                            </div>
+                                            <div id="modalSection">
+                                                <p id="modalcontent">Are you sure you want to stop this timer and log the time?</p>
+                                                <button className="col-sm-3 btn btn-default" id ="closeBtn" style={{"float":"left"}}
+                                                        onClick={this.closeModal}>Cancel</button>
+                                                <button className="col-sm-3 btn btn-success" id ="closeBtn" style={{"float":"right"}}
+                                                        >Ok</button>
+
+                                            </div>
+
+
+                                        </div>
+
+
+                                    </Modal>
                                 </form>
                             </div>
                         </div>
