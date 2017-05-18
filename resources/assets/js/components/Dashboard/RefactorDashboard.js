@@ -1,11 +1,26 @@
 import React, { Component } from 'react';
 import ReactDOM from 'react-dom';
+import Modal from 'react-modal';
 import Calendar from '../../calendar.js';
 import Tasks from './Tasks.js';
 import Timer from './Timer.js';
 import FilterBar from './FilterBar.js';
 import TableHeader from './TableHeader.js';
 import ColumnHeader from './ColumnHeader.js';
+
+const appElement = document.getElementById('dashboard');
+const customStyles = {
+    content : {
+        top                   : '50%',
+        left                  : '50%',
+        right                 : 'auto',
+        bottom                : 'auto',
+        marginRight           : '-50%',
+        transform             : 'translate(-50%, -50%)',
+        height                : '300px',
+        width                 : '300px'
+    }
+};
 
 class RefactorDashboard extends Component {
 
@@ -15,7 +30,8 @@ class RefactorDashboard extends Component {
             tasks: [],
             currentprofile: [],
             calendar: [],
-            currenttimer: []
+            currenttimer: [],
+            modalIsOpen: false
         }
         this.state.calendar = new Calendar();
         this.state.calendar.init();
@@ -24,6 +40,9 @@ class RefactorDashboard extends Component {
         this.header = this.header.bind(this);
         this.handleFilter = this.handleFilter.bind(this);
         this.handleTimer = this.handleTimer.bind(this);
+        this.openModal = this.openModal.bind(this);
+        this.afterOpenModal = this.afterOpenModal.bind(this);
+        this.closeModal = this.closeModal.bind(this);
     }
 
     componentDidMount() {
@@ -95,6 +114,19 @@ class RefactorDashboard extends Component {
         this.setState({currenttimer:task});
     }
 
+    openModal() {
+        this.setState({modalIsOpen: true});
+    }
+
+    afterOpenModal() {
+        // references are now sync'd and can be accessed.
+        this.subtitle.style.color = '#f00';
+    }
+
+    closeModal() {
+        this.setState({modalIsOpen: false});
+    }
+
     render() {
         return (
             <div>
@@ -113,6 +145,17 @@ class RefactorDashboard extends Component {
                             tasks={this.state.tasks}
                             onTimerChange={this.handleTimer}/>
                     </table>
+                    <button onClick={this.openModal}>Open Modal</button>
+                    <Modal
+                        isOpen={this.state.modalIsOpen}
+                        onAfterOpen={this.afterOpenModal}
+                        onRequestClose={this.closeModal}
+                        style={customStyles}
+                        contentLabel="Example Modal"
+                    >
+                        <h2>Log Time</h2>
+                        <button onClick={this.closeModal}>close</button>
+                    </Modal>
 
                     <Timer timer={this.state.currenttimer}/>
                 </div>
