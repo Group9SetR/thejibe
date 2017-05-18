@@ -142,21 +142,22 @@ export default class Timer extends Component {
     openModal() {
         this.setState({modalIsOpen: true});
     }
-    openModal2(){
+    openModal2() {
         this.setState({modalIsOpen2: true});
     }
 
     afterOpenModal() {
 
-
     }
     afterOpenModal2() {
-
 
     }
 
     closeModal() {
         this.setState({modalIsOpen: false});
+    }
+    closeModal2() {
+        this.setState({modalIsOpen2: false});
     }
 
     render() {
@@ -236,13 +237,13 @@ export default class Timer extends Component {
                                             <div className="modalHeader">
                                                 <h3 className="col-sm-7" style={{"float":"left"}}>Are you sure?</h3>
                                                 <button className="col-sm-1 btn btn-default" id ="closeBtn" style={{"float":"right"}}
-                                                        onClick={this.closeModal}><strong>X</strong></button>
+                                                        onClick={this.closeModal2}><strong>X</strong></button>
                                             </div>
                                             <div className="modalSection">
                                                 <p className="modalcontent">Are you sure you want to cancel this timer and time?</p>
                                                 <div className="modalFooter">
                                                     <button className="col-sm-3 btn btn-default" id ="closeBtn" style={{"float":"left"}}
-                                                            onClick={this.closeModal}>Cancel</button>
+                                                            onClick={this.closeModal2}>Cancel</button>
                                                     <button className="col-sm-3 btn btn-success" id ="closeBtn" style={{"float":"right"}}
                                                     >Ok</button>
                                                 </div>
