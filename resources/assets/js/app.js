@@ -7,7 +7,7 @@
 
 require('./bootstrap');
 
-//import Dashboard from './components/Dashboard';
-import RefactorDashboard from './components/RefactorDashboard';
 import MyProfile from './components/MyProfile/MyProfile';
+import RefactorDashboard from './components/Dashboard/RefactorDashboard';
+
 
