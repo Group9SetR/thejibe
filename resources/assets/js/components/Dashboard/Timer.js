@@ -13,8 +13,8 @@ const customStyles = {
         height                : '204px',
         width                 : '430px',
         padding               : '0px',
-        margin                : '0px'
-    }
+        margin                : '0px',
+}
 
 };
 export default class Timer extends Component {
@@ -24,7 +24,8 @@ export default class Timer extends Component {
         this.state={
             current: [],
             seconds: 0,
-            modalIsOpen: false
+            modalIsOpen: false,
+            modalIsOpen2: false
         };
         this.timer = null;
         this.log_time = this.log_time.bind(this);
@@ -142,7 +143,7 @@ export default class Timer extends Component {
         this.setState({modalIsOpen: true});
     }
     openModal2(){
-        this.setState({modalIsOpen: true});
+        this.setState({modalIsOpen2: true});
     }
 
     afterOpenModal() {
@@ -150,7 +151,7 @@ export default class Timer extends Component {
 
     }
     afterOpenModal2() {
-        
+
 
     }
 
@@ -225,7 +226,7 @@ export default class Timer extends Component {
                                     </Modal>
 
                                     <Modal2
-                                        isOpen={this.state.modalIsOpen}
+                                        isOpen={this.state.modalIsOpen2}
                                         onAfterOpen={this.afterOpenModal2}
                                         onRequestClose={this.closeModal}
                                         style={customStyles}
