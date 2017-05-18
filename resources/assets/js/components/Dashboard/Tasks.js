@@ -117,7 +117,7 @@ export default class Tasks extends Component {
                                     </div>
                                     <div style={{ "float":"right"}}>
                                         <button type="button" className="btn btn-default btn-sm" id = "collapseBtn"
-                                                data-toggle="collapse" data-target=".taskscol" >
+                                                data-toggle="collapse" data-target={'#taskscol-' + task.id} >
                                             <span className="glyphicon glyphicon-chevron-down"></span>
                                         </button>
                                     </div>
@@ -125,7 +125,7 @@ export default class Tasks extends Component {
                             </div>
 
 
-                            <div className = "taskscol collapse">
+                            <div className = "taskscol collapse" id={'taskscol-'+task.id}>
                                 <div className = "row sliderBardiv">
                                     <div id = "sliderBar" style={{ "float":"left"}} className="col-sm-9">
                                         <input type="range"  min="0" step="10" max="100" id={task.id + "slider"} onChange={this.sliderChange.bind(this, task.id)} defaultValue={task.progress}/>
