@@ -21,24 +21,13 @@ export default class Timer extends Component {
         this.handle_logTimeSubmit = this.handle_logTimeSubmit.bind(this);
     }
 
-    log_time(id) {
+    log_time(id, description) {
         this.handle_pause();
         var key = "twp_29i8q9BH4BGyLykU4jSMZVkj1OnI";
         var base64 = new Buffer(key + ":xxx").toString("base64");
         var date = new Date();
         var hours = this.get_hours();
         var minutes = this.get_minutes();
-
-        if (minutes == 0) {
-            minutes = 1;
-        }
-
-        console.log('id passed ' + id);
-        console.log('person-id ' + auth_id);
-        console.log("hours:" + this.get_hours() + "  minutes:" + this.get_minutes() + "  seconds:" + this.get_seconds() + "  = logged time");
-        console.log('date  ' + date.getFullYear() + ("0" + (date.getMonth() + 1)).slice(-2) + ("0" + date.getDate()).slice(-2));
-        console.log('time  ' + date.getHours() + ":" + date.getMinutes());
-
         var entry = {
             "time-entry": {
                 "description": "Testing Dates",
@@ -50,24 +39,38 @@ export default class Timer extends Component {
                 "isbillable": "1"
             }
         };
+
+        console.log('id passed ' + id);
+        console.log('person-id ' + auth_id);
+        console.log("hours:" + this.get_hours() + "  minutes:" + this.get_minutes() + "  seconds:" + this.get_seconds() + "  = logged time");
+        console.log('date  ' + date.getFullYear() + ("0" + (date.getMonth() + 1)).slice(-2) + ("0" + date.getDate()).slice(-2));
+        console.log('time  ' + date.getHours() + ":" + date.getMinutes());
         console.log(entry);
 
-        $.ajax({
-            url: 'https://thejibe.teamwork.com/tasks/' + id + '/time_entries.json',
-            type: 'POST',
-            dataType: 'json',
-            data: JSON.stringify(entry),
-            success: function(data) {
-                this.handle_clear();
-                console.log("time logged");
-            },
-            error: function() { console.log('GET request to time totals failed'); },
-            beforeSend: setHeader
-        });
+        if (minutes > 0) {
+            $.ajax({
+                url: 'https://thejibe.teamwork.com/tasks/' + id + '/time_entries.json',
+                type: 'POST',
+                dataType: 'json',
+                data: JSON.stringify(entry),
+                success: function(data) {
+                    // clear current timer
+                    clearInterval(this.timer);
+                    this.setState({
+                        seconds: 0
+                    });
+                    console.log("time logged");
+                },
+                error: function() { console.log('GET request to time totals failed'); },
+                beforeSend: setHeader
+            });
 
-        function setHeader(xhr) {
-            xhr.setRequestHeader('Authorization', 'BASIC ' + base64);
-            xhr.setRequestHeader('Content-Type', 'application/json');
+            function setHeader(xhr) {
+                xhr.setRequestHeader('Authorization', 'BASIC ' + base64);
+                xhr.setRequestHeader('Content-Type', 'application/json');
+            }
+        } else {
+            alert('Cannot log time for under a minute');
         }
     }
 
