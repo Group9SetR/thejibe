@@ -20,5 +20,8 @@
     "vue": "^2.0.1",
     "vue-resource": "^1.0.3",
     "webpack": "^2.5.1"
+  },
+  "dependencies": {
+    "react-modal": "^1.7.7"
   }
 }

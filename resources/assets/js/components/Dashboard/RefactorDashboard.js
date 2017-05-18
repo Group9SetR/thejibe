@@ -7,6 +7,9 @@ import FilterBar from './FilterBar.js';
 import TableHeader from './TableHeader.js';
 import ColumnHeader from './ColumnHeader.js';
 
+const appElement = document.getElementById('dashboard');
+
+
 class RefactorDashboard extends Component {
 
     constructor() {
@@ -16,6 +19,7 @@ class RefactorDashboard extends Component {
             currentprofile: [],
             calendar: [],
             currenttimer: []
+
         }
         this.state.calendar = new Calendar();
         this.state.calendar.init();
@@ -24,6 +28,7 @@ class RefactorDashboard extends Component {
         this.header = this.header.bind(this);
         this.handleFilter = this.handleFilter.bind(this);
         this.handleTimer = this.handleTimer.bind(this);
+
     }
 
     componentDidMount() {
@@ -95,6 +100,8 @@ class RefactorDashboard extends Component {
         this.setState({currenttimer:task});
     }
 
+
+
     render() {
         return (
             <div>
@@ -113,6 +120,7 @@ class RefactorDashboard extends Component {
                             tasks={this.state.tasks}
                             onTimerChange={this.handleTimer}/>
                     </table>
+
 
                     <Timer timer={this.state.currenttimer}/>
                 </div>
