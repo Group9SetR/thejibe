@@ -13,7 +13,7 @@ export default class Tasks extends Component {
     }
 
     sliderChange(id) {
-        var key = "twp_WUI8GI94aBL8p97JiiyXue8epq9A";
+        var key = auth_api_token;
         var base64 = new Buffer(key+":xxx").toString("base64");
         var progress = $('#' + id + 'slider').val();
         var progressjson = {"todo-item": { "progress": progress } };
@@ -34,6 +34,10 @@ export default class Tasks extends Component {
             xhr.setRequestHeader('Authorization', 'BASIC ' + base64);
             xhr.setRequestHeader('Content-Type', 'application/json');
         }
+    }
+
+    completeTask(id) {
+
     }
 
     render() {
