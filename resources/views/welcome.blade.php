@@ -79,12 +79,13 @@
 
             <div class="content">
                 <div class="title m-b-md">
-                    The Jibe - Teamwork Dashboard
+                    The Jibe - TW Dashboard
                 </div>
 
                 <div class="links">
                     @if (Auth::check())
                         <a href="{{ url('/dashboard') }}">Dashboard</a>
+                        <a hred=""{{ url('/logout') }}>Logout</a>
                     @else
                         <a href="{{ url('/login') }}">Login</a>
                     @endif

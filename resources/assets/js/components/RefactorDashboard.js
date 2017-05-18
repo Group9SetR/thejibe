@@ -56,6 +56,7 @@ class RefactorDashboard extends Component {
             });
     }
 
+    /* Applies headers for this component */
     header() {
         var key = auth_api_token;
         console.log(auth_api_token);
@@ -269,8 +270,9 @@ class Tasks extends Component {
         this.props.onTimerChange(timer);
     }
 
+    /* Handles changing of slider to reflect project progress, submit asynchronous request when slider is changed */
     sliderChange(id) {
-        var key = "twp_WUI8GI94aBL8p97JiiyXue8epq9A";
+        var key = auth_api_token;
         var base64 = new Buffer(key+":xxx").toString("base64");
         var progress = $('#' + id + 'slider').val();
         var progressjson = {"todo-item": { "progress": progress } };
@@ -322,6 +324,8 @@ class Tasks extends Component {
                 error: function() { console.log('GET request to time totals failed'); },
                 beforeSend: setHeader
             });
+
+            /* Sets headers for time-totals request */
             function setHeader(xhr) {
                 xhr.setRequestHeader('Authorization', 'BASIC ' + base64);
                 xhr.setRequestHeader('Content-Type', 'application/json');
@@ -428,7 +432,7 @@ class Timer extends Component {
         this.handle_logTimeSubmit = this.handle_logTimeSubmit.bind(this);
     }
     log_time() {
-        var key = "twp_29i8q9BH4BGyLykU4jSMZVkj1OnI";
+        var key = auth_api_token;
         var base64 = new Buffer(key + ":xxx").toString("base64");
         var date = new Date();
         fetch('https://thejibe.teamwork.com/tasks/7576391/time_entries.json', {
