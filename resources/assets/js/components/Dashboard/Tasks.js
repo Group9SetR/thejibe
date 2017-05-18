@@ -8,6 +8,8 @@ export default class Tasks extends Component {
     }
 
     startTimer(e) {
+        // set guards so user cannot start another timer without first finishing current one
+        $('.timer-btn').attr('disabled', true);
         var timer = {"id":e.target.dataset.taskId, "content":e.target.dataset.taskDesc};
         this.props.onTimerChange(timer);
     }
