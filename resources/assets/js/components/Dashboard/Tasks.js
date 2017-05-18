@@ -80,7 +80,6 @@ export default class Tasks extends Component {
                     if(task['start-date'] !== "" && task['due-date'] !== "") {
                         var startdate = calendar.convertFromTeamworkDate(task['start-date']);
                         var duedate = calendar.convertFromTeamworkDate(task['due-date']);
-                        var dailyhours = "";
                         var dailyhours = (Array.isArray(this.props.taskhours) && !this.props.taskhours.length)?""
                            :this.props.taskhours[task.id]['hoursperday'];
                         var rangedate = calendar.range[i][j];

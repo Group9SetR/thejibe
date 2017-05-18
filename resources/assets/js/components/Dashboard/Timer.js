@@ -21,9 +21,9 @@ export default class Timer extends Component {
         this.handle_logTimeSubmit = this.handle_logTimeSubmit.bind(this);
     }
 
-    componentWillUnmount() {
+    //componentWillUnmount() {
         //TODO write this to remove timer
-    }
+    //}
 
 
     log_time() {
