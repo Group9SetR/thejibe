@@ -44,8 +44,9 @@ class RefactorDashboard extends Component {
                 return response.json();
             })
             .then(tasks => {
-                this.setState({ tasks:tasks['todo-items'] }, this.calculateTaskHours);
+                this.setState({ tasks:tasks['todo-items'] });
             });
+        this.calculateTaskHours();
     }
 
     //Ignore tasks that do not have a start and enddate
@@ -65,6 +66,8 @@ class RefactorDashboard extends Component {
             var hoursperday = (task['estimated-minutes']/60)/counter;
             return {[task.id]:{"numberofdays":counter.toString(), "hoursperday":hoursperday}};
         });
+        console.log(hours);
+        console.log(this.state.tasks);
         this.setState({taskhours:hours});
     }
 
