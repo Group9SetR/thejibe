@@ -96,6 +96,10 @@ export default class Timer extends Component {
                     <div className="panel panel-default">
                         <div className="panel-heading">
                             <h4 className="panel-title">
+                                <div className="panelTitle">
+                                <p id="panelTask">{ current.content }</p>
+                                </div>
+                                <div className="timerDiv">
                                 <button onClick={this.handle_start} className="btn btn-default btn-sm">
                                     <span className="glyphicon glyphicon glyphicon-play" aria-hidden="true"></span>
                                 </button>
@@ -108,21 +112,22 @@ export default class Timer extends Component {
                                 <button onClick={this.log_time} className="btn btn-default btn-sm">
                                     <span className="glyphicon glyphicon glyphicon-time" aria-hidden="true"></span>
                                 </button>
-                                &nbsp;&nbsp;&nbsp;
+                                &nbsp;
                                 {this.get_hours()}:{this.get_minutes()}:{this.get_seconds()}
                                 <a className="accordion-toggle" data-toggle="collapse" data-parent="#accordion" href="#collapseOne"></a>
+                                </div>
                             </h4>
                         </div>
                         <div id="collapseOne" className="panel-body panel-collapse collapse">
                             <div id="demo">
-                                <p>Task: { current.content }</p>
+                                <p style={{"text-align":"left"}}>Task: { current.content }</p>
                                 <form onSubmit={this.handle_logTimeSubmit}>
                                     <div className="form-group">
-                                        <textarea name="description" className="form-control" value="" onChange={this.handle_descChange} rows="3"/>
+                                        <textarea name="description" className="form-control" value="" onChange={this.handle_descChange} rows="2"/>
                                         <br/>
                                         <span className="pull-left">
                                                 <input name="billable" type="checkbox"/>&nbsp;Billable
-                                            </span>
+                                        </span>
                                     </div>
                                     <br/>
                                     <button className="btn btn-success openTimerConfirmModal col-sm-4" data-toggle="modal" data-target="#confirmTimerModal">

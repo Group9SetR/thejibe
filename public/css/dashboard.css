@@ -117,8 +117,9 @@ thead th:not(.nohover):hover::after {
     width:100%;
     margin-right: 0px;
     margin-left: 0px;
-    margin-top:5px;
-    height:30px;
+    margin-top:10px;
+    margin-bottom: 10px;
+    height:50px;
     background-color: #FF6347;
     opacity: 0.6;
     border-radius: 2px;
@@ -189,6 +190,12 @@ thead th:not(.nohover):hover::after {
 .sliderBar{
     width: 70%;
     padding:0px;
+}
+/* timer */
+#panelTask{
+    color: #2a88bd;
+    font-size: small;
+
 }
 /* Loading page */
 
