@@ -24,6 +24,7 @@ export default class Profile extends Component {
                         </div>
                         <div className = "col-sm-1" id = "expandBtn">
                             <button type="button" className="btn btn-default btn-sm accordion-toggle"
+                                    id="expandTasksBtn"
                                     data-toggle="collapse" data-target=".tasks" >
                                 <span className="glyphicon glyphicon-chevron-down"></span>
                             </button>

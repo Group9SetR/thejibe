@@ -8,6 +8,7 @@ export default class FilterBar extends Component {
 
     handleDateFilterChange(e) {
         this.props.onFilterChange({"type":"date", "value":e.target.value});
+        document.getElementById('expandTasksBtn').click();
     }
 
     handleProjectFilterChange(e) {
