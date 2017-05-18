@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import Modal from 'react-modal';
+import Modal2 from 'react-modal';
 
 const customStyles = {
     content : {
@@ -17,7 +18,6 @@ const customStyles = {
 
 };
 export default class Timer extends Component {
-
 
     constructor(props) {
         super(props);
@@ -38,7 +38,9 @@ export default class Timer extends Component {
         this.handle_descChange = this.handle_descChange.bind(this);
         this.handle_logTimeSubmit = this.handle_logTimeSubmit.bind(this);
         this.openModal = this.openModal.bind(this);
+        this.openModal2 = this.openModal2.bind(this);
         this.afterOpenModal = this.afterOpenModal.bind(this);
+        this.afterOpenModal2 = this.afterOpenModal2.bind(this);
         this.closeModal = this.closeModal.bind(this);
     }
     log_time() {
@@ -105,13 +107,21 @@ export default class Timer extends Component {
     handle_logTimeSubmit() {
         // send to teamwork?
     }
+
     openModal() {
+        this.setState({modalIsOpen: true});
+    }
+    openModal2(){
         this.setState({modalIsOpen: true});
     }
 
     afterOpenModal() {
-        // references are now sync'd and can be accessed.
-        this.subtitle.style.color = '#f00';
+
+
+    }
+    afterOpenModal2() {
+        
+
     }
 
     closeModal() {
@@ -165,7 +175,7 @@ export default class Timer extends Component {
                                     <button className="btn btn-success openTimerConfirmModal col-sm-4" onClick={this.openModal}>
                                         Log Time
                                     </button>
-                                    <button className="btn btn-danger pull-right">
+                                    <button className="btn btn-danger pull-right" onClick={this.openModal2}>
                                         Delete
                                     </button>
 
@@ -174,7 +184,7 @@ export default class Timer extends Component {
                                         onAfterOpen={this.afterOpenModal}
                                         onRequestClose={this.closeModal}
                                         style={customStyles}
-                                        contentLabel="Example Modal"
+                                        contentLabel=" Modal"
                                     >
                                         <div className ="modalContainer">
                                             <div className="modalHeader">
@@ -182,20 +192,42 @@ export default class Timer extends Component {
                                                 <button className="col-sm-1 btn btn-default" id ="closeBtn" style={{"float":"right"}}
                                                         onClick={this.closeModal}><strong>X</strong></button>
                                             </div>
-                                            <div id="modalSection">
-                                                <p id="modalcontent">Are you sure you want to stop this timer and log the time?</p>
+                                            <div className="modalSection">
+                                                <p className="modalcontent">Are you sure you want to stop this timer and log the time?</p>
+                                                <div className="modalFooter">
                                                 <button className="col-sm-3 btn btn-default" id ="closeBtn" style={{"float":"left"}}
                                                         onClick={this.closeModal}>Cancel</button>
                                                 <button className="col-sm-3 btn btn-success" id ="closeBtn" style={{"float":"right"}}
                                                         >Ok</button>
-
+                                                </div>
                                             </div>
-
-
                                         </div>
-
-
                                     </Modal>
+
+                                    <Modal2
+                                        isOpen={this.state.modalIsOpen}
+                                        onAfterOpen={this.afterOpenModal2}
+                                        onRequestClose={this.closeModal}
+                                        style={customStyles}
+                                        contentLabel=" Modal2"
+                                    >
+                                        <div className ="modalContainer">
+                                            <div className="modalHeader">
+                                                <h3 className="col-sm-7" style={{"float":"left"}}>Are you sure?</h3>
+                                                <button className="col-sm-1 btn btn-default" id ="closeBtn" style={{"float":"right"}}
+                                                        onClick={this.closeModal}><strong>X</strong></button>
+                                            </div>
+                                            <div className="modalSection">
+                                                <p className="modalcontent">Are you sure you want to cancel this timer and time?</p>
+                                                <div className="modalFooter">
+                                                    <button className="col-sm-3 btn btn-default" id ="closeBtn" style={{"float":"left"}}
+                                                            onClick={this.closeModal}>Cancel</button>
+                                                    <button className="col-sm-3 btn btn-success" id ="closeBtn" style={{"float":"right"}}
+                                                    >Ok</button>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </Modal2>
                                 </form>
                             </div>
                         </div>
