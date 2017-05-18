@@ -6,12 +6,28 @@ export default class Profile extends Component {
         super(props);
     }
     //data-toggle="collapse" data-target=".tasks" className="accordion-toggle"
+
     render() {
         if(Array.isArray(this.props.profile)) {
             return (<tr></tr>);
         }
         const profile = this.props.profile;
         const utilization = this.props.calendar.range.length * 5;
+        var dailyhours = [];
+        for(let i=0; i<this.props.calendar.range.length; i++) {
+            for(let j=0; j<5; j++) {
+                var counter = 0;
+                var taskspanname = "taskSpan-"+i+"-"+j;
+                var dailyspans = document.getElementsByClassName(taskspanname);
+                if(dailyspans) {
+                    for(let k=0; k<dailyspans.length; k++) {
+                        console.log(dailyspans[k]);
+                        counter+=Number(dailyspans[k].dataset.taskhours, 10);
+                    }
+                }
+                dailyhours.push(counter);
+            }
+        }
         return (
             <tr key={profile.id} >
                 <th scope="row" className="nohover">

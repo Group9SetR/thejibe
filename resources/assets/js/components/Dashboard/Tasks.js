@@ -36,6 +36,7 @@ export default class Tasks extends Component {
         }
     }
 
+
     render() {
         if(Array.isArray(this.props.tasks) && !this.props.tasks.length) {
             return (<tbody><tr></tr></tbody>);
@@ -43,10 +44,7 @@ export default class Tasks extends Component {
         const calendar = this.props.calendar;
         const tasks = this.props.tasks;
 
-
         var elements = tasks.map(task => {
-
-            if(this.props.taskhours)console.log(this.props.taskhours);
             var key = auth_api_token;
             var base64 = new Buffer(key+":xxx").toString("base64");
             var completion = 0;
@@ -75,18 +73,20 @@ export default class Tasks extends Component {
             }
 
             var timespan = [];
+            var dailyhours = (Array.isArray(this.props.taskhours) && !this.props.taskhours.length)?0:this.props.taskhours[task.id];
+
             for(let i=0; i<calendar.range.length; i++) {
                 for(let j=0; j<5; j++) {
                     if(task['start-date'] !== "" && task['due-date'] !== "") {
                         var startdate = calendar.convertFromTeamworkDate(task['start-date']);
                         var duedate = calendar.convertFromTeamworkDate(task['due-date']);
-                        var dailyhours = (Array.isArray(this.props.taskhours) && !this.props.taskhours.length)?""
-                           :this.props.taskhours[task.id]['hoursperday'];
+
                         var rangedate = calendar.range[i][j];
                         var current = new Date(rangedate.year, rangedate.month, rangedate.day);
                         if(current >= startdate && current <= duedate) {
+                            var taskspanname = "taskSpan-"+i+"-"+j;
                             timespan.push(<td style={{ "padding":"0"}} key={task.id+"-"+i+"-"+j} className="taskSpan">
-                                <div>{dailyhours}</div></td>);
+                                <div className={taskspanname} data-taskhours={dailyhours}>{dailyhours}</div></td>);
                         } else {
                             timespan.push(<td key={task.id+"-"+i+"-"+j}></td>);
                         }
@@ -95,6 +95,7 @@ export default class Tasks extends Component {
                     }
                 }
             }
+            //return dailyhours
             return (
                 <tr key={task.id} className="tasks collapse">
                     <th scope="row">
@@ -152,6 +153,7 @@ export default class Tasks extends Component {
 
             );
         });
+
         return (<tbody>{elements}</tbody>);
     }
 }

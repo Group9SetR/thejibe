@@ -32,6 +32,7 @@ export default class TableHeader extends Component {
                 {dates}
             </tr>
             <Profile profile={this.props.profile}
+                     tasks={this.props.tasks}
                      calendar={this.props.calendar}/>
             </thead>
         );

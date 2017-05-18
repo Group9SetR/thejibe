@@ -16,11 +16,12 @@ class RefactorDashboard extends Component {
             currentprofile: [],
             calendar: [],
             currenttimer: [],
-            taskhours:[]
+            taskhours: []
         }
         this.state.calendar = new Calendar();
         this.state.calendar.init();
         this.taskList = this.taskList.bind(this);
+        this.taskHours = this.taskHours.bind(this);
         this.calculateTaskHours = this.calculateTaskHours.bind(this);
         this.currentProfile  = this.currentProfile.bind(this);
         this.header = this.header.bind(this);
@@ -44,32 +45,10 @@ class RefactorDashboard extends Component {
                 return response.json();
             })
             .then(tasks => {
-                this.setState({ tasks:tasks['todo-items'] });
+                this.setState({ tasks:tasks['todo-items']},this.taskHours);
             });
-        this.calculateTaskHours();
     }
 
-    //Ignore tasks that do not have a start and enddate
-    calculateTaskHours() {
-        var hours= this.state.tasks.map( task => {
-            //find date range
-            var counter = 1;
-            var startdate = this.state.calendar.convertFromTeamworkDate(task['start-date']);
-            var duedate = this.state.calendar.convertFromTeamworkDate(task['due-date']);
-            while(startdate.toDateString() != duedate.toDateString()) {
-                var dayofweek = startdate.getDay();
-                if(dayofweek != 0 && dayofweek != 6) {
-                    counter++;
-                }
-                startdate.setDate(startdate.getDate()+1);
-            }
-            var hoursperday = (task['estimated-minutes']/60)/counter;
-            return {[task.id]:{"numberofdays":counter.toString(), "hoursperday":hoursperday}};
-        });
-        console.log(hours);
-        console.log(this.state.tasks);
-        this.setState({taskhours:hours});
-    }
 
     /**
      * The current profile should actually be stored upon login.
@@ -82,6 +61,16 @@ class RefactorDashboard extends Component {
             .then(currentprofile => {
                 this.setState({ currentprofile:currentprofile.person });
             });
+    }
+
+    taskHours() {
+        var taskhours = [];
+        this.state.tasks.map(task=>{
+            taskhours[task.id] = this.calculateTaskHours(task)['hoursperday'];
+        });
+        this.setState({
+            taskhours:taskhours
+        });
     }
 
     header() {
@@ -119,6 +108,27 @@ class RefactorDashboard extends Component {
         this.setState({currenttimer:task});
     }
 
+    calculateTaskHours(task) {
+        var counter = 1;
+        var hoursperday =0;
+        if(task['start-date'] == "" || task['due-date'] == "") {
+            return {"hoursperday":hoursperday};
+        } else {
+            var startdate = this.state.calendar.convertFromTeamworkDate(task['start-date']);
+            var duedate = this.state.calendar.convertFromTeamworkDate(task['due-date']);
+            while (startdate.toDateString() != duedate.toDateString()) {
+                var dayofweek = startdate.getDay();
+                if (dayofweek != 0 && dayofweek != 6) {
+                    counter++;
+                }
+                startdate.setDate(startdate.getDate() + 1);
+            }
+            hoursperday = (task['estimated-minutes'] / 60) / counter;
+
+            return {"hoursperday": hoursperday};
+        }
+    }
+
     render() {
         return (
             <div>
@@ -131,8 +141,9 @@ class RefactorDashboard extends Component {
                         <ColumnHeader calendar={this.state.calendar} />
 
                         <TableHeader calendar={this.state.calendar}
-                                profile={this.state.currentprofile}
-                                />
+                            profile={this.state.currentprofile}
+                            tasks={this.state.tasks}
+                            />
                         <Tasks
                             calendar={this.state.calendar}
                             tasks={this.state.tasks}
