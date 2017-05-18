@@ -1,36 +1,6 @@
 import React, { Component } from 'react';
-import ReactDOM from 'react-dom';
 
-class Profile extends Component {
-    constructor(){
-        super();
-        this.state = {
-            currenttab:""
-        };
-        this.handleTabChange = this.handleTabChange.bind(this);
-    }
-    componentDidMount() {
-    }
-
-    handleTabChange(selection) {
-        this.setState({currenttab:selection});
-    }
-
-    render() {
-        return (
-            <div className="row">
-                <div className="col-md-3">
-                    <Sidebar onTabChange={this.handleTabChange}/>
-                </div>
-                <div className="col-md-9">
-                    <Content current={this.state.currenttab}/>
-                </div>
-            </div>
-        );
-    }
-}
-
-class Content extends Component {
+export default class Content extends Component {
     constructor(props){
         super(props);
         this.handleAvailabilityForm = this.handleAvailabilityForm.bind(this);
@@ -56,18 +26,18 @@ class Content extends Component {
                         <div className="form-group">
                             <table className= "table table-striped table-bordered table-hover table-condensed">
                                 <thead>
-                                    <tr className="info">
-                                        <th>Mon</th><th>Tues</th><th>Wed</th><th>Thurs</th><th>Fri</th>
-                                    </tr>
+                                <tr className="info">
+                                    <th>Mon</th><th>Tues</th><th>Wed</th><th>Thurs</th><th>Fri</th>
+                                </tr>
                                 </thead>
                                 <tbody>
-                                    <tr>
-                                        <td><input type="checkbox" name="mon"/></td>
-                                        <td><input type="checkbox" name="tues"/></td>
-                                        <td><input type="checkbox" name="wed"/></td>
-                                        <td><input type="checkbox" name="thurs"/></td>
-                                        <td><input type="checkbox" name="fri"/></td>
-                                    </tr>
+                                <tr>
+                                    <td><input type="checkbox" name="mon"/></td>
+                                    <td><input type="checkbox" name="tues"/></td>
+                                    <td><input type="checkbox" name="wed"/></td>
+                                    <td><input type="checkbox" name="thurs"/></td>
+                                    <td><input type="checkbox" name="fri"/></td>
+                                </tr>
                                 </tbody>
                             </table>
                         </div>
@@ -123,33 +93,4 @@ class Content extends Component {
             </div>
         );
     }
-}
-
-class Sidebar extends Component {
-    constructor(props){
-        super(props);
-        this.changeContent = this.changeContent.bind(this);
-    }
-
-    changeContent(e) {
-        this.props.onTabChange(e.target.dataset.section);
-    }
-
-    render() {
-        return(
-            <ul className="list-group">
-                <li className="list-group-item" data-section="Schedule" onClick={this.changeContent}>Schedule</li>
-                <li className="list-group-item" data-section="Preferences" onClick={this.changeContent}>Preferences</li>
-                <li className="list-group-item disabled">Nothing here</li>
-                <li className="list-group-item disabled">Nothing here</li>
-                <li className="list-group-item disabled">Nothing here</li>
-            </ul>
-        );
-    }
-}
-
-export default Profile;
-
-if (document.getElementById('wrapper')) {
-    ReactDOM.render(<Profile />, document.getElementById('wrapper'));
 }
