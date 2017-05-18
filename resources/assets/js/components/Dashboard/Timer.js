@@ -43,10 +43,10 @@ export default class Timer extends Component {
         this.afterOpenModal = this.afterOpenModal.bind(this);
         this.afterOpenModal2 = this.afterOpenModal2.bind(this);
         this.closeModal = this.closeModal.bind(this);
+        this.closeModal2 = this.closeModal2.bind(this);
     }
 
     log_time(id, description) {
-        this.handle_pause();
         var key = "twp_29i8q9BH4BGyLykU4jSMZVkj1OnI";
         var base64 = new Buffer(key + ":xxx").toString("base64");
         var date = new Date();
@@ -78,11 +78,7 @@ export default class Timer extends Component {
                 dataType: 'json',
                 data: JSON.stringify(entry),
                 success: function(data) {
-                    // clear current timer
-                    clearInterval(this.timer);
-                    this.setState({
-                        seconds: 0
-                    });
+                    // TODO: need to clear current timer
                     console.log("time logged");
                 },
                 error: function() { console.log('GET request to time totals failed'); },
@@ -140,6 +136,7 @@ export default class Timer extends Component {
     }
 
     openModal() {
+        this.handle_pause();
         this.setState({modalIsOpen: true});
     }
     openModal2() {
