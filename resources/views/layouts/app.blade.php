@@ -46,6 +46,7 @@
                         <!-- Right Side Of Navbar -->
                         <ul class="nav navbar-nav navbar-right">
                             <li><a href="{{url('/profile')}}"><font color="white">My Account</font></a></li>
+                            <li><a href="{{url('/logout')}}"><font color="white">Logout</font></a></li>
                         </ul>
                     </div>
                 </div>
