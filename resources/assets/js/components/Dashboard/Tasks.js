@@ -116,13 +116,14 @@ export default class Tasks extends Component {
                                         }
                                     </div>
                                     <div style={{ "float":"right"}}>
-                                        <button type="button" className="btn btn-default btn-sm "
+                                        <button type="button" className="btn btn-default btn-sm" id = "collapseBtn"
                                                 data-toggle="collapse" data-target=".taskscol" >
                                             <span className="glyphicon glyphicon-chevron-down"></span>
                                         </button>
                                     </div>
                                 </div>
                             </div>
+
 
                             <div className = "taskscol collapse">
                                 <div className = "row sliderBardiv">

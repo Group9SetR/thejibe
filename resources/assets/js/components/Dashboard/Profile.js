@@ -23,11 +23,7 @@ export default class Profile extends Component {
                             <p>{ profile['first-name'] } {profile['last-name']}</p>
                         </div>
                         <div className = "col-sm-1" id = "expandBtn">
-                            <button type="button" className="btn btn-default btn-sm accordion-toggle"
-                                    id="expandTasksBtn"
-                                    data-toggle="collapse" data-target=".tasks" >
-                                <span className="glyphicon glyphicon-chevron-down"></span>
-                            </button>
+                            <a className="accordion-toggle" data-toggle="collapse" data-parent="#accordion" href=".tasks"></a>
                         </div>
                     </div>
                 </th>

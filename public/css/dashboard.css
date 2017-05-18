@@ -161,6 +161,19 @@ thead th:not(.nohover):hover::after {
     color: white;
     font-weight: bold;
 }
+#expandBtn{
+    padding-top: 10px;
+}
+#expandBtn .accordion-toggle:after {
+    /* symbol for "opening" panels */
+    font-family: 'Glyphicons Halflings';
+    content: "\e114";
+    float: right;
+    color: grey;
+}
+#expandBtn.accordion-toggle.collapsed:after {
+    content: "\e113";
+}
 
 /* TaskBar */
 #companyName{
@@ -186,6 +199,10 @@ thead th:not(.nohover):hover::after {
 .sliderBardiv{
     margin-left: 5px;
 }
+
+
+
+
 /* sliderBar */
 .sliderBar{
     width: 70%;
@@ -265,16 +282,20 @@ thead th:not(.nohover):hover::after {
     background-color:white;
 }
 
+/* logtimer */
 .panel-heading .accordion-toggle:after {
     /* symbol for "opening" panels */
     font-family: 'Glyphicons Halflings';
-    content: "\e114";
+    content: "\e113";
     float: right;
     color: grey;
 }
+
 .panel-heading .accordion-toggle.collapsed:after {
-    content: "\e080";
+    content: "\e114";
+
 }
+
 
 .logtimer {
     visibility: visible;

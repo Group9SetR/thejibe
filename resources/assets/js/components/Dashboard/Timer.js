@@ -97,7 +97,7 @@ export default class Timer extends Component {
                         <div className="panel-heading">
                             <h4 className="panel-title">
                                 <div className="panelTitle">
-                                <p id="panelTask">{ current.content }</p>
+                                <p id="panelTask">Task : { current.content }</p>
                                 </div>
                                 <div className="timerDiv">
                                 <button onClick={this.handle_start} className="btn btn-default btn-sm">
@@ -119,11 +119,10 @@ export default class Timer extends Component {
                             </h4>
                         </div>
                         <div id="collapseOne" className="panel-body panel-collapse collapse">
-                            <div id="demo">
-                                <p style={{"text-align":"left"}}>Task: { current.content }</p>
+                            <div >
                                 <form onSubmit={this.handle_logTimeSubmit}>
                                     <div className="form-group">
-                                        <textarea name="description" className="form-control" value="" onChange={this.handle_descChange} rows="2"/>
+                                        <textarea name="description" placeholder="Optional Description"className="form-control" value="" onChange={this.handle_descChange} rows="2"/>
                                         <br/>
                                         <span className="pull-left">
                                                 <input name="billable" type="checkbox"/>&nbsp;Billable
