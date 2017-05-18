@@ -42,7 +42,11 @@ export default class Tasks extends Component {
         }
         const calendar = this.props.calendar;
         const tasks = this.props.tasks;
+
+
         var elements = tasks.map(task => {
+
+            if(this.props.taskhours)console.log(this.props.taskhours);
             var key = auth_api_token;
             var base64 = new Buffer(key+":xxx").toString("base64");
             var completion = 0;
@@ -76,11 +80,14 @@ export default class Tasks extends Component {
                     if(task['start-date'] !== "" && task['due-date'] !== "") {
                         var startdate = calendar.convertFromTeamworkDate(task['start-date']);
                         var duedate = calendar.convertFromTeamworkDate(task['due-date']);
-
+                        var dailyhours = "";
+                        var dailyhours = (Array.isArray(this.props.taskhours) && !this.props.taskhours.length)?""
+                           :this.props.taskhours[task.id]['hoursperday'];
                         var rangedate = calendar.range[i][j];
                         var current = new Date(rangedate.year, rangedate.month, rangedate.day);
                         if(current >= startdate && current <= duedate) {
-                            timespan.push(<td style={{ "padding":"0"}} key={task.id+"-"+i+"-"+j} className="taskSpan"><div></div></td>);
+                            timespan.push(<td style={{ "padding":"0"}} key={task.id+"-"+i+"-"+j} className="taskSpan">
+                                <div>{dailyhours}</div></td>);
                         } else {
                             timespan.push(<td key={task.id+"-"+i+"-"+j}></td>);
                         }

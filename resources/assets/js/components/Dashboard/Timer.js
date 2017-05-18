@@ -20,6 +20,12 @@ export default class Timer extends Component {
         this.handle_descChange = this.handle_descChange.bind(this);
         this.handle_logTimeSubmit = this.handle_logTimeSubmit.bind(this);
     }
+
+    componentWillUnmount() {
+        //TODO write this to remove timer
+    }
+
+
     log_time() {
         var key = "twp_29i8q9BH4BGyLykU4jSMZVkj1OnI";
         var base64 = new Buffer(key + ":xxx").toString("base64");

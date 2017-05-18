@@ -15,11 +15,13 @@ class RefactorDashboard extends Component {
             tasks: [],
             currentprofile: [],
             calendar: [],
-            currenttimer: []
+            currenttimer: [],
+            taskhours:[]
         }
         this.state.calendar = new Calendar();
         this.state.calendar.init();
         this.taskList = this.taskList.bind(this);
+        this.calculateTaskHours = this.calculateTaskHours.bind(this);
         this.currentProfile  = this.currentProfile.bind(this);
         this.header = this.header.bind(this);
         this.handleFilter = this.handleFilter.bind(this);
@@ -31,7 +33,6 @@ class RefactorDashboard extends Component {
         this.currentProfile();
     }
 
-    //https://thejibe.teamwork.com/tasks.json?startdate=20170515&enddate=20170519&responsible-party-ids=173890
     taskList() {
         //TODO Read id from current profile
         var startdate = this.state.calendar.convertToTeamworkDate(this.state.calendar.start);
@@ -43,8 +44,28 @@ class RefactorDashboard extends Component {
                 return response.json();
             })
             .then(tasks => {
-                this.setState({ tasks:tasks['todo-items'] });
+                this.setState({ tasks:tasks['todo-items'] }, this.calculateTaskHours);
             });
+    }
+
+    //Ignore tasks that do not have a start and enddate
+    calculateTaskHours() {
+        var hours= this.state.tasks.map( task => {
+            //find date range
+            var counter = 1;
+            var startdate = this.state.calendar.convertFromTeamworkDate(task['start-date']);
+            var duedate = this.state.calendar.convertFromTeamworkDate(task['due-date']);
+            while(startdate.toDateString() != duedate.toDateString()) {
+                var dayofweek = startdate.getDay();
+                if(dayofweek != 0 && dayofweek != 6) {
+                    counter++;
+                }
+                startdate.setDate(startdate.getDate()+1);
+            }
+            var hoursperday = (task['estimated-minutes']/60)/counter;
+            return {[task.id]:{"numberofdays":counter.toString(), "hoursperday":hoursperday}};
+        });
+        this.setState({taskhours:hours});
     }
 
     /**
@@ -107,10 +128,12 @@ class RefactorDashboard extends Component {
                         <ColumnHeader calendar={this.state.calendar} />
 
                         <TableHeader calendar={this.state.calendar}
-                                profile={this.state.currentprofile}/>
+                                profile={this.state.currentprofile}
+                                />
                         <Tasks
                             calendar={this.state.calendar}
                             tasks={this.state.tasks}
+                            taskhours={this.state.taskhours}
                             onTimerChange={this.handleTimer}/>
                     </table>
 
