@@ -192,13 +192,6 @@ export default class Timer extends Component {
                                         </span>
                                     </div>
                                     <br/>
-                                    <button className="btn btn-success openTimerConfirmModal col-sm-4" onClick={this.openModal}>
-                                        Log Time
-                                    </button>
-                                    <button className="btn btn-danger pull-right">
-                                        Delete
-                                    </button>
-
                                     <Modal
                                         isOpen={this.state.modalIsOpen}
                                         onAfterOpen={this.afterOpenModal}
@@ -216,17 +209,18 @@ export default class Timer extends Component {
                                                 <p id="modalcontent">Are you sure you want to stop this timer and log the time?</p>
                                                 <button className="col-sm-3 btn btn-default" id ="closeBtn" style={{"float":"left"}}
                                                         onClick={this.closeModal}>Cancel</button>
-                                                <button className="col-sm-3 btn btn-success" id ="closeBtn" style={{"float":"right"}}
+                                                <button onClick={this.log_time.bind(this, current.id)} className="col-sm-3 btn btn-success" id ="closeBtn" style={{"float":"right"}}
                                                         >Ok</button>
-
                                             </div>
-
-
                                         </div>
-
-
                                     </Modal>
                                 </form>
+                                <button className="btn btn-success openTimerConfirmModal col-sm-4" onClick={this.openModal}>
+                                    Log Time
+                                </button>
+                                <button className="btn btn-danger pull-right">
+                                    Delete
+                                </button>
                             </div>
                         </div>
                     </div>
