@@ -172,9 +172,6 @@ export default class Timer extends Component {
                                 <button onClick={this.handle_clear} className="btn btn-default btn-sm">
                                     <span className="glyphicon glyphicon glyphicon-stop" aria-hidden="true"></span>
                                 </button>
-                                <button onClick={this.log_time.bind(this, current.id)} className="btn btn-default btn-sm">
-                                    <span className="glyphicon glyphicon glyphicon-time" aria-hidden="true"></span>
-                                </button>
                                 &nbsp;
                                 {this.get_hours()}:{this.get_minutes()}:{this.get_seconds()}
                                 <a className="accordion-toggle" data-toggle="collapse" data-parent="#accordion" href="#collapseOne"></a>
