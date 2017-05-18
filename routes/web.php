@@ -27,6 +27,9 @@ Route::get('/profile', 'PagesController@profile');
 Route::get('login', 'AuthController@getLogin');
 Route::post('/login', 'AuthController@postLogin');
 Route::get('/logout', 'AuthController@getLogout');
+Route::get('/phpinfo', function() {
+    return phpinfo();
+});
 
 Route::get('/home', 'HomeController@index');
 Route::get('/dash', 'DashboardController@index');
