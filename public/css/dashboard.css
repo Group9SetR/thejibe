@@ -86,7 +86,7 @@ thead th:not(.nohover):hover::after {
 /* Tasks */
 
 .tasks {
-    height:140px;
+    height:auto;
 }
 
 .taskName{
@@ -107,24 +107,18 @@ thead th:not(.nohover):hover::after {
     font-family: "Tahoma";
     font-size: smaller;
     color: #2a88bd;
-}
-.companyName{
-    font-family: "Tahoma";
-    color: lightgray;
     font-weight: lighter;
-
 }
+
 
 .taskSpan > div{
     padding-left:0px;
     padding-right:0px;
     width:100%;
-    padding: 0;
-    margin-top: 20px;
-    margin-bottom: 20px;
     margin-right: 0px;
     margin-left: 0px;
-    height:100px;
+    margin-top:5px;
+    height:30px;
     background-color: #FF6347;
     opacity: 0.6;
     border-radius: 2px;
@@ -250,7 +244,8 @@ thead th:not(.nohover):hover::after {
 
 
 .priorityBtn {
-    width: 70px;
+    width: 65px;
+    padding:auto;
 }
 
 
@@ -280,5 +275,9 @@ thead th:not(.nohover):hover::after {
     position: sticky;
     width: 300px;
     bottom: 0;
+}
+
+.btn:focus,.btn:active {
+    outline: none !important;
 }
 

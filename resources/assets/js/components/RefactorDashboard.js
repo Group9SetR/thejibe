@@ -351,49 +351,60 @@ class Tasks extends Component {
                     <th scope="row">
                         <div>
                             <div className="row">
-                                <div className="col-sm-9">
+                                <div className="col-sm-8">
                                     <div className ="taskName">
                                         { task.content }
                                         <div>
-                                            <p className ="projectName">{task['company-name']}</p>
+                                            <p className ="projectName">{task['company-name']} : {task['project-name']}</p>
                                         </div>
                                     </div>
                                 </div>
-                                <div className="col-sm-3">
-                                    {
-                                        (task.priority === "") ? <span></span>:
-                                            (task.priority === "medium") ?
-                                                <button type="button" className="priorityBtn btn btn-warning btn-sm" style={{ "float":"right"}}><bold>Medium</bold></button>:
-                                                (task.priority === "low") ?
-                                                    <button type="button" className= "priorityBtn btn btn-success btn-sm" style={{ "float":"right" }}><bold>Low</bold></button>:
-                                                    <button type="button" className= "priorityBtn btn btn-danger btn-sm" style={{ "float":"right"}}><bold>High</bold></button>
+                                <div className ="col-sm-4">
+                                    <div style={{ "float":"left"}}>
+                                        {
+                                            (task.priority === "") ? <span></span>:
+                                                (task.priority === "medium") ?
+                                                    <button type="button" className="priorityBtn btn btn-warning btn-sm" style={{ "float":"right"}}><bold>Medium</bold></button>:
+                                                    (task.priority === "low") ?
+                                                        <button type="button" className= "priorityBtn btn btn-success btn-sm" style={{ "float":"right" }}><bold>Low</bold></button>:
+                                                        <button type="button" className= "priorityBtn btn btn-danger btn-sm" style={{ "float":"right"}}><bold>High</bold></button>
 
-                                    }
-                                </div>
-                            </div>
-
-                            <div className = "row sliderBardiv">
-                                <div id = "sliderBar" style={{ "float":"left"}} className="col-sm-9">
-                                    <input type="range"  min="0" step="10" max="100" id={task.id + "slider"} onChange={this.sliderChange.bind(this, task.id)} defaultValue={task.progress}/>
-                                    <span id={task.id + "display"}>{task.progress}%</span>
-                                </div>
-                                <div className="col-sm-3" style={{ "float":"right"}}>
-                                    <p>{totalhours}/{estimated}</p>
-                                </div>
-                            </div>
-                            <div className ="row progressBardiv">
-                                <div className="col-sm-9 progress progressBar" style={{ "float":"left"}}>
-                                    <div className="progress-bar  " role="progressbar"
-                                         aria-valuenow={completion} aria-valuemin="0" aria-valuemax="100" style={{ "width" : completion + "%"}}>
-                                        {completion}%
+                                        }
+                                    </div>
+                                    <div style={{ "float":"right"}}>
+                                        <button type="button" className="btn btn-default btn-sm "
+                                                data-toggle="collapse" data-target=".taskscol" >
+                                            <span className="glyphicon glyphicon-chevron-down"></span>
+                                        </button>
                                     </div>
                                 </div>
-                                <div className ="col-sm-3" style={{ "float":"right"}}>
+                            </div>
 
-                                    <button type="button" onClick={this.startTimer}
-                                            data-task-id={task.id} data-task-desc={task.content}
-                                            className="btn btn-default btn-sm pull-right glyphicon glyphicon-time timer-btn">
-                                    </button>
+                            <div className = "taskscol collapse">
+                                <div className = "row sliderBardiv">
+                                    <div id = "sliderBar" style={{ "float":"left"}} className="col-sm-9">
+                                        <input type="range"  min="0" step="10" max="100" id={task.id + "slider"} onChange={this.sliderChange.bind(this, task.id)} defaultValue={task.progress}/>
+                                        <span id={task.id + "display"}>{task.progress}%</span>
+                                    </div>
+                                    <div className ="col-sm-3" style={{ "float":"right"}}>
+                                        <button type="button" onClick={this.startTimer}
+                                                data-task-id={task.id} data-task-desc={task.content}
+                                                className="btn btn-default btn-sm pull-right glyphicon glyphicon-time timer-btn">
+                                        </button>
+                                    </div>
+
+                                </div>
+                                <div className ="row progressBardiv">
+                                    <div className="col-sm-9 progress progressBar" style={{ "float":"left"}}>
+                                        <div className="progress-bar  " role="progressbar"
+                                             aria-valuenow={completion} aria-valuemin="0" aria-valuemax="100" style={{ "width" : completion + "%"}}>
+                                            {completion}%
+                                        </div>
+                                    </div>
+                                    <div className="col-sm-3" style={{ "float":"right"}}>
+                                        <p>{totalhours}/{estimated}</p>
+                                    </div>
+
                                 </div>
                             </div>
                         </div>
