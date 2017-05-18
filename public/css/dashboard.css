@@ -319,7 +319,7 @@ thead th:not(.nohover):hover::after {
     border-bottom: 2px solid gainsboro;
 }
 
-#modalSection{
+.modalSection{
     width: 100%;
     heght: 60px;
 }
@@ -327,11 +327,20 @@ thead th:not(.nohover):hover::after {
     margin-top:10px;
     margin-right: 5px;
 }
-#modalcontent{
-    padding-top: 10px;
-    padding-left:10px;
+.modalcontent{
+    padding-top: 20px;
+    padding-left:20px;
+    padding-right:20px;
+    padding-bottom: 37px;
 }
 
 
-
+.modalFooter{
+    padding-left: 5px;
+    padding-right: 5px;
+    height: 57px;
+    background-color: #f5f5f5;
+    margin:auto;
+    border-top: 2px solid gainsboro;
+}
 
