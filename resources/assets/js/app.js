@@ -8,6 +8,6 @@
 require('./bootstrap');
 
 //import Dashboard from './components/Dashboard';
-import Profile from './components/Profile';
 import RefactorDashboard from './components/RefactorDashboard';
-import TimeTracker from './components/TimeTracker.js';
+import MyProfile from './components/MyProfile/MyProfile';
+
