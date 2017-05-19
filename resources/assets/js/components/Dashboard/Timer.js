@@ -64,6 +64,8 @@ export default class Timer extends Component {
                 "isbillable": billable
             }
         };
+        var clearTimer = this.handle_clear();
+        var closeLogTimeModal = this.closeModal();
 
         console.log('id passed ' + id);
         console.log('person-id ' + auth_id);
@@ -80,8 +82,13 @@ export default class Timer extends Component {
             dataType: 'json',
             data: JSON.stringify(entry),
             success: function(data) {
-                // TODO: need to clear current timer
                 console.log("time logged");
+                clearTimer;
+                closeLogTimeModal;
+                $('#timerDescription').val('');
+                $('#timerBillable').prop('checked', false);
+                $('.logtimer').css('visibility', 'hidden');
+                $('.timer-btn').removeAttr('disabled');
             },
             error: function() { console.log('GET request to time totals failed'); },
             beforeSend: setHeader
