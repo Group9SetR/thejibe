@@ -4,6 +4,9 @@ export default class Tasks extends Component {
 
     constructor(props) {
         super(props);
+        this.state = {
+            completed: false
+        };
         this.startTimer = this.startTimer.bind(this);
     }
 
@@ -36,8 +39,65 @@ export default class Tasks extends Component {
         }
     }
 
-    completeTask(id) {
+    onCompletionClick(id) {
+        var completed = this.state.completed;
+        if (completed) {
+            this.uncompleteTask(id);
+        } else {
+            this.completeTask(id);
+        }
+    }
 
+    putHeader() {
+        var key = auth_api_token;
+        var base64 = new Buffer(key+":xxx").toString("base64");
+        var obj = {
+            method:"PUT",
+            dataType: 'json',
+            headers: {
+                'Authorization': 'BASIC '+base64,
+                'Content-Type': 'application/json'
+            }
+        };
+        return obj;
+    }
+    completeTask(id) {
+        fetch('https://thejibe.teamwork.com/tasks/' + id + '/complete.json', this.putHeader())
+            .then( function() {
+                this.setState({ completed: true });
+                console.log("task completed")
+                $('#' + id + 'complete').css("color", "green");
+            });
+/*        var key = auth_api_token;
+        var base64 = new Buffer(key+":xxx").toString("base64");
+        $.ajax({
+            url: 'https://thejibe.teamwork.com/tasks/' + id + '/complete.json',
+            type: 'PUT',
+            dataType: 'json',
+            success: function(data) {
+                console.log("task completed")
+                $('#' + id + 'complete').attr("color", "green");
+                this.setState({
+                    completed: true
+                });
+            },
+            error: function() { console.log('Task was not able to be completed'); },
+            beforeSend: setHeader
+        });
+
+        function setHeader(xhr) {
+            xhr.setRequestHeader('Authorization', 'BASIC ' + base64);
+            xhr.setRequestHeader('Content-Type', 'application/json');
+        }*/
+    }
+
+    uncompleteTask(id) {
+        fetch('https://thejibe.teamwork.com/tasks/' + id + '/uncomplete.json', this.putHeader())
+            .then( function() {
+                this.setState({ completed: false });
+                console.log("task uncompleted")
+                $('#' + id + 'complete').css("color", "green");
+            });
     }
 
     render() {
@@ -136,6 +196,9 @@ export default class Tasks extends Component {
                                         <span id={task.id + "display"}>{task.progress}%</span>
                                     </div>
                                     <div className ="col-sm-3" style={{ "float":"right"}}>
+                                        <button type="button" onClick={this.onCompletionClick.bind(this, task.id)}>
+                                            <span className="glyphicon glyphicon-ok" color="black" id={task.id + "complete"}></span>
+                                        </button>
                                         <button type="button" onClick={this.startTimer}
                                                 data-task-id={task.id} data-task-desc={task.content}
                                                 className="btn btn-default btn-sm pull-right glyphicon glyphicon-time timer-btn">
