@@ -25,9 +25,22 @@ export default class Profile extends Component {
                         counter+=Number(dailyspans[k].dataset.taskhours, 10);
                     }
                 }
-                dailyhours.push(counter);
+                if((counter/8) < 0.5 || (counter/8) > 0.9) {
+                    dailyhours.push(
+                        <td className="utilizationbar nohighlight" key={"utilization-"+i+"-"+j}>
+                            <div className="utilizationbar-top"></div>
+                            <div className="bg-danger utilizationbar-bottom">{counter}</div>
+                        </td>);
+                } else {
+                    dailyhours.push(
+                        <td className="utilizationbar nohighlight" key={"utilization-"+i+"-"+j}>
+                            <div className="utilizationbar-top"></div>
+                            <div className="bg-primary utilizationbar-bottom">{counter}</div>
+                        </td>);
+                }
             }
         }
+
         return (
             <tr key={profile.id} >
                 <th scope="row" className="nohover">
@@ -47,9 +60,7 @@ export default class Profile extends Component {
                         </div>
                     </div>
                 </th>
-                <td colSpan={utilization} className="nohover nohighlight">
-                    <div id="scheduledBar"><p id="scheduledText">65h/ 80h(81%) scheduled</p></div>
-                </td>
+                {dailyhours}
             </tr>
         );
     }

@@ -54,7 +54,9 @@ td, th {
 
 thead th:not(:empty):hover::after,
 td:focus::after,
-thead th:not(:empty):focus::after {
+thead th:not(:empty):focus::after,
+tbody td:hover::after,
+tbody td:focus::after{
     content: '';
     height: 10000px;
     left: 0;
@@ -65,7 +67,8 @@ thead th:not(:empty):focus::after {
 }
 
 td:not(.nohover):hover::after,
-thead th:not(.nohover):hover::after {
+thead th:not(.nohover):hover::after,
+tbody td:hover::after{
     background-color: lightgray;
 }
 
@@ -73,8 +76,6 @@ thead th:not(.nohover):hover::after {
     text-align:center;
     width: 3%;
 }
-
-
 
 /* table */
 #task_table {
@@ -129,6 +130,17 @@ thead th:not(.nohover):hover::after {
     opacity: 0.6;
     border-radius: 2px;
 }
+.taskSpan > div > span {
+    color:transparent;
+    position: relative;
+    top: 50%;
+    transform: translateY(-50%);
+
+}
+
+.taskSpan >div:hover > span {
+    color:black;
+}
 
 .timer-btn {
     width:100%;
@@ -153,18 +165,24 @@ thead th:not(.nohover):hover::after {
 }
 
 /* scheduledBar */
-#scheduledBar {
-    background-color: #99b900;
-    height: 70px;
-    margin-top:10px;
-    margin-bottom:10px;
+.utilizationbar {
+    height:100%;
+    width:100%;
+    border:0 !important;
+    padding-top: 15px !important;
+    padding-bottom: 15px !important;
+    padding-right: 0 !important;
+    padding-left:0 !important;
     border-radius: 3px;
 }
 
-#scheduledText {
-    padding: 15px;
-    color: white;
-    font-weight: bold;
+.utilizationbar-top {
+    background-color: #99b900;
+    height:85%;
+}
+
+.utilizationbar-bottom {
+    height:15%;
 }
 
 /* TaskBar */

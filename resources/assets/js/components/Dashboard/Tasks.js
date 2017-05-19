@@ -86,7 +86,9 @@ export default class Tasks extends Component {
                         if(current >= startdate && current <= duedate) {
                             var taskspanname = "taskSpan-"+i+"-"+j;
                             timespan.push(<td style={{ "padding":"0"}} key={task.id+"-"+i+"-"+j} className="taskSpan">
-                                <div className={taskspanname} data-taskhours={dailyhours}>{dailyhours}</div></td>);
+                                <div className={taskspanname} data-taskhours={dailyhours}>
+                                    <span>{dailyhours}</span>
+                                </div></td>);
                         } else {
                             timespan.push(<td key={task.id+"-"+i+"-"+j}></td>);
                         }
