@@ -44,6 +44,7 @@ export default class Timer extends Component {
         this.afterOpenModal2 = this.afterOpenModal2.bind(this);
         this.closeModal = this.closeModal.bind(this);
         this.closeModal2 = this.closeModal2.bind(this);
+        this.deleteTimer = this.deleteTimer.bind(this);
     }
 
     log_time(id, description) {
@@ -157,6 +158,13 @@ export default class Timer extends Component {
         this.setState({modalIsOpen2: false});
     }
 
+    deleteTimer() {
+        this.handle_clear();
+        this.closeModal2();
+        $('.timer-btn').removeAttr('disabled');
+        $('.logtimer').css('visibility', 'visible');
+    }
+
     render() {
         if(Array.isArray(this.props.timer) && !this.props.timer.length) {
             return (<div></div>);
@@ -241,8 +249,9 @@ export default class Timer extends Component {
                                                 <div className="modalFooter">
                                                     <button className="col-sm-3 btn btn-default" id ="closeBtn" style={{"float":"left"}}
                                                             onClick={this.closeModal2}>Cancel</button>
-                                                    <button className="col-sm-3 btn btn-success" id ="closeBtn" style={{"float":"right"}}
-                                                    >Ok</button>
+                                                    <button onClick={this.deleteTimer} className="col-sm-3 btn btn-success" id ="closeBtn" style={{"float":"right"}}>
+                                                        Ok
+                                                    </button>
                                                 </div>
                                             </div>
                                         </div>
