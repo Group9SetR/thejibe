@@ -29,19 +29,14 @@ export default class Timer extends Component {
         };
         this.timer = null;
         this.log_time = this.log_time.bind(this);
-        this.handle_logTimeSubmit = this.handle_logTimeSubmit.bind(this);
         this.get_hours = this.get_hours.bind(this);
         this.get_minutes = this.get_minutes.bind(this);
         this.get_seconds = this.get_seconds.bind(this);
         this.handle_start = this.handle_start.bind(this);
         this.handle_pause = this.handle_pause.bind(this);
         this.handle_clear = this.handle_clear.bind(this);
-        this.handle_descChange = this.handle_descChange.bind(this);
-        this.handle_logTimeSubmit = this.handle_logTimeSubmit.bind(this);
         this.openModal = this.openModal.bind(this);
         this.openModal2 = this.openModal2.bind(this);
-        this.afterOpenModal = this.afterOpenModal.bind(this);
-        this.afterOpenModal2 = this.afterOpenModal2.bind(this);
         this.closeModal = this.closeModal.bind(this);
         this.closeModal2 = this.closeModal2.bind(this);
         this.deleteTimer = this.deleteTimer.bind(this);
@@ -69,6 +64,8 @@ export default class Timer extends Component {
                 "isbillable": billable
             }
         };
+        var clearTimer = this.handle_clear();
+        var closeLogTimeModal = this.closeModal();
 
         console.log('id passed ' + id);
         console.log('person-id ' + auth_id);
@@ -85,8 +82,13 @@ export default class Timer extends Component {
             dataType: 'json',
             data: JSON.stringify(entry),
             success: function(data) {
-                // TODO: need to clear current timer
                 console.log("time logged");
+                clearTimer;
+                closeLogTimeModal;
+                $('#timerDescription').val('');
+                $('#timerBillable').prop('checked', false);
+                $('.logtimer').css('visibility', 'hidden');
+                $('.timer-btn').removeAttr('disabled');
             },
             error: function() { console.log('GET request to time totals failed'); },
             beforeSend: setHeader
@@ -102,7 +104,6 @@ export default class Timer extends Component {
         let hours = Math.floor(this.state.seconds / 3600)
         return ("0" + hours).slice(-2);
     }
-
     get_minutes() {
         let minutes = Math.floor(this.state.seconds / 60)
         return ("0" + minutes).slice(-2);
@@ -119,24 +120,14 @@ export default class Timer extends Component {
                 })
             , 1000);
     }
-
     handle_pause() {
         clearInterval(this.timer);
     }
-
     handle_clear() {
         clearInterval(this.timer);
         this.setState({
             seconds: 0
         });
-    }
-
-    handle_descChange(event) {
-        this.setState({value: event.target.value});
-    }
-
-    handle_logTimeSubmit() {
-        // send to teamwork?
     }
 
     openModal() {
@@ -147,14 +138,6 @@ export default class Timer extends Component {
         this.handle_pause();
         this.setState({modalIsOpen2: true});
     }
-
-    afterOpenModal() {
-
-    }
-    afterOpenModal2() {
-
-    }
-
     closeModal() {
         this.setState({modalIsOpen: false});
     }
@@ -165,8 +148,10 @@ export default class Timer extends Component {
     deleteTimer() {
         this.handle_clear();
         this.closeModal2();
-        $('.timer-btn').removeAttr('disabled');
+        $('#timerDescription').val('');
+        $('#timerBillable').prop('checked', false);
         $('.logtimer').css('visibility', 'hidden');
+        $('.timer-btn').removeAttr('disabled');
     }
 
     render() {
@@ -200,74 +185,71 @@ export default class Timer extends Component {
                             </h4>
                         </div>
                         <div id="collapseOne" className="panel-body panel-collapse collapse">
-                            <div >
-                                <form onSubmit={this.handle_logTimeSubmit}>
-                                    <div className="form-group">
-                                        <textarea id="timerDescription" name="description" placeholder="Optional Description" className="form-control" defaultValue="" rows="2"/>
-                                        <br/>
-                                        <span className="pull-left">
-                                            <input id="timerBillable" name="billable" type="checkbox"/>&nbsp;Billable
-                                        </span>
-                                    </div>
+                            <div>
+                                <div className="form-group">
+                                    <textarea id="timerDescription" name="description" placeholder="Optional Description" className="form-control" defaultValue="" rows="2"/>
                                     <br/>
-                                    <Modal
-                                        isOpen={this.state.modalIsOpen}
-                                        onAfterOpen={this.afterOpenModal}
-                                        onRequestClose={this.closeModal}
-                                        style={customStyles}
-                                        contentLabel=" Modal"
-                                    >
-                                        <div className ="modalContainer">
-                                            <div className="modalHeader">
-                                                <h3 className="col-sm-7" style={{"float":"left"}}>Log This Time?</h3>
-                                                <button className="col-sm-1 btn btn-default" id ="closeBtn" style={{"float":"right"}}
-                                                        onClick={this.closeModal}><strong>X</strong></button>
-                                            </div>
-                                            <div className="modalSection">
-                                                <p className="modalcontent">Are you sure you want to stop this timer and log the time?</p>
-                                                <div className="modalFooter">
-                                                <button className="col-sm-3 btn btn-default" id ="closeBtn" style={{"float":"left"}}
-                                                        onClick={this.closeModal}>Cancel</button>
-                                                <button onClick={this.log_time.bind(this, current.id)} className="col-sm-3 btn btn-success" id ="closeBtn" style={{"float":"right"}}
-                                                        >Ok</button>
-                                                </div>
+                                    <span className="pull-left">
+                                        <input id="timerBillable" name="billable" type="checkbox"/>&nbsp;Billable
+                                    </span>
+                                </div>
+                                <br/>
+                                <Modal
+                                    isOpen={this.state.modalIsOpen}
+                                    onAfterOpen={this.afterOpenModal}
+                                    onRequestClose={this.closeModal}
+                                    style={customStyles}
+                                    contentLabel=" Modal"
+                                >
+                                    <div className ="modalContainer">
+                                        <div className="modalHeader">
+                                            <h3 className="col-sm-7" style={{"float":"left"}}>Log This Time?</h3>
+                                            <button className="col-sm-1 btn btn-default" id ="closeBtn" style={{"float":"right"}}
+                                                    onClick={this.closeModal}><strong>X</strong></button>
+                                        </div>
+                                        <div className="modalSection">
+                                            <p className="modalcontent">Are you sure you want to stop this timer and log the time?</p>
+                                            <div className="modalFooter">
+                                            <button className="col-sm-3 btn btn-default" id ="closeBtn" style={{"float":"left"}}
+                                                    onClick={this.closeModal}>Cancel</button>
+                                            <button onClick={this.log_time.bind(this, current.id)} className="col-sm-3 btn btn-success" id ="closeBtn" style={{"float":"right"}}
+                                                    >Ok</button>
                                             </div>
                                         </div>
-                                    </Modal>
+                                    </div>
+                                </Modal>
 
-                                    <Modal2
-                                        isOpen={this.state.modalIsOpen2}
-                                        onAfterOpen={this.afterOpenModal2}
-                                        onRequestClose={this.closeModal}
-                                        style={customStyles}
-                                        contentLabel=" Modal2"
-                                    >
-                                        <div className ="modalContainer">
-                                            <div className="modalHeader">
-                                                <h3 className="col-sm-7" style={{"float":"left"}}>Are you sure?</h3>
-                                                <button className="col-sm-1 btn btn-default" id ="closeBtn" style={{"float":"right"}}
-                                                        onClick={this.closeModal2}><strong>X</strong></button>
-                                            </div>
-                                            <div className="modalSection">
-                                                <p className="modalcontent">Are you sure you want to cancel this timer and time?</p>
-                                                <div className="modalFooter">
-                                                    <button className="col-sm-3 btn btn-default" id ="closeBtn" style={{"float":"left"}}
-                                                            onClick={this.closeModal2}>Cancel</button>
-                                                    <button onClick={this.deleteTimer} className="col-sm-3 btn btn-danger" id ="closeBtn" style={{"float":"right"}}>
-                                                        Ok
-                                                    </button>
-                                                </div>
+                                <Modal2
+                                    isOpen={this.state.modalIsOpen2}
+                                    onAfterOpen={this.afterOpenModal2}
+                                    onRequestClose={this.closeModal}
+                                    style={customStyles}
+                                    contentLabel=" Modal2"
+                                >
+                                    <div className ="modalContainer">
+                                        <div className="modalHeader">
+                                            <h3 className="col-sm-7" style={{"float":"left"}}>Are you sure?</h3>
+                                            <button className="col-sm-1 btn btn-default" id ="closeBtn" style={{"float":"right"}}
+                                                    onClick={this.closeModal2}><strong>X</strong></button>
+                                        </div>
+                                        <div className="modalSection">
+                                            <p className="modalcontent">Are you sure you want to cancel this timer and time?</p>
+                                            <div className="modalFooter">
+                                                <button className="col-sm-3 btn btn-default" id ="closeBtn" style={{"float":"left"}}
+                                                        onClick={this.closeModal2}>Cancel</button>
+                                                <button onClick={this.deleteTimer} className="col-sm-3 btn btn-danger" id ="closeBtn" style={{"float":"right"}}>
+                                                    Ok
+                                                </button>
                                             </div>
                                         </div>
-                                    </Modal2>
-                                </form>
+                                    </div>
+                                </Modal2>
                                 <button className="btn btn-success openTimerConfirmModal col-sm-4" onClick={this.openModal}>
                                     Log Time
                                 </button>
                                 <button className="btn btn-danger pull-right" onClick={this.openModal2}>
                                     Delete
                                 </button>
-
                             </div>
                         </div>
                     </div>
