@@ -13,28 +13,17 @@ export default class FilterBar extends Component {
     }
 
     handleFilterChange(e){
-        switch(e.target.id){
-            case 'priority-filter':
-                if(e.target.value == "priorities-all") {
-                    $('.'+e.target.value).each(function() {
-                        $(this).attr('style', 'display:table-row');
-                    });
-                } else {
-                    $('.tasks').each(function() {
-                        $(this).attr('style', 'display: none');
-                    });
-                    $('.'+e.target.value).each(function() {
-                        $(this).attr('style','display:table-row');
-                    });
-                }
-
-                break;
-            case 'project-filter':
-                switch(e.target.value){}
-                break;
-            case 'case-filter':
-                switch(e.target.value){}
-                break;
+        if(e.target.value == "tasks") {
+            $('.tasks').each(function () {
+                $(this).attr('style', 'display:table-row');
+            });
+        } else {
+            $(".tasks:not(."+e.target.value+")").each(function() {
+                $(this).attr('style', 'display: none');
+            });
+            $('.'+e.target.value).each(function() {
+                $(this).attr('style','display:table-row');
+            });
         }
     }
 
@@ -42,22 +31,34 @@ export default class FilterBar extends Component {
         var calendar = this.props.calendar;
         var startDate = calendar.start.toISOString().substr(0,10);
         var endDate = calendar.end.toISOString().substr(0,10);
+        var companies = [];
+        var projects = [];
+        if(this.props.companies.length > 0){
+            for(let i=0; i<this.props.companies.length; i++) {
+                companies.push(<option value={"company-"+this.props.companies[i]['company-id']}>{this.props.companies[i]['company-name']}</option>);
+            }
+        }
+        if(this.props.projects.length > 0){
+            console.log("projects"+this.props.projects);
+            for(let i=0; i<this.props.projects.length; i++) {
+                projects.push(<option value={"project-"+this.props.projects[i]['project-id']}>{this.props.projects[i]['project-name']}</option>);
+            }
+        }
+
         return (
             <div>
                 <div className="secondnav" id="mySecondnav">
                     <div className="form-group">
                         <div className="col-sm-2">
                             <select className="form-control" id="client-filter" onChange={this.handleFilterChange}>
-                                <option>All Clients</option>
-                                <option>client 1</option>
-                                <option>client 2</option>
+                                <option value="tasks">All Companies</option>
+                                {companies}
                             </select>
                         </div>
                         <div className="col-sm-2">
                             <select className="form-control" id="project-filter" onChange={this.handleFilterChange}>
-                                <option>All Projects</option>
-                                <option>project 1</option>
-                                <option>project 2</option>
+                                <option value="tasks">All Projects</option>
+                                {projects}
                             </select>
                         </div>
                         <div className="col-sm-2">

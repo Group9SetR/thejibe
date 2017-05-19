@@ -98,6 +98,7 @@ export default class Tasks extends Component {
                 }
             }
             var taskrowclass = "tasks collapse ";
+            taskrowclass += "project-"+task['project-id'] + " company-"+task['company-id']+" ";
             if(task.priority == "medium") {
                 taskrowclass+= "task-priority-medium";
             } else if(task.priority == "high") {

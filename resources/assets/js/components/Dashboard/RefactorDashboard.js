@@ -16,12 +16,14 @@ class RefactorDashboard extends Component {
             currentprofile: [],
             calendar: [],
             currenttimer: [],
-            taskhours: []
+            taskhours: [],
+            companies: [],
+            projects: []
         }
         this.state.calendar = new Calendar();
         this.state.calendar.init();
         this.taskList = this.taskList.bind(this);
-        this.taskHours = this.taskHours.bind(this);
+        this.taskDetails = this.taskDetails.bind(this);
         this.calculateTaskHours = this.calculateTaskHours.bind(this);
         this.currentProfile  = this.currentProfile.bind(this);
         this.header = this.header.bind(this);
@@ -45,7 +47,7 @@ class RefactorDashboard extends Component {
                 return response.json();
             })
             .then(tasks => {
-                this.setState({ tasks:tasks['todo-items']},this.taskHours);
+                this.setState({ tasks:tasks['todo-items']},this.taskDetails);
             });
     }
 
@@ -63,14 +65,30 @@ class RefactorDashboard extends Component {
             });
     }
 
-    taskHours() {
+    taskDetails() {
         var taskhours = [];
+        var companyset = new Set();
+        var companyarr = [];
+        var projectset = new Set();
+        var projectarr = [];
         this.state.tasks.map(task=>{
             taskhours[task.id] = this.calculateTaskHours(task)['hoursperday'];
+            if(!companyset.has(task['company-id'])) {
+                companyset.add(task['company-id']);
+                companyarr.push({"company-id":task['company-id'], "company-name":task['company-name']});
+            }
+            console.log(projectset.has(task['project-id']));
+            if(!projectset.has(task['project-id'])) {
+                projectset.add(task['project-id']);
+                projectarr.push({"project-id":task['project-id'],"project-name":task['project-name']});
+            }
         });
         this.setState({
-            taskhours:taskhours
+            taskhours:taskhours,
+            companies:companyarr,
+            projects:projectarr
         });
+        console.log(this.state.companies);
     }
 
     header() {
@@ -125,6 +143,8 @@ class RefactorDashboard extends Component {
                 <FilterBar
                     calendar={this.state.calendar}
                     tasks={this.state.tasks}
+                    companies={this.state.companies}
+                    projects={this.state.projects}
                     onDateFilterChange={this.handleDateFilter}/>
                 <div className="container" id="wrapper">
                     <table className="table table-bordered " id="task_table">
