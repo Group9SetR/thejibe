@@ -102,7 +102,7 @@ export default class Tasks extends Component {
                                     <div className ="taskName">
                                         { task.content }
                                         <div>
-                                            <p className ="projectName">{task['company-name']} : {task['project-name']}</p>
+                                            <p className ="projectName"> {task['project-name']} : {task['company-name']} </p>
                                         </div>
                                     </div>
                                 </div>
