@@ -141,6 +141,7 @@ export default class Timer extends Component {
         this.setState({modalIsOpen: true});
     }
     openModal2() {
+        this.handle_pause();
         this.setState({modalIsOpen2: true});
     }
 
@@ -162,7 +163,7 @@ export default class Timer extends Component {
         this.handle_clear();
         this.closeModal2();
         $('.timer-btn').removeAttr('disabled');
-        $('.logtimer').css('visibility', 'visible');
+        $('.logtimer').css('visibility', 'hidden');
     }
 
     render() {
@@ -199,10 +200,10 @@ export default class Timer extends Component {
                             <div >
                                 <form onSubmit={this.handle_logTimeSubmit}>
                                     <div className="form-group">
-                                        <textarea name="description" placeholder="Optional Description"className="form-control" value="" onChange={this.handle_descChange} rows="2"/>
+                                        <textarea name="description" placeholder="Optional Description" className="form-control" value="" rows="2"/>
                                         <br/>
                                         <span className="pull-left">
-                                                <input name="billable" type="checkbox"/>&nbsp;Billable
+                                            <input name="billable" type="checkbox"/>&nbsp;Billable
                                         </span>
                                     </div>
                                     <br/>
