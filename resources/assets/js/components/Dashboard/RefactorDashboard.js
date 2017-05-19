@@ -96,7 +96,6 @@ class RefactorDashboard extends Component {
 
     header() {
         var key = auth_api_token;
-        console.log(auth_api_token);
         var base64 = new Buffer(key+":xxx").toString("base64");
         var obj = {
             method:"GET",
