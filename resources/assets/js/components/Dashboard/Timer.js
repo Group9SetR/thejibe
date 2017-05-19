@@ -47,51 +47,54 @@ export default class Timer extends Component {
         this.deleteTimer = this.deleteTimer.bind(this);
     }
 
-    log_time(id, description) {
+    log_time(id) {
         var key = "twp_29i8q9BH4BGyLykU4jSMZVkj1OnI";
         var base64 = new Buffer(key + ":xxx").toString("base64");
         var date = new Date();
         var hours = this.get_hours();
         var minutes = this.get_minutes();
+        var description = $('#timerDescription').val();
+        var billable = $('#timerBillable').prop('checked') ? "1" : "0";
+        if (minutes == '00') {
+            minutes = '01';
+        }
         var entry = {
             "time-entry": {
-                "description": "Testing Dates",
+                "description": description,
                 "person-id": auth_id,
                 "date": date.getFullYear() + ("0" + (date.getMonth() + 1)).slice(-2) + ("0" + date.getDate()).slice(-2),
                 "time": date.getHours() + ":" + date.getMinutes(),
                 "hours": hours,
                 "minutes": minutes,
-                "isbillable": "1"
+                "isbillable": billable
             }
         };
 
         console.log('id passed ' + id);
         console.log('person-id ' + auth_id);
-        console.log("hours:" + this.get_hours() + "  minutes:" + this.get_minutes() + "  seconds:" + this.get_seconds() + "  = logged time");
+        console.log("hours:" + this.get_hours() + "  minutes:" + minutes + "  seconds:" + this.get_seconds() + "  = logged time");
         console.log('date  ' + date.getFullYear() + ("0" + (date.getMonth() + 1)).slice(-2) + ("0" + date.getDate()).slice(-2));
         console.log('time  ' + date.getHours() + ":" + date.getMinutes());
         console.log(entry);
+        console.log(description);
+        console.log(billable);
 
-        if (minutes > 0) {
-            $.ajax({
-                url: 'https://thejibe.teamwork.com/tasks/' + id + '/time_entries.json',
-                type: 'POST',
-                dataType: 'json',
-                data: JSON.stringify(entry),
-                success: function(data) {
-                    // TODO: need to clear current timer
-                    console.log("time logged");
-                },
-                error: function() { console.log('GET request to time totals failed'); },
-                beforeSend: setHeader
-            });
+        $.ajax({
+            url: 'https://thejibe.teamwork.com/tasks/' + id + '/time_entries.json',
+            type: 'POST',
+            dataType: 'json',
+            data: JSON.stringify(entry),
+            success: function(data) {
+                // TODO: need to clear current timer
+                console.log("time logged");
+            },
+            error: function() { console.log('GET request to time totals failed'); },
+            beforeSend: setHeader
+        });
 
-            function setHeader(xhr) {
-                xhr.setRequestHeader('Authorization', 'BASIC ' + base64);
-                xhr.setRequestHeader('Content-Type', 'application/json');
-            }
-        } else {
-            alert('Cannot log time for under a minute');
+        function setHeader(xhr) {
+            xhr.setRequestHeader('Authorization', 'BASIC ' + base64);
+            xhr.setRequestHeader('Content-Type', 'application/json');
         }
     }
 
@@ -200,10 +203,10 @@ export default class Timer extends Component {
                             <div >
                                 <form onSubmit={this.handle_logTimeSubmit}>
                                     <div className="form-group">
-                                        <textarea name="description" placeholder="Optional Description" className="form-control" value="" rows="2"/>
+                                        <textarea id="timerDescription" name="description" placeholder="Optional Description" className="form-control" defaultValue="" rows="2"/>
                                         <br/>
                                         <span className="pull-left">
-                                            <input name="billable" type="checkbox"/>&nbsp;Billable
+                                            <input id="timerBillable" name="billable" type="checkbox"/>&nbsp;Billable
                                         </span>
                                     </div>
                                     <br/>
