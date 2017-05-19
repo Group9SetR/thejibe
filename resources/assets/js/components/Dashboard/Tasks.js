@@ -4,9 +4,6 @@ export default class Tasks extends Component {
 
     constructor(props) {
         super(props);
-        this.state = {
-            completed: false
-        };
         this.startTimer = this.startTimer.bind(this);
     }
 
@@ -42,44 +39,9 @@ export default class Tasks extends Component {
         }
     }
 
-    onCompletionClick(id) {
-        var completed = this.state.completed;
-        if (completed) {
-            fetch('https://thejibe.teamwork.com/tasks/' + id + '/uncomplete.json', this.putHeader())
-                .then( (responseText) => {
-                    return responseText.json();
-                })
-                .then((response) => {
-                    console.log("task uncompleted")
-                    this.setState({ completed: false });
-                    $('#' + id + 'complete').css("color", "black");
-                });
-        } else {
-            fetch('https://thejibe.teamwork.com/tasks/' + id + '/complete.json', this.putHeader())
-                .then( (responseText) => {
-                    return responseText.json();
-                })
-                .then((response) => {
-                    console.log("task completed")
-                    this.setState({ completed: true });
-                    $('#' + id + 'complete').css("color", "green");
-                });
-        }
-    }
 
-    putHeader() {
-        var key = auth_api_token;
-        var base64 = new Buffer(key+":xxx").toString("base64");
-        var obj = {
-            method:"PUT",
-            dataType: 'json',
-            headers: {
-                'Authorization': 'BASIC '+base64,
-                'Content-Type': 'application/json'
-            }
-        };
-        return obj;
-    }
+
+
 
     render() {
         if(Array.isArray(this.props.tasks) && !this.props.tasks.length) {
@@ -196,9 +158,6 @@ export default class Tasks extends Component {
                                         <span id={task.id + "display"}>{task.progress}%</span>
                                     </div>
                                     <div className ="col-sm-3" style={{ "float":"right"}}>
-                                        <button type="button" id={task.id + "complete"} onClick={this.onCompletionClick.bind(this, task.id)}>
-                                            <span className="glyphicon glyphicon-ok" color="black"></span>
-                                        </button>
                                         <button type="button" onClick={this.startTimer}
                                                 data-task-id={task.id} data-task-desc={task.content}
                                                 className="btn btn-default btn-sm pull-right glyphicon glyphicon-time timer-btn">
@@ -207,7 +166,7 @@ export default class Tasks extends Component {
 
                                 </div>
                                 <div className ="row progressBardiv">
-                                    <div className="col-sm-9 progress progressBar" style={{ "float":"left"}}>
+                                    <div className="progress progressBar" style={{ "float":"left"}}>
                                         <div className="progress-bar  " role="progressbar"
                                              aria-valuenow={completion} aria-valuemin="0" aria-valuemax="100" style={{ "width" : completion + "%"}}>
                                             {completion}%

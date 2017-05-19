@@ -119,7 +119,7 @@ tbody td:hover::after{
     margin-top:10px;
     margin-bottom: 10px;
     height:50px;
-    background-color: #FF6347;
+    background-color: #FFD700;
     opacity: 0.6;
     border-radius: 2px;
 }
@@ -171,11 +171,11 @@ tbody td:hover::after{
 
 .utilizationbar-top {
     background-color: #99b900;
-    height:85%;
+    height:75%;
 }
 
 .utilizationbar-bottom {
-    height:15%;
+    height:25%;
 }
 #expandBtn{
     padding-top: 10px;
@@ -185,7 +185,7 @@ tbody td:hover::after{
     font-family: 'Glyphicons Halflings';
     content: "\e114";
     float: right;
-    color: grey;
+    font-weight: bold;
 }
 #expandBtn.accordion-toggle.collapsed:after {
     content: "\e113";
@@ -364,4 +364,6 @@ tbody td:hover::after{
 
 
 
-
+#billable_completeBtn{
+    padding: 10px;
+}
