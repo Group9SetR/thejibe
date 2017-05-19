@@ -119,10 +119,12 @@ export default class Tasks extends Component {
                                         }
                                     </div>
                                     <div style={{ "float":"right"}}>
-                                        <button type="button" className="btn btn-default btn-sm" id = "collapseBtn"
+
+                                        <button type="button" className="btn btn-default btn-sm " id = "collapseBtn"
                                                 data-toggle="collapse" data-target={'#taskscol-' + task.id} >
                                             <span className="glyphicon glyphicon-chevron-down"></span>
                                         </button>
+
                                     </div>
                                 </div>
                             </div>
@@ -135,10 +137,10 @@ export default class Tasks extends Component {
                                         <span id={task.id + "display"}>{task.progress}%</span>
                                     </div>
                                     <div className ="col-sm-3" style={{ "float":"right"}}>
-                                        <button type="button" onClick={this.startTimer}
-                                                data-task-id={task.id} data-task-desc={task.content}
-                                                className="btn btn-default btn-sm pull-right glyphicon glyphicon-time timer-btn">
-                                        </button>
+                                            <button type="button" onClick={this.startTimer}
+                                                    data-task-id={task.id} data-task-desc={task.content}
+                                                    className="btn btn-default btn-sm pull-right glyphicon glyphicon-time timer-btn">
+                                            </button>
                                     </div>
 
                                 </div>

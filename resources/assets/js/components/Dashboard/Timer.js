@@ -249,7 +249,7 @@ export default class Timer extends Component {
                                                 <div className="modalFooter">
                                                     <button className="col-sm-3 btn btn-default" id ="closeBtn" style={{"float":"left"}}
                                                             onClick={this.closeModal2}>Cancel</button>
-                                                    <button onClick={this.deleteTimer} className="col-sm-3 btn btn-success" id ="closeBtn" style={{"float":"right"}}>
+                                                    <button onClick={this.deleteTimer} className="col-sm-3 btn btn-danger" id ="closeBtn" style={{"float":"right"}}>
                                                         Ok
                                                     </button>
                                                 </div>
@@ -263,6 +263,7 @@ export default class Timer extends Component {
                                 <button className="btn btn-danger pull-right" onClick={this.openModal2}>
                                     Delete
                                 </button>
+
                             </div>
                         </div>
                     </div>
