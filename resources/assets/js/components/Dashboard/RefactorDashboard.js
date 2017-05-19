@@ -7,6 +7,9 @@ import FilterBar from './FilterBar.js';
 import TableHeader from './TableHeader.js';
 import ColumnHeader from './ColumnHeader.js';
 
+const appElement = document.getElementById('dashboard');
+
+
 class RefactorDashboard extends Component {
 
     constructor() {
@@ -160,6 +163,7 @@ class RefactorDashboard extends Component {
                             taskhours={this.state.taskhours}
                             onTimerChange={this.handleTimer}/>
                     </table>
+
 
                     <Timer timer={this.state.currenttimer}/>
                 </div>

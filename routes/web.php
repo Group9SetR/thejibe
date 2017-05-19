@@ -30,6 +30,3 @@ Route::get('/logout', 'AuthController@getLogout');
 Route::get('/phpinfo', function() {
     return phpinfo();
 });
-
-Route::get('/home', 'HomeController@index');
-Route::get('/dash', 'DashboardController@index');

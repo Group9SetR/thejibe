@@ -1,12 +1,31 @@
 import React, { Component } from 'react';
+import Modal from 'react-modal';
+import Modal2 from 'react-modal';
 
+const customStyles = {
+    content : {
+        top                   : '50%',
+        left                  : '50%',
+        right                 : 'auto',
+        bottom                : 'auto',
+        marginRight           : '-50%',
+        transform             : 'translate(-50%, -50%)',
+        height                : '204px',
+        width                 : '430px',
+        padding               : '0px',
+        margin                : '0px',
+}
+
+};
 export default class Timer extends Component {
 
     constructor(props) {
         super(props);
         this.state={
             current: [],
-            seconds: 0
+            seconds: 0,
+            modalIsOpen: false,
+            modalIsOpen2: false
         };
         this.timer = null;
         this.log_time = this.log_time.bind(this);
@@ -19,35 +38,64 @@ export default class Timer extends Component {
         this.handle_clear = this.handle_clear.bind(this);
         this.handle_descChange = this.handle_descChange.bind(this);
         this.handle_logTimeSubmit = this.handle_logTimeSubmit.bind(this);
+        this.openModal = this.openModal.bind(this);
+        this.openModal2 = this.openModal2.bind(this);
+        this.afterOpenModal = this.afterOpenModal.bind(this);
+        this.afterOpenModal2 = this.afterOpenModal2.bind(this);
+        this.closeModal = this.closeModal.bind(this);
+        this.closeModal2 = this.closeModal2.bind(this);
+        this.deleteTimer = this.deleteTimer.bind(this);
     }
 
-    //componentWillUnmount() {
-        //TODO write this to remove timer
-    //}
-
-
-    log_time() {
+    log_time(id) {
         var key = "twp_29i8q9BH4BGyLykU4jSMZVkj1OnI";
         var base64 = new Buffer(key + ":xxx").toString("base64");
         var date = new Date();
-        fetch('https://thejibe.teamwork.com/tasks/7576391/time_entries.json', {
-            method: 'POST',
-            headers: {
-                'Authorization': "BASIC " + base64,
-                'Content-Type': 'application/json',
+        var hours = this.get_hours();
+        var minutes = this.get_minutes();
+        var description = $('#timerDescription').val();
+        var billable = $('#timerBillable').prop('checked') ? "1" : "0";
+        if (minutes == '00') {
+            minutes = '01';
+        }
+        var entry = {
+            "time-entry": {
+                "description": description,
+                "person-id": auth_id,
+                "date": date.getFullYear() + ("0" + (date.getMonth() + 1)).slice(-2) + ("0" + date.getDate()).slice(-2),
+                "time": date.getHours() + ":" + date.getMinutes(),
+                "hours": hours,
+                "minutes": minutes,
+                "isbillable": billable
+            }
+        };
+
+        console.log('id passed ' + id);
+        console.log('person-id ' + auth_id);
+        console.log("hours:" + this.get_hours() + "  minutes:" + minutes + "  seconds:" + this.get_seconds() + "  = logged time");
+        console.log('date  ' + date.getFullYear() + ("0" + (date.getMonth() + 1)).slice(-2) + ("0" + date.getDate()).slice(-2));
+        console.log('time  ' + date.getHours() + ":" + date.getMinutes());
+        console.log(entry);
+        console.log(description);
+        console.log(billable);
+
+        $.ajax({
+            url: 'https://thejibe.teamwork.com/tasks/' + id + '/time_entries.json',
+            type: 'POST',
+            dataType: 'json',
+            data: JSON.stringify(entry),
+            success: function(data) {
+                // TODO: need to clear current timer
+                console.log("time logged");
             },
-            body: JSON.stringify({
-                "time-entry": {
-                    "description": "Testing Dates",
-                    "person-id": "173892",
-                    "date": date.getFullYear() + ("0" + (date.getMonth() + 1)).slice(-2) + ("0" + date.getDate()).slice(-2),
-                    "time": date.getHours() + ":" + date.getMinutes(),
-                    "hours": "2",
-                    "minutes": "00",
-                    "isbillable": "1"
-                }
-            })
-        })
+            error: function() { console.log('GET request to time totals failed'); },
+            beforeSend: setHeader
+        });
+
+        function setHeader(xhr) {
+            xhr.setRequestHeader('Authorization', 'BASIC ' + base64);
+            xhr.setRequestHeader('Content-Type', 'application/json');
+        }
     }
 
     get_hours() {
@@ -91,6 +139,36 @@ export default class Timer extends Component {
         // send to teamwork?
     }
 
+    openModal() {
+        this.handle_pause();
+        this.setState({modalIsOpen: true});
+    }
+    openModal2() {
+        this.handle_pause();
+        this.setState({modalIsOpen2: true});
+    }
+
+    afterOpenModal() {
+
+    }
+    afterOpenModal2() {
+
+    }
+
+    closeModal() {
+        this.setState({modalIsOpen: false});
+    }
+    closeModal2() {
+        this.setState({modalIsOpen2: false});
+    }
+
+    deleteTimer() {
+        this.handle_clear();
+        this.closeModal2();
+        $('.timer-btn').removeAttr('disabled');
+        $('.logtimer').css('visibility', 'hidden');
+    }
+
     render() {
         if(Array.isArray(this.props.timer) && !this.props.timer.length) {
             return (<div></div>);
@@ -102,6 +180,10 @@ export default class Timer extends Component {
                     <div className="panel panel-default">
                         <div className="panel-heading">
                             <h4 className="panel-title">
+                                <div className="panelTitle">
+                                <p id="panelTask">Task : { current.content }</p>
+                                </div>
+                                <div className="timerDiv">
                                 <button onClick={this.handle_start} className="btn btn-default btn-sm">
                                     <span className="glyphicon glyphicon glyphicon-play" aria-hidden="true"></span>
                                 </button>
@@ -111,33 +193,81 @@ export default class Timer extends Component {
                                 <button onClick={this.handle_clear} className="btn btn-default btn-sm">
                                     <span className="glyphicon glyphicon glyphicon-stop" aria-hidden="true"></span>
                                 </button>
-                                <button onClick={this.log_time} className="btn btn-default btn-sm">
-                                    <span className="glyphicon glyphicon glyphicon-time" aria-hidden="true"></span>
-                                </button>
-                                &nbsp;&nbsp;&nbsp;
+                                &nbsp;
                                 {this.get_hours()}:{this.get_minutes()}:{this.get_seconds()}
                                 <a className="accordion-toggle" data-toggle="collapse" data-parent="#accordion" href="#collapseOne"></a>
+                                </div>
                             </h4>
                         </div>
                         <div id="collapseOne" className="panel-body panel-collapse collapse">
-                            <div id="demo">
-                                <p>Task: { current.content }</p>
+                            <div >
                                 <form onSubmit={this.handle_logTimeSubmit}>
                                     <div className="form-group">
-                                        <textarea name="description" className="form-control" value="" onChange={this.handle_descChange} rows="3"/>
+                                        <textarea id="timerDescription" name="description" placeholder="Optional Description" className="form-control" defaultValue="" rows="2"/>
                                         <br/>
                                         <span className="pull-left">
-                                                <input name="billable" type="checkbox"/>&nbsp;Billable
-                                            </span>
+                                            <input id="timerBillable" name="billable" type="checkbox"/>&nbsp;Billable
+                                        </span>
                                     </div>
                                     <br/>
-                                    <button className="btn btn-success openTimerConfirmModal col-sm-4" data-toggle="modal" data-target="#confirmTimerModal">
-                                        Log Time
-                                    </button>
-                                    <button className="btn btn-danger pull-right">
-                                        Delete
-                                    </button>
+                                    <Modal
+                                        isOpen={this.state.modalIsOpen}
+                                        onAfterOpen={this.afterOpenModal}
+                                        onRequestClose={this.closeModal}
+                                        style={customStyles}
+                                        contentLabel=" Modal"
+                                    >
+                                        <div className ="modalContainer">
+                                            <div className="modalHeader">
+                                                <h3 className="col-sm-7" style={{"float":"left"}}>Log This Time?</h3>
+                                                <button className="col-sm-1 btn btn-default" id ="closeBtn" style={{"float":"right"}}
+                                                        onClick={this.closeModal}><strong>X</strong></button>
+                                            </div>
+                                            <div className="modalSection">
+                                                <p className="modalcontent">Are you sure you want to stop this timer and log the time?</p>
+                                                <div className="modalFooter">
+                                                <button className="col-sm-3 btn btn-default" id ="closeBtn" style={{"float":"left"}}
+                                                        onClick={this.closeModal}>Cancel</button>
+                                                <button onClick={this.log_time.bind(this, current.id)} className="col-sm-3 btn btn-success" id ="closeBtn" style={{"float":"right"}}
+                                                        >Ok</button>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </Modal>
+
+                                    <Modal2
+                                        isOpen={this.state.modalIsOpen2}
+                                        onAfterOpen={this.afterOpenModal2}
+                                        onRequestClose={this.closeModal}
+                                        style={customStyles}
+                                        contentLabel=" Modal2"
+                                    >
+                                        <div className ="modalContainer">
+                                            <div className="modalHeader">
+                                                <h3 className="col-sm-7" style={{"float":"left"}}>Are you sure?</h3>
+                                                <button className="col-sm-1 btn btn-default" id ="closeBtn" style={{"float":"right"}}
+                                                        onClick={this.closeModal2}><strong>X</strong></button>
+                                            </div>
+                                            <div className="modalSection">
+                                                <p className="modalcontent">Are you sure you want to cancel this timer and time?</p>
+                                                <div className="modalFooter">
+                                                    <button className="col-sm-3 btn btn-default" id ="closeBtn" style={{"float":"left"}}
+                                                            onClick={this.closeModal2}>Cancel</button>
+                                                    <button onClick={this.deleteTimer} className="col-sm-3 btn btn-danger" id ="closeBtn" style={{"float":"right"}}>
+                                                        Ok
+                                                    </button>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </Modal2>
                                 </form>
+                                <button className="btn btn-success openTimerConfirmModal col-sm-4" onClick={this.openModal}>
+                                    Log Time
+                                </button>
+                                <button className="btn btn-danger pull-right" onClick={this.openModal2}>
+                                    Delete
+                                </button>
+
                             </div>
                         </div>
                     </div>

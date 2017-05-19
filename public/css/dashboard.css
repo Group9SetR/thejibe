@@ -26,9 +26,7 @@ section {
     font-family: "Times New Roman", Times, serif;
 }
 
-div {
-    height: 100%;
-}
+
 
 /* Pattern styles */
 .container {
@@ -87,7 +85,7 @@ tbody td:hover::after{
 /* Tasks */
 
 .tasks {
-    height:140px;
+    height:auto;
 }
 
 .taskName{
@@ -108,24 +106,19 @@ tbody td:hover::after{
     font-family: "Tahoma";
     font-size: smaller;
     color: #2a88bd;
-}
-.companyName{
-    font-family: "Tahoma";
-    color: lightgray;
     font-weight: lighter;
-
 }
+
 
 .taskSpan > div{
     padding-left:0px;
     padding-right:0px;
     width:100%;
-    padding: 0;
-    margin-top: 20px;
-    margin-bottom: 20px;
     margin-right: 0px;
     margin-left: 0px;
-    height:100px;
+    margin-top:10px;
+    margin-bottom: 10px;
+    height:50px;
     background-color: #FF6347;
     opacity: 0.6;
     border-radius: 2px;
@@ -184,6 +177,19 @@ tbody td:hover::after{
 .utilizationbar-bottom {
     height:15%;
 }
+#expandBtn{
+    padding-top: 10px;
+}
+#expandBtn .accordion-toggle:after {
+    /* symbol for "opening" panels */
+    font-family: 'Glyphicons Halflings';
+    content: "\e114";
+    float: right;
+    color: grey;
+}
+#expandBtn.accordion-toggle.collapsed:after {
+    content: "\e113";
+}
 
 /* TaskBar */
 #companyName{
@@ -209,10 +215,20 @@ tbody td:hover::after{
 .sliderBardiv{
     margin-left: 5px;
 }
+
+
+
+
 /* sliderBar */
 .sliderBar{
     width: 70%;
     padding:0px;
+}
+/* timer */
+#panelTask{
+    color: #2a88bd;
+    font-size: small;
+
 }
 /* Loading page */
 
@@ -268,7 +284,8 @@ tbody td:hover::after{
 
 
 .priorityBtn {
-    width: 70px;
+    width: 65px;
+    padding:auto;
 }
 
 
@@ -281,16 +298,20 @@ tbody td:hover::after{
     background-color:white;
 }
 
+/* logtimer */
 .panel-heading .accordion-toggle:after {
     /* symbol for "opening" panels */
     font-family: 'Glyphicons Halflings';
-    content: "\e114";
+    content: "\e113";
     float: right;
     color: grey;
 }
+
 .panel-heading .accordion-toggle.collapsed:after {
-    content: "\e080";
+    content: "\e114";
+
 }
+
 
 .logtimer {
     visibility: visible;
@@ -299,4 +320,48 @@ tbody td:hover::after{
     width: 300px;
     bottom: 0;
 }
+
+.btn:focus,.btn:active {
+    outline: none !important;
+}
+
+/* modal */
+.modalContainer{
+    width: 100%;
+    height: 200px;
+}
+.modalHeader{
+    height: 57px;
+    background-color: #f5f5f5;
+    margin:auto;
+    border-bottom: 2px solid gainsboro;
+}
+
+.modalSection{
+    width: 100%;
+    heght: 60px;
+}
+#closeBtn{
+    margin-top:10px;
+    margin-right: 5px;
+}
+.modalcontent{
+    padding-top: 20px;
+    padding-left:20px;
+    padding-right:20px;
+    padding-bottom: 37px;
+}
+
+
+.modalFooter{
+    padding-left: 5px;
+    padding-right: 5px;
+    height: 57px;
+    background-color: #f5f5f5;
+    margin:auto;
+    border-top: 2px solid gainsboro;
+}
+
+
+
 
