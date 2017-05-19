@@ -141,8 +141,10 @@ export default class Timer extends Component {
     deleteTimer() {
         this.handle_clear();
         this.closeModal2();
-        $('.timer-btn').removeAttr('disabled');
+        $('#timerDescription').val('');
+        $('#timerBillable').prop('checked', false);
         $('.logtimer').css('visibility', 'hidden');
+        $('.timer-btn').removeAttr('disabled');
     }
 
     render() {
