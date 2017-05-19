@@ -25,7 +25,7 @@ class RefactorDashboard extends Component {
         this.calculateTaskHours = this.calculateTaskHours.bind(this);
         this.currentProfile  = this.currentProfile.bind(this);
         this.header = this.header.bind(this);
-        this.handleFilter = this.handleFilter.bind(this);
+        this.handleDateFilter = this.handleDateFilter.bind(this);
         this.handleTimer = this.handleTimer.bind(this);
     }
 
@@ -88,20 +88,10 @@ class RefactorDashboard extends Component {
         return obj;
     }
 
-    handleFilter(filter) {
-        switch(filter.type) {
-            case "date":
-                var temp = new Calendar();
-                temp.init(filter.value);
-                this.setState({calendar:temp}, this.taskList);
-                break;
-            case "project":
-                break;
-            case "priority":
-                break;
-            case "company":
-                break;
-        }
+    handleDateFilter(type) {
+        var temp = new Calendar();
+        temp.init(type);
+        this.setState({calendar:temp}, this.taskList);
     }
 
     handleTimer(task) {
@@ -135,7 +125,7 @@ class RefactorDashboard extends Component {
                 <FilterBar
                     calendar={this.state.calendar}
                     tasks={this.state.tasks}
-                    onFilterChange={this.handleFilter}/>
+                    onDateFilterChange={this.handleDateFilter}/>
                 <div className="container" id="wrapper">
                     <table className="table table-bordered " id="task_table">
                         <ColumnHeader calendar={this.state.calendar} />

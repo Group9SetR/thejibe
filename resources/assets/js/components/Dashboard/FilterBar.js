@@ -4,23 +4,38 @@ export default class FilterBar extends Component {
     constructor(props) {
         super(props);
         this.handleDateFilterChange = this.handleDateFilterChange.bind(this);
+        this.handleFilterChange = this.handleFilterChange.bind(this);
     }
 
     handleDateFilterChange(e) {
-        this.props.onFilterChange({"type":"date", "value":e.target.value});
+        this.props.onDateFilterChange(e.target.value);
         document.getElementById('expandTasksBtn').click();
     }
 
-    handleProjectFilterChange(e) {
+    handleFilterChange(e){
+        switch(e.target.id){
+            case 'priority-filter':
+                if(e.target.value == "priorities-all") {
+                    $('.'+e.target.value).each(function() {
+                        $(this).attr('style', 'display:table-row');
+                    });
+                } else {
+                    $('.tasks').each(function() {
+                        $(this).attr('style', 'display: none');
+                    });
+                    $('.'+e.target.value).each(function() {
+                        $(this).attr('style','display:table-row');
+                    });
+                }
 
-    }
-
-    handlePriorityFilterChange(e) {
-
-    }
-
-    handleClientFilterChange(e) {
-
+                break;
+            case 'project-filter':
+                switch(e.target.value){}
+                break;
+            case 'case-filter':
+                switch(e.target.value){}
+                break;
+        }
     }
 
     render() {
@@ -32,25 +47,25 @@ export default class FilterBar extends Component {
                 <div className="secondnav" id="mySecondnav">
                     <div className="form-group">
                         <div className="col-sm-2">
-                            <select className="form-control" id="client" onChange={this.handleClientFilterChange}>
+                            <select className="form-control" id="client-filter" onChange={this.handleFilterChange}>
                                 <option>All Clients</option>
                                 <option>client 1</option>
                                 <option>client 2</option>
                             </select>
                         </div>
                         <div className="col-sm-2">
-                            <select className="form-control" id="project" onChange={this.handleProjectFilterChange}>
+                            <select className="form-control" id="project-filter" onChange={this.handleFilterChange}>
                                 <option>All Projects</option>
                                 <option>project 1</option>
                                 <option>project 2</option>
                             </select>
                         </div>
                         <div className="col-sm-2">
-                            <select className="form-control" id="priority" onChange={this.handlePriorityFilterChange}>
-                                <option>All Priorities</option>
-                                <option>High</option>
-                                <option>Medium</option>
-                                <option>Low</option>
+                            <select className="form-control" id="priority-filter" onChange={this.handleFilterChange}>
+                                <option value="tasks">All Priorities</option>
+                                <option value="task-priority-high">High</option>
+                                <option value="task-priority-medium">Medium</option>
+                                <option value="task-priority-low">Low</option>
                             </select>
                         </div>
 

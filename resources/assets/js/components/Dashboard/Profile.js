@@ -21,7 +21,6 @@ export default class Profile extends Component {
                 var dailyspans = document.getElementsByClassName(taskspanname);
                 if(dailyspans) {
                     for(let k=0; k<dailyspans.length; k++) {
-                        console.log(dailyspans[k]);
                         counter+=Number(dailyspans[k].dataset.taskhours, 10);
                     }
                 }

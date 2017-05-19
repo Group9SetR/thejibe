@@ -97,9 +97,19 @@ export default class Tasks extends Component {
                     }
                 }
             }
+            var taskrowclass = "tasks collapse ";
+            if(task.priority == "medium") {
+                taskrowclass+= "task-priority-medium";
+            } else if(task.priority == "high") {
+                taskrowclass+= "task-priority-high";
+            } else if(task.priority == "low") {
+                taskrowclass+= "task-priority-low";
+            } else {
+                taskrowclass+= "task-priority-none";
+            }
             //return dailyhours
             return (
-                <tr key={task.id} className="tasks collapse">
+                <tr key={task.id} className={taskrowclass}>
                     <th scope="row">
                         <div>
                             <div className="row">
