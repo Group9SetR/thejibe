@@ -42,9 +42,25 @@ export default class Tasks extends Component {
     onCompletionClick(id) {
         var completed = this.state.completed;
         if (completed) {
-            this.uncompleteTask(id);
+            fetch('https://thejibe.teamwork.com/tasks/' + id + '/uncomplete.json', this.putHeader())
+                .then( (responseText) => {
+                    return responseText.json();
+                })
+                .then((response) => {
+                    console.log("task uncompleted")
+                    this.setState({ completed: false });
+                    $('#' + id + 'complete').css("color", "black");
+                });
         } else {
-            this.completeTask(id);
+            fetch('https://thejibe.teamwork.com/tasks/' + id + '/complete.json', this.putHeader())
+                .then( (responseText) => {
+                    return responseText.json();
+                })
+                .then((response) => {
+                    console.log("task completed")
+                    this.setState({ completed: true });
+                    $('#' + id + 'complete').css("color", "green");
+                });
         }
     }
 
@@ -60,44 +76,6 @@ export default class Tasks extends Component {
             }
         };
         return obj;
-    }
-    completeTask(id) {
-        fetch('https://thejibe.teamwork.com/tasks/' + id + '/complete.json', this.putHeader())
-            .then( function() {
-                this.setState({ completed: true });
-                console.log("task completed")
-                $('#' + id + 'complete').css("color", "green");
-            });
-/*        var key = auth_api_token;
-        var base64 = new Buffer(key+":xxx").toString("base64");
-        $.ajax({
-            url: 'https://thejibe.teamwork.com/tasks/' + id + '/complete.json',
-            type: 'PUT',
-            dataType: 'json',
-            success: function(data) {
-                console.log("task completed")
-                $('#' + id + 'complete').attr("color", "green");
-                this.setState({
-                    completed: true
-                });
-            },
-            error: function() { console.log('Task was not able to be completed'); },
-            beforeSend: setHeader
-        });
-
-        function setHeader(xhr) {
-            xhr.setRequestHeader('Authorization', 'BASIC ' + base64);
-            xhr.setRequestHeader('Content-Type', 'application/json');
-        }*/
-    }
-
-    uncompleteTask(id) {
-        fetch('https://thejibe.teamwork.com/tasks/' + id + '/uncomplete.json', this.putHeader())
-            .then( function() {
-                this.setState({ completed: false });
-                console.log("task uncompleted")
-                $('#' + id + 'complete').css("color", "green");
-            });
     }
 
     render() {
