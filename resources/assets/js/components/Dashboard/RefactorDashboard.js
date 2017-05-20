@@ -17,6 +17,7 @@ class RefactorDashboard extends Component {
         this.state = {
             tasks: [],
             currentprofile: [],
+            utilizationhours: [],
             calendar: [],
             currenttimer: [],
             taskhours: [],
@@ -70,17 +71,18 @@ class RefactorDashboard extends Component {
 
     taskDetails() {
         var taskhours = [];
-        var companyset = new Set();
-        var companyarr = [];
-        var projectset = new Set();
-        var projectarr = [];
+        var utilizationhours = []; //TODO set utilization hours here
+        //initialize utilization hours to 0 for each day in range
+        var companyset = new Set(); //TODO remove this
+        var companyarr = []; //TODO remove this
+        var projectset = new Set(); //TODO remove this
+        var projectarr = []; //TODO remove this
         this.state.tasks.map(task=>{
-            taskhours[task.id] = this.calculateTaskHours(task)['hoursperday'];
+            taskhours[task.id] = this.calculateTaskHours(task, utilizationhours)['hoursperday'];
             if(!companyset.has(task['company-id'])) {
                 companyset.add(task['company-id']);
                 companyarr.push({"company-id":task['company-id'], "company-name":task['company-name']});
             }
-            console.log(projectset.has(task['project-id']));
             if(!projectset.has(task['project-id'])) {
                 projectset.add(task['project-id']);
                 projectarr.push({"project-id":task['project-id'],"project-name":task['project-name']});
@@ -88,10 +90,10 @@ class RefactorDashboard extends Component {
         });
         this.setState({
             taskhours:taskhours,
+            utilizationhours:utilizationhours,
             companies:companyarr,
             projects:projectarr
         });
-        console.log(this.state.companies);
     }
 
     header() {
@@ -118,22 +120,42 @@ class RefactorDashboard extends Component {
         this.setState({currenttimer:task});
     }
 
-    calculateTaskHours(task) {
+    calculateTaskHours(task, utilizationhours) {
         var counter = 1;
         var hoursperday =0;
+        var hours = new Array();
         if(task['start-date'] == "" || task['due-date'] == "") {
             return {"hoursperday":hoursperday};
         } else {
-            var startdate = this.state.calendar.convertFromTeamworkDate(task['start-date']);
-            var duedate = this.state.calendar.convertFromTeamworkDate(task['due-date']);
-            while (startdate.toDateString() != duedate.toDateString()) {
-                var dayofweek = startdate.getDay();
+            const calendar = this.state.calendar;
+            var startdate = calendar.convertFromTeamworkDate(task['start-date']);
+            var duedate = calendar.convertFromTeamworkDate(task['due-date']);
+            var dateincrement = new Date(startdate.getFullYear(), startdate.getMonth(), startdate.getDate());
+            while (dateincrement.toDateString() != duedate.toDateString()) {
+                var dayofweek = dateincrement.getDay();
                 if (dayofweek != 0 && dayofweek != 6) {
                     counter++;
                 }
-                startdate.setDate(startdate.getDate() + 1);
+                dateincrement.setDate(dateincrement.getDate() + 1);
             }
+            //TODO for every day in calendar range, add hoursperday to utilizationhours
             hoursperday = (task['estimated-minutes'] / 60) / counter;
+            for(let i=0; i<calendar.range.length; i++) {
+                for(let j=0; j<5; j++) {
+                    if(task['start-date'] !== "" && task['due-date'] !== "") {
+                        var rangedate = calendar.range[i][j];
+                        var current = new Date(rangedate.year, rangedate.month, rangedate.day);
+                        if(current >= startdate && current <= duedate) {
+                            hours.push(hoursperday);
+                        } else {
+                            hours.push(0);
+                        }
+                    } else {
+                        hours.push(0);
+                    }
+                }
+            }
+            utilizationhours.push(hours);
 
             return {"hoursperday": hoursperday};
         }
@@ -144,7 +166,6 @@ class RefactorDashboard extends Component {
             <div>
                 <FilterBar
                     calendar={this.state.calendar}
-                    tasks={this.state.tasks}
                     companies={this.state.companies}
                     projects={this.state.projects}
                     onDateFilterChange={this.handleDateFilter}/>
@@ -154,7 +175,7 @@ class RefactorDashboard extends Component {
 
                         <TableHeader calendar={this.state.calendar}
                             profile={this.state.currentprofile}
-                            tasks={this.state.tasks}
+                            utilizationhours={this.state.utilizationhours}
                             />
                         <Tasks
                             calendar={this.state.calendar}
