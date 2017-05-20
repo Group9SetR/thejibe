@@ -8,9 +8,9 @@ export default class FilterBar extends Component {
     }
 
     handleDateFilterChange(e) {
-        if($('.tasks').attr("aria-expanded")){
-            document.getElementById('expandBtnToggle').click();
-        }
+        $('.tasks').each(function() {
+            $(this).removeClass('in');
+        });
         this.props.onDateFilterChange(e.target.value);
     }
 
