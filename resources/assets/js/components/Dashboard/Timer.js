@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
 import Modal from 'react-modal';
-import Modal2 from 'react-modal';
 
 const customStyles = {
     content : {
@@ -66,7 +65,7 @@ export default class Timer extends Component {
             }
         };
         var clearTimer = this.handle_clear();
-        var closeLogTimeModal = this.closeModal();
+        var closeLogTimeModal = this.logtimeModalClose();
 
         console.log('id passed ' + id);
         console.log('person-id ' + auth_id);
@@ -148,7 +147,7 @@ export default class Timer extends Component {
 
     deleteTimer() {
         this.handle_clear();
-        this.closeModal2();
+        this.deleteModalClose();
         $('#timerDescription').val('');
         $('#timerBillable').prop('checked', false);
         $('.logtimer').css('visibility', 'hidden');
@@ -240,7 +239,7 @@ export default class Timer extends Component {
                                 <br/>
                                 <Modal
                                     isOpen={this.state.logtimeModalOpen}
-                                    onAfterOpen={this.afterOpenModal}
+                                    onAfterOpen={this.afterLogtimeModalOpen}
                                     onRequestClose={this.logtimeModalClose}
                                     style={customStyles}
                                     contentLabel=" Modal"
@@ -263,9 +262,9 @@ export default class Timer extends Component {
                                     </div>
                                 </Modal>
 
-                                <Modal2
+                                <Modal
                                     isOpen={this.state.deleteModalOpen}
-                                    onAfterOpen={this.afterOpenModal2}
+                                    onAfterOpen={this.afterDeleteModalOpen}
                                     onRequestClose={this.deleteModalClose}
                                     style={customStyles}
                                     contentLabel=" Modal2"
@@ -287,7 +286,7 @@ export default class Timer extends Component {
                                             </div>
                                         </div>
                                     </div>
-                                </Modal2>
+                                </Modal>
                                 <button className="btn btn-success openTimerConfirmModal col-sm-4" onClick={this.logtimeModalOpen}>
                                     Log Time
                                 </button>
