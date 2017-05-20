@@ -8,21 +8,23 @@ export default class FilterBar extends Component {
     }
 
     handleDateFilterChange(e) {
+        if($('.tasks').attr("aria-expanded")){
+            document.getElementById('expandBtnToggle').click();
+        }
         this.props.onDateFilterChange(e.target.value);
-        document.getElementById('expandTasksBtn').click();
     }
 
     handleFilterChange(e){
         if(e.target.value == "tasks") {
             $('.tasks').each(function () {
-                $(this).attr('style', 'display:table-row');
+                $(this).addClass('in');
             });
         } else {
-            $(".tasks:not(."+e.target.value+")").each(function() {
-                $(this).attr('style', 'display: none');
+            $(".tasks:not(."+e.target.value+")").each(function(){
+                $(this).removeClass('in');
             });
             $('.'+e.target.value).each(function() {
-                $(this).attr('style','display:table-row');
+                $(this).addClass('in');
             });
         }
     }
@@ -39,7 +41,6 @@ export default class FilterBar extends Component {
             }
         }
         if(this.props.projects.length > 0){
-            console.log("projects"+this.props.projects);
             for(let i=0; i<this.props.projects.length; i++) {
                 projects.push(<option value={"project-"+this.props.projects[i]['project-id']}>{this.props.projects[i]['project-name']}</option>);
             }
