@@ -176,7 +176,10 @@ tbody td:hover::after{
 
 .utilizationbar-bottom {
     height:25%;
+    color:transparent !important;
 }
+
+
 #expandBtn{
     padding-top: 10px;
 }

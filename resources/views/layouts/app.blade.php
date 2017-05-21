@@ -13,8 +13,10 @@
     <link href="{{asset('css/app.css')}}" rel="stylesheet">
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
     <link rel="stylesheet" href="https://cdnjs.com/libraries/bootstrap-slider">
-    @yield('css')
+    <link rel="stylesheet" href="{{asset('css/w3.css')}}">
     <link rel="stylesheet" href="{{asset('css/application-level.css')}}">
+    @yield('css')
+
     <!-- Scripts -->
     <script>
         window.Laravel = <?php echo json_encode([
