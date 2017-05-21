@@ -41,11 +41,11 @@ class RefactorDashboard extends Component {
     }
 
     taskList() {
-        //TODO Read id from current profile
-        var startdate = this.state.calendar.convertToTeamworkDate(this.state.calendar.start);
-        var enddate = this.state.calendar.convertToTeamworkDate(this.state.calendar.end);
-        var request = 'https://thejibe.teamwork.com/tasks.json'+'?startdate='+startdate
-            +'&enddate='+enddate+'&responsible-party-ids='+auth_id;
+        //var startdate = this.state.calendar.convertToTeamworkDate(this.state.calendar.start);
+        //var enddate = this.state.calendar.convertToTeamworkDate(this.state.calendar.end);
+        //var request = 'https://thejibe.teamwork.com/tasks.json'+'?startdate='+startdate
+        //    +'&enddate='+enddate+'&responsible-party-ids='+auth_id+'&include=nodate';
+        var request = 'https://thejibe.teamwork.com/tasks.json'+'?responsible-party-ids='+auth_id;
         fetch(request, this.header())
             .then(response => {
                 return response.json();
@@ -54,7 +54,6 @@ class RefactorDashboard extends Component {
                 this.setState({ tasks:tasks['todo-items']},this.taskDetails);
             });
     }
-
 
     /**
      * The current profile should actually be stored upon login.
