@@ -55,23 +55,52 @@ export default class FilterBar extends Component {
         }
     }
 
+    getHeader() {
+        var key = auth_api_token;
+        var base64 = new Buffer(key+":xxx").toString("base64");
+        var obj = {
+            method:"GET",
+            dataType: 'json',
+            headers: {
+                'Authorization': 'BASIC '+base64,
+                'Content-Type': 'application/json'
+            }
+        };
+        return obj;
+    }
+
+    getCompanyList() {
+        fetch('https://thejibe.teamwork.com/companies.json', this.getHeader())
+            .then( (response) => {
+                return response.json();
+            }).then( function(companyList) {
+                for(let i = 0; i < companyList['companies'].length; i++) {
+                    $("#client-filter").append(new Option(
+                        companyList['companies'][i]['name'],
+                        "company-" + companyList['companies'][i]['id']));
+                }
+            //$("#client-filter").select2();
+        });
+    }
+
+    getProjectList() {
+        fetch('https://thejibe.teamwork.com/projects.json', this.getHeader())
+            .then( (response) => {
+                return response.json();
+            }).then( function(projectList) {
+            for(let i = 0; i < projectList['projects'].length; i++) {
+                $("#project-filter").append(new Option(
+                    projectList['projects'][i]['name'],
+                    "project-" + projectList['projects'][i]['id']));
+            }
+            //$("#project-filter").select2();
+        });
+    }
+
     render() {
         var calendar = this.props.calendar;
         var startDate = calendar.start.toISOString().substr(0,10);
         var endDate = calendar.end.toISOString().substr(0,10);
-        var companies = [];
-        var projects = [];
-        if(this.props.companies.length > 0){
-            for(let i=0; i<this.props.companies.length; i++) {
-                companies.push(<option value={"company-"+this.props.companies[i]['company-id']}>{this.props.companies[i]['company-name']}</option>);
-            }
-        }
-        if(this.props.projects.length > 0){
-            for(let i=0; i<this.props.projects.length; i++) {
-                projects.push(<option value={"project-"+this.props.projects[i]['project-id']}>{this.props.projects[i]['project-name']}</option>);
-            }
-        }
-
         return (
             <div>
                 <div className="secondnav" id="mySecondnav">
@@ -79,13 +108,11 @@ export default class FilterBar extends Component {
                         <div className="col-sm-2">
                             <select className="form-control" id="client-filter" onChange={this.handleFilterChange}>
                                 <option value="tasks">All Companies</option>
-                                {companies}
                             </select>
                         </div>
                         <div className="col-sm-2">
                             <select className="form-control" id="project-filter" onChange={this.handleFilterChange}>
                                 <option value="tasks">All Projects</option>
-                                {projects}
                             </select>
                         </div>
                         <div className="col-sm-2">
@@ -121,5 +148,12 @@ export default class FilterBar extends Component {
                 </div>
             </div>
         );
+    }
+
+    componentDidMount() {
+        this.getCompanyList();
+        this.getProjectList();
+        //$("#client-filter").select2();
+        //$("#project-filter").select2();
     }
 }
