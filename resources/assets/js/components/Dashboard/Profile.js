@@ -77,7 +77,7 @@ export default class Profile extends Component {
             var utilizationformatted = this.state.utilization[i].toFixed(2);
             dailyhours.push(
                 <td className="utilizationbar nohighlight" key={"utilization-"+i}>
-                    <div className={timeframeutilization}>{this.state.total+'/'+this.props.calendar.range.length*5*8 }</div>
+                    <div className={timeframeutilization}>{this.state.total.toFixed(2)+'/'+this.props.calendar.range.length*5*8 }</div>
                     <div className={type}>{utilizationformatted}</div>
                 </td>);
         }

@@ -5,7 +5,33 @@ export default class FilterBar extends Component {
         super(props);
         this.handleDateFilterChange = this.handleDateFilterChange.bind(this);
         this.handleFilterChange = this.handleFilterChange.bind(this);
+        this.handleDateSelectorChange = this.handleDateSelectorChange.bind(this);
     }
+
+    componentDidMount() {
+        var startdate = this.props.calendar.start.toISOString().substr(0,10);
+        var enddate = this.props.calendar.end.toISOString().substr(0,10);
+        this.setState({
+            start:startdate,
+            end:enddate
+        });
+    }
+
+    componentWillReceiveProps(nextProps) {
+        if(nextProps.calendar != this.props.calendar) {
+            var startdate = this.props.calendar.start.toISOString().substr(0,10);
+            var enddate = this.props.calendar.end.toISOString().substr(0,10);
+            this.setState({
+                start:startdate,
+                end:enddate
+            });
+        }
+    }
+
+    handleDateSelectorChange() {
+
+    }
+
 
     handleDateFilterChange(e) {
         $('.tasks').each(function() {
@@ -77,9 +103,9 @@ export default class FilterBar extends Component {
                                 <form>
                                     <div className ="form-inline">
                                         <input type="date" name="start_date" id="start_date" className="form-control"
-                                               defaultValue={startDate} />
+                                               value={this.state.start} onChange={}/>
                                         <input type="date" name="end_date" id="end_date" className="form-control"
-                                               defaultValue={endDate} />
+                                               value={this.state.end} onChange={}/>
                                         <select className="form-control" id="date_filter"
                                                 defaultValue={calendar.default} onChange={this.handleDateFilterChange}>
                                             <option value={calendar.Type_Enum.WEEK}>Week</option>
