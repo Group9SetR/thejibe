@@ -119,15 +119,18 @@ export default class Timer extends Component {
                     seconds: this.state.seconds + 1
                 })
             , 1000);
+        $('#startBtn').attr('disabled', true);
     }
     handle_pause() {
         clearInterval(this.timer);
+        $('#startBtn').removeAttr('disabled');
     }
     handle_clear() {
         clearInterval(this.timer);
         this.setState({
             seconds: 0
         });
+        $('#startBtn').removeAttr('disabled');
     }
 
     logtimeModalOpen() {
@@ -206,13 +209,13 @@ export default class Timer extends Component {
                                 <p id="panelTask">Task : { current.content }</p>
                                 </div>
                                 <div className="timerDiv">
-                                <button onClick={this.handle_start} className="btn btn-default btn-sm">
+                                <button id='startBtn' onClick={this.handle_start} className="btn btn-default btn-sm">
                                     <span className="glyphicon glyphicon glyphicon-play" aria-hidden="true"></span>
                                 </button>
-                                <button onClick={this.handle_pause} className="btn btn-default btn-sm">
+                                <button id='pauseBtn' onClick={this.handle_pause} className="btn btn-default btn-sm">
                                     <span className="glyphicon glyphicon glyphicon-pause" aria-hidden="true"></span>
                                 </button>
-                                <button onClick={this.handle_clear} className="btn btn-default btn-sm">
+                                <button id='stopBtn' onClick={this.handle_clear} className="btn btn-default btn-sm">
                                     <span className="glyphicon glyphicon glyphicon-stop" aria-hidden="true"></span>
                                 </button>
                                 &nbsp;
