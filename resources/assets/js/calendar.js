@@ -6,6 +6,7 @@
  */
 export default function Calendar()
 {
+    //TODO Extract enums to separate files
     this.Type_Enum = Object.freeze({
         DEFAULT:0,
         WEEK:1,
@@ -15,9 +16,7 @@ export default function Calendar()
         CUSTOM:5,
         properties: {
             1: {name:"week", weeks:1},
-            2: {name:"biweek", weeks:2},
-            3: {name:"month", weeks:4},
-            4: {name:"trimonth", weeks:12}
+            2: {name:"biweek", weeks:2}
         }
     });
     this.Month_Enum = Object.freeze({
@@ -48,21 +47,20 @@ export default function Calendar()
             11: "Dec"
         }
     });
-    this.custom = "";
     this.default = this.Type_Enum.BIWEEK;
     this.start = "";
     this.end = "";
     this.type = "";
     this.range = [];
-    this.init = function(type) { //initialize range of dates
+    this.init = function(type, customstart, customend) { //initialize range of dates
         this.range = [];
         this.type = (type === undefined) ? this.default : this.getType(type);
-        this.start = getStart(this.type, this.Type_Enum);
-        this.setRange();
+        this.start = getStart(this.type, this.Type_Enum, customstart);
+        this.setRange(customend);
         var last = this.range[this.range.length-1][4];
         this.end = new Date(last.year, last.month, last.day);
     };
-    this.setRange = function () {
+    this.setRange = function (end) {
         var current = new Date();
         current.setTime(this.start.getTime());
         if(this.type === this.Type_Enum.WEEK || this.type === this.Type_Enum.BIWEEK) {
@@ -82,6 +80,14 @@ export default function Calendar()
             temp.setTime(this.start.getTime());
             temp.setMonth(temp.getMonth()+3);
             while(current.getMonth() != temp.getMonth()) {
+                var next = new Date(current.getFullYear(), current.getMonth(), current.getDate()+7);
+                this.range.push(getWeekDates(current));
+                current = next;
+            }
+        } else if(this.type === this.Type_Enum.CUSTOM) {
+            var temp = new Date();
+            temp.setTime(end.getTime());
+            while(current <= temp) {
                 var next = new Date(current.getFullYear(), current.getMonth(), current.getDate()+7);
                 this.range.push(getWeekDates(current));
                 current = next;
@@ -123,7 +129,14 @@ export default function Calendar()
             day = '0'+day;
         }
         return year+month+day;
-
+    };
+    this.convertHTMLDate = function(datestr) {
+        //YYYY-MM-DD
+        var newdate = new Date();
+        newdate.setFullYear(datestr.substr(0,4));
+        newdate.setMonth(Number(datestr.substr(5,2))-1);
+        newdate.setDate(datestr.substr(8,2));
+        return newdate;
     }
 }
 
@@ -165,17 +178,18 @@ function getWeekStart(date) {
     return current;
 }
 
+
 function getMonthStart(date) {
     return new Date(date.getFullYear(), date.getMonth(), 1);
 }
 
-function getStart(type, typeenum) {
+function getStart(type, typeenum, start) {
     var current = new Date();
     if(type == typeenum.WEEK || type == typeenum.BIWEEK) {
         return getWeekStart(current);
     } else if (type == typeenum.MONTH || type == typeenum.TRIMONTH) {
         return getMonthStart(current);
-    } else {
-        return current;
+    } else if(type == typeenum.CUSTOM){
+        return getWeekStart(start);
     }
 }
