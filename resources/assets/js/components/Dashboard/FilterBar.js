@@ -95,13 +95,13 @@ export default class FilterBar extends Component {
                         <div className="navbar">
                             <ul className="nav navbar-nav navbar-left ">
                                 <div className ="form-inline">
-                                    <select className="form-control" id="client-filter" onChange={this.handleFilterChange}>
+                                    <select className="form-control datafilter" id="client-filter" onChange={this.handleFilterChange}>
                                         <option value="tasks">All Companies</option>
                                     </select>
-                                    <select className="form-control" id="project-filter" onChange={this.handleFilterChange}>
+                                    <select className="form-control datefilter" id="project-filter" onChange={this.handleFilterChange}>
                                         <option value="tasks">All Projects</option>
                                     </select>
-                                    <select className="form-control" id="priority-filter" onChange={this.handleFilterChange}>
+                                    <select className="form-control datafilter" id="priority-filter" onChange={this.handleFilterChange}>
                                         <option value="tasks">All Priorities</option>
                                         <option value="task-priority-high">High</option>
                                         <option value="task-priority-medium">Medium</option>
