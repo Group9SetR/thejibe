@@ -68,6 +68,7 @@ export default class FilterBar extends Component {
                                 <option value="task-priority-high">High</option>
                                 <option value="task-priority-medium">Medium</option>
                                 <option value="task-priority-low">Low</option>
+                                <option value="task-priority-none">None</option>
                             </select>
                         </div>
 
