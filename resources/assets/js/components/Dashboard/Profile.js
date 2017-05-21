@@ -66,7 +66,7 @@ export default class Profile extends Component {
 
         var dailyhours = [];
         var result = this.state.total/(this.props.calendar.range.length*5*8);
-        var timeframeutilization = "utilizationbar-top w3-hover-text-white";
+        var timeframeutilization = "utilizationbar-top w3-hover-text-white ";
 
         timeframeutilization = this.setColourIdentifier(result, timeframeutilization);
 

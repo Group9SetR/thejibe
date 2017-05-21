@@ -172,6 +172,8 @@ tbody td:hover::after{
 .utilizationbar-top {
     background-color: #99b900;
     height:75%;
+
+    color: transparent !important;
 }
 
 .utilizationbar-bottom {
