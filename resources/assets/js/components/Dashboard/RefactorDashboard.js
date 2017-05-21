@@ -20,9 +20,7 @@ class RefactorDashboard extends Component {
             utilizationhours: [],
             calendar: [],
             currenttimer: [],
-            taskhours: [],
-            companies: [],
-            projects: []
+            taskhours: []
         }
         this.state.calendar = new Calendar();
         this.state.calendar.init();
@@ -71,27 +69,12 @@ class RefactorDashboard extends Component {
     taskDetails() {
         var taskhours = [];
         var utilizationhours = []; //TODO set utilization hours here
-        //initialize utilization hours to 0 for each day in range
-        var companyset = new Set(); //TODO remove this
-        var companyarr = []; //TODO remove this
-        var projectset = new Set(); //TODO remove this
-        var projectarr = []; //TODO remove this
         this.state.tasks.map(task=>{
             taskhours[task.id] = this.calculateTaskHours(task, utilizationhours)['hoursperday'];
-            if(!companyset.has(task['company-id'])) {
-                companyset.add(task['company-id']);
-                companyarr.push({"company-id":task['company-id'], "company-name":task['company-name']});
-            }
-            if(!projectset.has(task['project-id'])) {
-                projectset.add(task['project-id']);
-                projectarr.push({"project-id":task['project-id'],"project-name":task['project-name']});
-            }
         });
         this.setState({
             taskhours:taskhours,
-            utilizationhours:utilizationhours,
-            companies:companyarr,
-            projects:projectarr
+            utilizationhours:utilizationhours
         });
     }
 
@@ -137,7 +120,6 @@ class RefactorDashboard extends Component {
                 }
                 dateincrement.setDate(dateincrement.getDate() + 1);
             }
-            //TODO for every day in calendar range, add hoursperday to utilizationhours
             hoursperday = (task['estimated-minutes'] / 60) / counter;
             for(let i=0; i<calendar.range.length; i++) {
                 for(let j=0; j<5; j++) {
@@ -165,7 +147,6 @@ class RefactorDashboard extends Component {
             <div>
                 <FilterBar
                     calendar={this.state.calendar}
-                    tasks={this.state.tasks}
                     onDateFilterChange={this.handleDateFilter}/>
                 <div className="container" id="wrapper">
                     <table className="table table-bordered " id="task_table">
