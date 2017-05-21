@@ -31,6 +31,7 @@ class RefactorDashboard extends Component {
         this.header = this.header.bind(this);
         this.handleDateFilter = this.handleDateFilter.bind(this);
         this.handleTimer = this.handleTimer.bind(this);
+        this.handleDateSelector = this.handleDateSelector.bind(this);
     }
 
     componentDidMount() {
@@ -95,7 +96,16 @@ class RefactorDashboard extends Component {
     handleDateFilter(type) {
         var temp = new Calendar();
         temp.init(type);
-        this.setState({calendar:temp}, this.taskList);
+        this.setState({calendar:temp}, this.taskDetails);
+        //Change to this.taskList if we go back to pulling tasks between a certain range
+    }
+
+    handleDateSelector(start,end) {
+        var temp = new Calendar();
+        temp.init(this.state.calendar.Type_Enum.CUSTOM, start, end);
+        this.setState({calendar:temp}, this.taskDetails);
+        //Change to this.taskList if we go back to pulling tasks between a certain range
+
     }
 
     handleTimer(task) {
@@ -147,7 +157,8 @@ class RefactorDashboard extends Component {
             <div>
                 <FilterBar
                     calendar={this.state.calendar}
-                    onDateFilterChange={this.handleDateFilter}/>
+                    onDateFilterChange={this.handleDateFilter}
+                    onDateSelectorChange={this.handleDateSelector}/>
                 <div className="container" id="wrapper">
                     <table className="table table-bordered " id="task_table">
                         <ColumnHeader calendar={this.state.calendar} />
