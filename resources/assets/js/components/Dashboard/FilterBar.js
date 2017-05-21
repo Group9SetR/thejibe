@@ -47,12 +47,12 @@ export default class FilterBar extends Component {
                 return response.json();
             }).then( function(companyList) {
                 for(let i = 0; i < companyList['companies'].length; i++) {
-                    console.log(companyList['companies'].length);
                     $("#client-filter").append(new Option(
                         companyList['companies'][i]['name'],
                         "company-" + companyList['companies'][i]['id']));
                 }
-            });
+            //$("#client-filter").select2();
+        });
     }
 
     getProjectList() {
@@ -61,11 +61,11 @@ export default class FilterBar extends Component {
                 return response.json();
             }).then( function(projectList) {
             for(let i = 0; i < projectList['projects'].length; i++) {
-                console.log(projectList['projects'].length);
                 $("#project-filter").append(new Option(
                     projectList['projects'][i]['name'],
                     "project-" + projectList['projects'][i]['id']));
             }
+            //$("#project-filter").select2();
         });
     }
 
@@ -73,18 +73,6 @@ export default class FilterBar extends Component {
         var calendar = this.props.calendar;
         var startDate = calendar.start.toISOString().substr(0,10);
         var endDate = calendar.end.toISOString().substr(0,10);
-        /*if(this.props.companies.length > 0){
-            for(let i=0; i<this.props.companies.length; i++) {
-                companies.push(<option value={"company-"+this.props.companies[i]['company-id']}>{this.props.companies[i]['company-name']}</option>);
-            }
-        }
-        if(this.props.projects.length > 0){
-            console.log("projects"+this.props.projects);
-            for(let i=0; i<this.props.projects.length; i++) {
-                projects.push(<option value={"project-"+this.props.projects[i]['project-id']}>{this.props.projects[i]['project-name']}</option>);
-            }
-        }*/
-
         return (
             <div>
                 <div className="secondnav" id="mySecondnav">
@@ -136,5 +124,7 @@ export default class FilterBar extends Component {
     componentDidMount() {
         this.getCompanyList();
         this.getProjectList();
+        //$("#client-filter").select2();
+        //$("#project-filter").select2();
     }
 }
