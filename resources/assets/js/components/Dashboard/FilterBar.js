@@ -47,21 +47,32 @@ export default class FilterBar extends Component {
                 return response.json();
             }).then( function(companyList) {
                 for(let i = 0; i < companyList['companies'].length; i++) {
+                    console.log(companyList['companies'].length);
                     $("#client-filter").append(new Option(
                         companyList['companies'][i]['name'],
-                        "company-" + companyList['companies'][i]['company-id']));
+                        "company-" + companyList['companies'][i]['id']));
                 }
             });
+    }
+
+    getProjectList() {
+        fetch('https://thejibe.teamwork.com/projects.json', this.getHeader())
+            .then( (response) => {
+                return response.json();
+            }).then( function(projectList) {
+            for(let i = 0; i < projectList['projects'].length; i++) {
+                console.log(projectList['projects'].length);
+                $("#project-filter").append(new Option(
+                    projectList['projects'][i]['name'],
+                    "project-" + projectList['projects'][i]['id']));
+            }
+        });
     }
 
     render() {
         var calendar = this.props.calendar;
         var startDate = calendar.start.toISOString().substr(0,10);
         var endDate = calendar.end.toISOString().substr(0,10);
-        var companyList = this.getCompanyList();
-        //var projectList = this.getProjectList();
-        var companies = [];
-        var projects = [];
         /*if(this.props.companies.length > 0){
             for(let i=0; i<this.props.companies.length; i++) {
                 companies.push(<option value={"company-"+this.props.companies[i]['company-id']}>{this.props.companies[i]['company-name']}</option>);
@@ -120,5 +131,10 @@ export default class FilterBar extends Component {
                 </div>
             </div>
         );
+    }
+
+    componentDidMount() {
+        this.getCompanyList();
+        this.getProjectList();
     }
 }
