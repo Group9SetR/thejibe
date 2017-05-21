@@ -39,10 +39,6 @@ export default class Tasks extends Component {
         }
     }
 
-
-
-
-
     render() {
         if(Array.isArray(this.props.tasks) && !this.props.tasks.length) {
             return (<tbody><tr></tr></tbody>);
@@ -79,8 +75,8 @@ export default class Tasks extends Component {
             }
 
             var timespan = [];
-            var dailyhours = (Array.isArray(this.props.taskhours) && !this.props.taskhours.length)?0:this.props.taskhours[task.id];
-
+            var dailyhours = (Array.isArray(this.props.taskhours) && !this.props.taskhours.length)?0:
+                this.props.taskhours[task.id].toFixed(2);
             for(let i=0; i<calendar.range.length; i++) {
                 for(let j=0; j<5; j++) {
                     if(task['start-date'] !== "" && task['due-date'] !== "") {
@@ -92,7 +88,7 @@ export default class Tasks extends Component {
                         if(current >= startdate && current <= duedate) {
                             var taskspanname = "taskGraph taskSpan-"+i+"-"+j;
                             timespan.push(<td style={{ "padding":"0"}} key={task.id+"-"+i+"-"+j} className="taskSpan">
-                                <div className={taskspanname} data-taskhours={dailyhours}>
+                                <div className={taskspanname}>
                                     <span>{dailyhours}</span>
                                 </div></td>);
                         } else {
