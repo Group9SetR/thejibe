@@ -165,8 +165,7 @@ class RefactorDashboard extends Component {
             <div>
                 <FilterBar
                     calendar={this.state.calendar}
-                    companies={this.state.companies}
-                    projects={this.state.projects}
+                    tasks={this.state.tasks}
                     onDateFilterChange={this.handleDateFilter}/>
                 <div className="container" id="wrapper">
                     <table className="table table-bordered " id="task_table">
