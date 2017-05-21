@@ -27,13 +27,42 @@ export default class FilterBar extends Component {
         }
     }
 
+    getHeader() {
+        var key = auth_api_token;
+        var base64 = new Buffer(key+":xxx").toString("base64");
+        var obj = {
+            method:"GET",
+            dataType: 'json',
+            headers: {
+                'Authorization': 'BASIC '+base64,
+                'Content-Type': 'application/json'
+            }
+        };
+        return obj;
+    }
+
+    getCompanyList() {
+        fetch('https://thejibe.teamwork.com/companies.json', this.getHeader())
+            .then( (response) => {
+                return response.json();
+            }).then( function(companyList) {
+                for(let i = 0; i < companyList['companies'].length; i++) {
+                    $("#client-filter").append(new Option(
+                        companyList['companies'][i]['name'],
+                        "company-" + companyList['companies'][i]['company-id']));
+                }
+            });
+    }
+
     render() {
         var calendar = this.props.calendar;
         var startDate = calendar.start.toISOString().substr(0,10);
         var endDate = calendar.end.toISOString().substr(0,10);
+        var companyList = this.getCompanyList();
+        //var projectList = this.getProjectList();
         var companies = [];
         var projects = [];
-        if(this.props.companies.length > 0){
+        /*if(this.props.companies.length > 0){
             for(let i=0; i<this.props.companies.length; i++) {
                 companies.push(<option value={"company-"+this.props.companies[i]['company-id']}>{this.props.companies[i]['company-name']}</option>);
             }
@@ -43,7 +72,7 @@ export default class FilterBar extends Component {
             for(let i=0; i<this.props.projects.length; i++) {
                 projects.push(<option value={"project-"+this.props.projects[i]['project-id']}>{this.props.projects[i]['project-name']}</option>);
             }
-        }
+        }*/
 
         return (
             <div>
@@ -52,13 +81,11 @@ export default class FilterBar extends Component {
                         <div className="col-sm-2">
                             <select className="form-control" id="client-filter" onChange={this.handleFilterChange}>
                                 <option value="tasks">All Companies</option>
-                                {companies}
                             </select>
                         </div>
                         <div className="col-sm-2">
                             <select className="form-control" id="project-filter" onChange={this.handleFilterChange}>
                                 <option value="tasks">All Projects</option>
-                                {projects}
                             </select>
                         </div>
                         <div className="col-sm-2">

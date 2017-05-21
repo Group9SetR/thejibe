@@ -80,7 +80,6 @@ class RefactorDashboard extends Component {
                 companyset.add(task['company-id']);
                 companyarr.push({"company-id":task['company-id'], "company-name":task['company-name']});
             }
-            console.log(projectset.has(task['project-id']));
             if(!projectset.has(task['project-id'])) {
                 projectset.add(task['project-id']);
                 projectarr.push({"project-id":task['project-id'],"project-name":task['project-name']});
@@ -91,7 +90,6 @@ class RefactorDashboard extends Component {
             companies:companyarr,
             projects:projectarr
         });
-        console.log(this.state.companies);
     }
 
     header() {
@@ -145,8 +143,6 @@ class RefactorDashboard extends Component {
                 <FilterBar
                     calendar={this.state.calendar}
                     tasks={this.state.tasks}
-                    companies={this.state.companies}
-                    projects={this.state.projects}
                     onDateFilterChange={this.handleDateFilter}/>
                 <div className="container" id="wrapper">
                     <table className="table table-bordered " id="task_table">
