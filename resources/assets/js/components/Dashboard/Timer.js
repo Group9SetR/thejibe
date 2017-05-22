@@ -13,9 +13,9 @@ const customStyles = {
         width                 : '430px',
         padding               : '0px',
         margin                : '0px',
-}
-
+    }
 };
+
 export default class Timer extends Component {
 
     constructor(props) {
@@ -28,13 +28,13 @@ export default class Timer extends Component {
             completed: false
         };
         this.timer = null;
-        this.log_time = this.log_time.bind(this);
-        this.get_hours = this.get_hours.bind(this);
-        this.get_minutes = this.get_minutes.bind(this);
-        this.get_seconds = this.get_seconds.bind(this);
-        this.handle_start = this.handle_start.bind(this);
-        this.handle_pause = this.handle_pause.bind(this);
-        this.handle_clear = this.handle_clear.bind(this);
+        this.logTime = this.logTime.bind(this);
+        this.getHours = this.getHours.bind(this);
+        this.getMinutes = this.getMinutes.bind(this);
+        this.getSeconds = this.getSeconds.bind(this);
+        this.handleStart = this.handleStart.bind(this);
+        this.handlePause = this.handlePause.bind(this);
+        this.handleClear = this.handleClear.bind(this);
         this.logtimeModalOpen = this.logtimeModalOpen.bind(this);
         this.deleteModalOpen = this.deleteModalOpen.bind(this);
         this.logtimeModalClose = this.logtimeModalClose.bind(this);
@@ -42,12 +42,12 @@ export default class Timer extends Component {
         this.deleteTimer = this.deleteTimer.bind(this);
     }
 
-    log_time(id) {
-        var key = "twp_29i8q9BH4BGyLykU4jSMZVkj1OnI";
+    logTime(id) {
+        var key = auth_api_token;
         var base64 = new Buffer(key + ":xxx").toString("base64");
         var date = new Date();
-        var hours = this.get_hours();
-        var minutes = this.get_minutes();
+        var hours = this.getHours();
+        var minutes = this.getMinutes();
         var description = $('#timerDescription').val();
         var billable = $('#timerBillable').prop('checked') ? "1" : "0";
         if (minutes == '00') {
@@ -64,17 +64,8 @@ export default class Timer extends Component {
                 "isbillable": billable
             }
         };
-        var clearTimer = this.handle_clear();
+        var clearTimer = this.handleClear();
         var closeLogTimeModal = this.logtimeModalClose();
-
-        console.log('id passed ' + id);
-        console.log('person-id ' + auth_id);
-        console.log("hours:" + this.get_hours() + "  minutes:" + minutes + "  seconds:" + this.get_seconds() + "  = logged time");
-        console.log('date  ' + date.getFullYear() + ("0" + (date.getMonth() + 1)).slice(-2) + ("0" + date.getDate()).slice(-2));
-        console.log('time  ' + date.getHours() + ":" + date.getMinutes());
-        console.log(entry);
-        console.log(description);
-        console.log(billable);
 
         $.ajax({
             url: 'https://thejibe.teamwork.com/tasks/' + id + '/time_entries.json',
@@ -82,13 +73,12 @@ export default class Timer extends Component {
             dataType: 'json',
             data: JSON.stringify(entry),
             success: function(data) {
-                console.log("time logged");
                 clearTimer;
                 closeLogTimeModal;
                 $('#timerDescription').val('');
                 $('#timerBillable').prop('checked', false);
                 $('.logtimer').css('visibility', 'hidden');
-                $('.timer-btn').removeAttr('disabled');
+                $('.timerBtn').removeAttr('disabled');
             },
             error: function() { console.log('GET request to time totals failed'); },
             beforeSend: setHeader
@@ -100,20 +90,20 @@ export default class Timer extends Component {
         }
     }
 
-    get_hours() {
+    getHours() {
         let hours = Math.floor(this.state.seconds / 3600)
         return ("0" + hours).slice(-2);
     }
-    get_minutes() {
+    getMinutes() {
         let minutes = Math.floor(this.state.seconds / 60)
         return ("0" + minutes).slice(-2);
     }
-    get_seconds() {
+    getSeconds() {
         let seconds = Math.floor(this.state.seconds % 60)
         return ("0" + seconds).slice(-2);
     }
 
-    handle_start() {
+    handleStart() {
         this.timer = setInterval( () =>
                 this.setState({
                     seconds: this.state.seconds + 1
@@ -121,11 +111,11 @@ export default class Timer extends Component {
             , 1000);
         $('#startBtn').attr('disabled', true);
     }
-    handle_pause() {
+    handlePause() {
         clearInterval(this.timer);
         $('#startBtn').removeAttr('disabled');
     }
-    handle_clear() {
+    handleClear() {
         clearInterval(this.timer);
         this.setState({
             seconds: 0
@@ -134,11 +124,11 @@ export default class Timer extends Component {
     }
 
     logtimeModalOpen() {
-        this.handle_pause();
+        this.handlePause();
         this.setState({logtimeModalOpen: true});
     }
     deleteModalOpen() {
-        this.handle_pause();
+        this.handlePause();
         this.setState({deleteModalOpen: true});
     }
     logtimeModalClose() {
@@ -149,12 +139,12 @@ export default class Timer extends Component {
     }
 
     deleteTimer() {
-        this.handle_clear();
+        this.handleClear();
         this.deleteModalClose();
         $('#timerDescription').val('');
         $('#timerBillable').prop('checked', false);
         $('.logtimer').css('visibility', 'hidden');
-        $('.timer-btn').removeAttr('disabled');
+        $('.timerBtn').removeAttr('disabled');
     }
     onCompletionClick(id) {
         var completed = this.state.completed;
@@ -164,7 +154,6 @@ export default class Timer extends Component {
                     return responseText.json();
                 })
                 .then((response) => {
-                    console.log("task uncompleted")
                     this.setState({ completed: false });
                     $('#' + id + 'complete').css("color", "black");
                 });
@@ -174,7 +163,6 @@ export default class Timer extends Component {
                     return responseText.json();
                 })
                 .then((response) => {
-                    console.log("task completed")
                     this.setState({ completed: true });
                     $('#' + id + 'complete').css("color", "green");
                 });
@@ -209,17 +197,17 @@ export default class Timer extends Component {
                                 <p id="panelTask">Task : { current.content }</p>
                                 </div>
                                 <div className="timerDiv">
-                                <button id='startBtn' onClick={this.handle_start} className="btn btn-default btn-sm">
+                                <button id='startBtn' onClick={this.handleStart} className="btn btn-default btn-sm">
                                     <span className="glyphicon glyphicon glyphicon-play" aria-hidden="true"></span>
                                 </button>
-                                <button id='pauseBtn' onClick={this.handle_pause} className="btn btn-default btn-sm">
+                                <button id='pauseBtn' onClick={this.handlePause} className="btn btn-default btn-sm">
                                     <span className="glyphicon glyphicon glyphicon-pause" aria-hidden="true"></span>
                                 </button>
-                                <button id='stopBtn' onClick={this.handle_clear} className="btn btn-default btn-sm">
+                                <button id='stopBtn' onClick={this.handleClear} className="btn btn-default btn-sm">
                                     <span className="glyphicon glyphicon glyphicon-stop" aria-hidden="true"></span>
                                 </button>
                                 &nbsp;
-                                {this.get_hours()}:{this.get_minutes()}:{this.get_seconds()}
+                                {this.getHours()}:{this.getMinutes()}:{this.getSeconds()}
                                 <a className="accordion-toggle" data-toggle="collapse" data-parent="#accordion" href="#collapseOne"></a>
                                 </div>
                             </h4>
@@ -258,7 +246,7 @@ export default class Timer extends Component {
                                             <div className="modalFooter">
                                             <button className="col-sm-3 btn btn-default"  id ="closeBtn" style={{"float":"left"}}
                                                     onClick={this.logtimeModalClose}>Cancel</button>
-                                            <button onClick={this.log_time.bind(this, current.id)} className="col-sm-3 btn btn-success" id ="closeBtn" style={{"float":"right"}}
+                                            <button onClick={this.logTime.bind(this, current.id)} className="col-sm-3 btn btn-success" id ="closeBtn" style={{"float":"right"}}
                                                     >Ok</button>
                                             </div>
                                         </div>
