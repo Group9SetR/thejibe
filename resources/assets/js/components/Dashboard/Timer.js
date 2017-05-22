@@ -13,9 +13,9 @@ const customStyles = {
         width                 : '430px',
         padding               : '0px',
         margin                : '0px',
-}
-
+    }
 };
+
 export default class Timer extends Component {
 
     constructor(props) {
@@ -43,7 +43,7 @@ export default class Timer extends Component {
     }
 
     logTime(id) {
-        var key = "twp_29i8q9BH4BGyLykU4jSMZVkj1OnI";
+        var key = auth_api_token;
         var base64 = new Buffer(key + ":xxx").toString("base64");
         var date = new Date();
         var hours = this.getHours();
