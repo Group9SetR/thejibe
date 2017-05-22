@@ -117,9 +117,9 @@ export default class Tasks extends Component {
                             <div className="row">
                                 <div className="col-sm-8">
                                     <div className ="taskName">
-                                        { task.content }
+                                        <a href={"https://thejibe.teamwork.com/index.cfm#tasks/" + task.id}>{ task.content }</a>
                                         <div>
-                                            <p className ="projectName"> {task['project-name']} : {task['company-name']} </p>
+                                            <a href={"https://thejibe.teamwork.com/index.cfm#/projects/" + task['project-id'] + "/overview/summary"}><p className ="projectName"> {task['project-name']} : {task['company-name']} </p></a>
                                         </div>
                                     </div>
                                 </div>

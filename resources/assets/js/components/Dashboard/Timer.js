@@ -76,7 +76,7 @@ export default class Timer extends Component {
                 clearTimer;
                 closeLogTimeModal;
                 $('#timerDescription').val('');
-                $('#timerBillable').prop('checked', false);
+                $('#timerBillable').prop('checked', true);
                 $('.logtimer').css('visibility', 'hidden');
                 $('.timerBtn').removeAttr('disabled');
             },
@@ -142,7 +142,7 @@ export default class Timer extends Component {
         this.handleClear();
         this.deleteModalClose();
         $('#timerDescription').val('');
-        $('#timerBillable').prop('checked', false);
+        $('#timerBillable').prop('checked', true);
         $('.logtimer').css('visibility', 'hidden');
         $('.timerBtn').removeAttr('disabled');
     }
@@ -219,7 +219,7 @@ export default class Timer extends Component {
                                     <br/>
                                     <div id ="billable_completeBtn">
                                         <span className="pull-left">
-                                            <input id="timerBillable" name="billable" type="checkbox"/>&nbsp;Billable
+                                            <input id="timerBillable" name="billable" type="checkbox" defaultChecked="true"/>&nbsp;Billable
                                         </span>
                                         <button className ="btn btn-default btn-sm" style={{"float":"right"}} type="button" id={current.id + "complete"} onClick={this.onCompletionClick.bind(this, current.id)}>
                                             <span className="glyphicon glyphicon-ok" color="black"></span>
