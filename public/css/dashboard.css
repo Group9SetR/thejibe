@@ -135,7 +135,7 @@ tbody td:hover::after{
     color:black;
 }
 
-.timer-btn {
+.timerBtn {
     width:100%;
     height:100%;
 }
