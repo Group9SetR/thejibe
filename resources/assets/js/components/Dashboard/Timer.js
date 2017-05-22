@@ -67,22 +67,13 @@ export default class Timer extends Component {
         var clearTimer = this.handle_clear();
         var closeLogTimeModal = this.logtimeModalClose();
 
-        console.log('id passed ' + id);
-        console.log('person-id ' + auth_id);
-        console.log("hours:" + this.get_hours() + "  minutes:" + minutes + "  seconds:" + this.get_seconds() + "  = logged time");
-        console.log('date  ' + date.getFullYear() + ("0" + (date.getMonth() + 1)).slice(-2) + ("0" + date.getDate()).slice(-2));
-        console.log('time  ' + date.getHours() + ":" + date.getMinutes());
-        console.log(entry);
-        console.log(description);
-        console.log(billable);
-
         $.ajax({
             url: 'https://thejibe.teamwork.com/tasks/' + id + '/time_entries.json',
             type: 'POST',
             dataType: 'json',
             data: JSON.stringify(entry),
             success: function(data) {
-                console.log("time logged");
+                console.log("time successfully logged");
                 clearTimer;
                 closeLogTimeModal;
                 $('#timerDescription').val('');
