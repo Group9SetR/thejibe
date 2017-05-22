@@ -6,32 +6,19 @@ export default class FilterBar extends Component {
         this.handleDateFilterChange = this.handleDateFilterChange.bind(this);
         this.handleFilterChange = this.handleFilterChange.bind(this);
         this.handleDateSelectorChange = this.handleDateSelectorChange.bind(this);
+        //this.handleDateDirectionChange = this.handleDateDirectionChange.bind(this);
     }
 
-    componentDidMount() {
-        var startdate = this.props.calendar.start.toISOString().substr(0,10);
-        var enddate = this.props.calendar.end.toISOString().substr(0,10);
-        this.setState({
-            start:startdate,
-            end:enddate
-        });
-    }
-
-    componentWillReceiveProps(nextProps) {
-        if(nextProps.calendar != this.props.calendar) {
-            var startdate = this.props.calendar.start.toISOString().substr(0,10);
-            var enddate = this.props.calendar.end.toISOString().substr(0,10);
-            this.setState({
-                start:startdate,
-                end:enddate
-            });
+    handleDateSelectorChange(e) {
+        var startdate = new Date(this.props.calendar.convertHTMLDate(document.getElementById('start_date').value));
+        var enddate = new Date(this.props.calendar.convertHTMLDate(document.getElementById('end_date').value));
+        if(startdate <= enddate) {
+            this.props.onDateSelectorChange(startdate, enddate);
+        } else {
+            alert("Start date cannot be greater than end date");
         }
+        e.preventDefault();
     }
-
-    handleDateSelectorChange() {
-
-    }
-
 
     handleDateFilterChange(e) {
         $('.tasks').each(function() {
@@ -104,44 +91,39 @@ export default class FilterBar extends Component {
         return (
             <div>
                 <div className="secondnav" id="mySecondnav">
-                    <div className="form-group">
-                        <div className="col-sm-2">
-                            <select className="form-control" id="client-filter" onChange={this.handleFilterChange}>
-                                <option value="tasks">All Companies</option>
-                            </select>
-                        </div>
-                        <div className="col-sm-2">
-                            <select className="form-control" id="project-filter" onChange={this.handleFilterChange}>
-                                <option value="tasks">All Projects</option>
-                            </select>
-                        </div>
-                        <div className="col-sm-2">
-                            <select className="form-control" id="priority-filter" onChange={this.handleFilterChange}>
-                                <option value="tasks">All Priorities</option>
-                                <option value="task-priority-high">High</option>
-                                <option value="task-priority-medium">Medium</option>
-                                <option value="task-priority-low">Low</option>
-                                <option value="task-priority-none">None</option>
-                            </select>
-                        </div>
-
-                        <div id="navbar" className="navbar-collapse collapse">
+                    <div className="form-inline">
+                        <div className="navbar">
+                            <ul className="nav navbar-nav navbar-left ">
+                                <div className ="form-inline">
+                                    <select className="form-control datafilter" id="client-filter" onChange={this.handleFilterChange}>
+                                        <option value="tasks">All Companies</option>
+                                    </select>
+                                    <select className="form-control datefilter" id="project-filter" onChange={this.handleFilterChange}>
+                                        <option value="tasks">All Projects</option>
+                                    </select>
+                                    <select className="form-control datafilter" id="priority-filter" onChange={this.handleFilterChange}>
+                                        <option value="tasks">All Priorities</option>
+                                        <option value="task-priority-high">High</option>
+                                        <option value="task-priority-medium">Medium</option>
+                                        <option value="task-priority-low">Low</option>
+                                        <option value="task-priority-none">None</option>
+                                    </select>
+                                </div>
+                            </ul>
                             <ul className="nav navbar-nav navbar-right ">
-                                <form>
-                                    <div className ="form-inline">
-                                        <input type="date" name="start_date" id="start_date" className="form-control"
-                                               value={this.state.start} onChange={}/>
-                                        <input type="date" name="end_date" id="end_date" className="form-control"
-                                               value={this.state.end} onChange={}/>
-                                        <select className="form-control" id="date_filter"
-                                                defaultValue={calendar.default} onChange={this.handleDateFilterChange}>
-                                            <option value={calendar.Type_Enum.WEEK}>Week</option>
-                                            <option value={calendar.Type_Enum.BIWEEK}>Biweek</option>
-                                            <option value={calendar.Type_Enum.MONTH}>Month</option>
-                                            <option value={calendar.Type_Enum.TRIMONTH}>90-days</option>
-                                        </select>
-                                    </div>
-                                </form>
+                                <div className ="form-inline">
+                                    <input type="date" name="start_date" id="start_date" className="form-control"
+                                           value={startDate} onChange={this.handleDateSelectorChange}/>
+                                    <input type="date" name="end_date" id="end_date" className="form-control"
+                                           value={endDate} onChange={this.handleDateSelectorChange}/>
+                                    <select className="form-control" id="date_filter"
+                                            defaultValue={calendar.default} onChange={this.handleDateFilterChange}>
+                                        <option value={calendar.Type_Enum.WEEK}>Week</option>
+                                        <option value={calendar.Type_Enum.BIWEEK}>2-week</option>
+                                        <option value={calendar.Type_Enum.MONTH}>Month</option>
+                                        <option value={calendar.Type_Enum.TRIMONTH}>90-days</option>
+                                    </select>
+                                </div>
                             </ul>
                         </div>
                     </div>

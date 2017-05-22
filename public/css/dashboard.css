@@ -3,6 +3,9 @@
     overflow: hidden;
     margin: 0;
     padding-top:13px;
+    height:65px;
+    padding-left:10px;
+    padding-right:30px;
 }
 
 #wrapper {
@@ -158,26 +161,12 @@ tbody td:hover::after{
 }
 
 /* scheduledBar */
-.utilizationbar {
-    height:100%;
-    width:100%;
-    border:0 !important;
-    padding-top: 15px !important;
-    padding-bottom: 15px !important;
-    padding-right: 0 !important;
-    padding-left:0 !important;
-    border-radius: 3px;
-}
-
 .utilizationbar-top {
-    background-color: #99b900;
-    height:75%;
-
-    color: transparent !important;
 }
 
 .utilizationbar-bottom {
-    height:25%;
+    height:15px !important;
+    padding:0 !important;
     color:transparent !important;
 }
 
