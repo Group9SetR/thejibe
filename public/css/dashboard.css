@@ -85,6 +85,10 @@ tbody td:hover::after{
     border-collapse:collapse;
 }
 
+#schedualedBarShow{
+    padding-top: 25px;
+}
+
 /* Tasks */
 
 .tasks {
@@ -192,7 +196,7 @@ tbody td:hover::after{
     font-weight: lighter;
 }
 #taskBar {
-    background-color: #f4ce42;
+    background-color: #99b900;
     height: 90px;
     border-radius: 3px;
 }
@@ -203,11 +207,11 @@ tbody td:hover::after{
 }
 
 .progressBardiv{
-    margin-left: 5px;
+    margin-left: 0px;
 }
 
 .sliderBardiv{
-    margin-left: 5px;
+    margin-left: 0px;
 }
 
 
@@ -333,7 +337,7 @@ tbody td:hover::after{
 
 .modalSection{
     width: 100%;
-    heght: 60px;
+    heght: 50px;
 }
 #closeBtn{
     margin-top:10px;
@@ -343,14 +347,14 @@ tbody td:hover::after{
     padding-top: 20px;
     padding-left:20px;
     padding-right:20px;
-    padding-bottom: 37px;
+    padding-bottom: 17px;
 }
 
 
 .modalFooter{
     padding-left: 5px;
     padding-right: 5px;
-    height: 57px;
+    height: 54px;
     background-color: #f5f5f5;
     margin:auto;
     border-top: 2px solid gainsboro;

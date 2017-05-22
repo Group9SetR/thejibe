@@ -149,9 +149,9 @@ export default class Tasks extends Component {
 
                             <div className = "taskscol collapse" id={'taskscol-'+task.id}>
                                 <div className = "row sliderBardiv">
-                                    <div id = "sliderBar" style={{ "float":"left"}} className="col-sm-9">
-                                        <input type="range"  min="0" step="10" max="100" id={task.id + "slider"} onChange={this.sliderChange.bind(this, task.id)} defaultValue={task.progress}/>
-                                        <span id={task.id + "display"}>{task.progress}%</span>
+                                    <div id = "sliderBar" style={{ "float":"left"}} >
+                                        <input style={{"width":"280px"}} type="range"  min="0" step="10" max="100" id={task.id + "slider"} onChange={this.sliderChange.bind(this, task.id)} defaultValue={task.progress}/>
+                                        <span id={task.id + "display"} style={{ "font-size":"smaller"}}>{task.progress}%</span>
                                     </div>
                                     <div className ="col-sm-3" style={{ "float":"right"}}>
                                         <button type="button" onClick={this.startTimer}
@@ -168,7 +168,7 @@ export default class Tasks extends Component {
                                             {completion}%
                                         </div>
                                     </div>
-                                    <div className="col-sm-3" style={{ "float":"right"}}>
+                                    <div className="col-sm-3" style={{ "float":"right", "font-size":"smaller"}}>
                                         <p>{totalhours}/{estimated}</p>
                                     </div>
 

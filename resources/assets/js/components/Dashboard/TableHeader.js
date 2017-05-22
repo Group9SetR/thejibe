@@ -68,7 +68,7 @@ export default class TableHeader extends Component {
         var timeframeutilization = "utilizationbar-top w3-text-white w3-x-large w3-left-align ";
         timeframeutilization = this.setColourIdentifier(result, timeframeutilization);
         return(
-            <tr key={profile.id} >
+            <tr key={profile.id}>
                 <th scope="row" className="nohover" rowSpan="2" >
                     <div className="profile">
                         <div className = "col-sm-2">
@@ -82,7 +82,7 @@ export default class TableHeader extends Component {
                         </div>
                     </div>
                 </th>
-                <td colSpan={this.props.calendar.range.length*5} className={timeframeutilization}>
+                <td colSpan={this.props.calendar.range.length*5} className={timeframeutilization} id ="schedualedBarShow">
                     <b>{this.state.total.toFixed(2)+'/'+this.props.calendar.range.length*5*8+" "}
                         {"("+((this.state.total/(this.props.calendar.range.length*5*8))*100).toFixed(0)+"%) scheduled"}</b>
                 </td>
