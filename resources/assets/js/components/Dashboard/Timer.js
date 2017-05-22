@@ -73,7 +73,6 @@ export default class Timer extends Component {
             dataType: 'json',
             data: JSON.stringify(entry),
             success: function(data) {
-                console.log("time successfully logged");
                 clearTimer;
                 closeLogTimeModal;
                 $('#timerDescription').val('');
@@ -155,7 +154,6 @@ export default class Timer extends Component {
                     return responseText.json();
                 })
                 .then((response) => {
-                    console.log("task uncompleted")
                     this.setState({ completed: false });
                     $('#' + id + 'complete').css("color", "black");
                 });
@@ -165,7 +163,6 @@ export default class Timer extends Component {
                     return responseText.json();
                 })
                 .then((response) => {
-                    console.log("task completed")
                     this.setState({ completed: true });
                     $('#' + id + 'complete').css("color", "green");
                 });
