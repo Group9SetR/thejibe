@@ -178,16 +178,28 @@ tbody td:hover::after{
 #expandBtn{
     padding-top: 10px;
 }
-.accordion-toggle:after {
+#expandBtn .accordion-toggle:after {
     /* symbol for "opening" panels */
     font-family: 'Glyphicons Halflings';
     content: "\e114";
     float: right;
     font-weight: bold;
 }
-.accordion-toggle.collapsed:after {
+#expandBtn .accordion-toggle.collapsed:after {
     content: "\e113";
 }
+
+.barcollapseBtn .accordion-toggle:after {
+    /* symbol for "opening" panels */
+    font-family: 'Glyphicons Halflings';
+    content: "\e114";
+    float: right;
+    font-weight: bold;
+}
+.barcollapseBtn .accordion-toggle.collapsed:after {
+    content: "\e113";
+}
+
 
 
 
@@ -367,3 +379,4 @@ tbody td:hover::after{
 #billable_completeBtn{
     padding: 10px;
 }
+
