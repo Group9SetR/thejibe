@@ -92,7 +92,9 @@ export default class Profile extends Component {
                             <p>{ profile['first-name'] } {profile['last-name']}</p>
                         </div>
                         <div className = "col-sm-1" id="expandBtn">
-                            <a className="accordion-toggle" data-toggle="collapse" data-parent="#accordion" href=".tasks"></a>
+
+                            <a className="accordion-toggle" data-toggle="collapse" data-parent="#accordion" href=".tasks">++</a>
+
                         </div>
                     </div>
                 </th>

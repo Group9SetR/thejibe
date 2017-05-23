@@ -7,6 +7,7 @@ export default class Tasks extends Component {
         this.startTimer = this.startTimer.bind(this);
     }
 
+
     startTimer(e) {
         // set guards so user cannot start another timer without first finishing current one
         $('.timerBtn').attr('disabled', true);
@@ -139,10 +140,14 @@ export default class Tasks extends Component {
                                                     <button type="button" className= "priorityBtn btn btn-danger btn-sm" style={{ "float":"right"}}><bold>High</bold></button>
                                         }
                                     </div>
+
                                     <div style={{ "float":"right"}} className="barToggleBtn">
-                                        <button type="button" className="btn btn-default btn-sm accordion-toggle " id = "collapseBtn"
-                                                data-toggle="collapse" data-parent="#accordion" data-target={'#taskscol-' + task.id} >
-                                        </button>
+                                        <a data-toggle="collapse" href={'#taskscol-' + task.id}
+                                           aria-expanded="false" aria-controls="collapseExample">
+                                            <i className="fa fa-chevron-up pull-right"></i>
+                                            <i className="fa fa-chevron-down pull-right"></i>
+                                        </a>
+
                                     </div>
                                 </div>
                             </div>

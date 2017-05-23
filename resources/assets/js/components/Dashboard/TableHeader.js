@@ -106,10 +106,13 @@ export default class TableHeader extends Component {
                         <div className = "col-sm-8" id = "name" >
                             <p>{ profile['first-name'] } {profile['last-name']}</p>
                         </div>
-                        <div className = "col-sm-1" id="accordion">
-                            <a className="accordion-toggle" id="expandBtnToggle"
-                               data-parent="#accordion"
-                                onClick={this.handleAccordion}></a>
+                        <div className = "col-sm-1 expandBtnToggle" id="accordion">
+                            <a data-toggle="collapse" onClick={this.handleAccordion} id="expandBtnToggle"
+                               aria-expanded="false" aria-controls="collapseExample">
+                                <i className="fa fa-chevron-up pull-right"></i>
+                                <i className="fa fa-chevron-down pull-right"></i>
+                            </a>
+
                         </div>
                     </div>
                 </th>
