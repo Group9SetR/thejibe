@@ -23,21 +23,36 @@ export default class FilterBar extends Component {
     handleDateFilterChange(e) {
         $('.tasks').each(function() {
             $(this).removeClass('in');
+            $(this).attr('aria-expanded', false);
         });
         this.props.onDateFilterChange(e.target.value);
     }
 
+    /**
+     * Company, project, priority, and scheduled v unscheduled filters
+     * @param e
+     */
     handleFilterChange(e){
-        if(e.target.value == "tasks") {
-            $('.tasks').each(function () {
-                $(this).addClass('in');
-            });
+        $('.tasks.in').removeClass('in').attr('aria-expanded', false);
+
+        var filters = "";
+        $('.datafilter').each(function(){
+            if($(this).val() != "tasks") {
+                filters+='.'+$(this).val();
+            }
+        });
+        if(filters == "") {
+            $('.tasks').addClass('in').attr('aria-expanded', true);
+            if($('#unscheduled-filter').prop('checked') == false) {
+                $('.unscheduled-tasks').removeClass('in').attr('aria-expanded', false);
+            }
         } else {
-            $(".tasks:not(."+e.target.value+")").each(function(){
-                $(this).removeClass('in');
-            });
-            $('.'+e.target.value).each(function() {
+            if($('#unscheduled-filter').prop('checked') == false) {
+                filters+=":not(.unscheduled-tasks)";
+            }
+            $(filters).each(function(){
                 $(this).addClass('in');
+                $(this).attr('aria-expanded', true);
             });
         }
     }
@@ -98,7 +113,7 @@ export default class FilterBar extends Component {
                                     <select className="form-control datafilter" id="client-filter" onChange={this.handleFilterChange}>
                                         <option value="tasks">All Companies</option>
                                     </select>
-                                    <select className="form-control datefilter" id="project-filter" onChange={this.handleFilterChange}>
+                                    <select className="form-control datafilter" id="project-filter" onChange={this.handleFilterChange}>
                                         <option value="tasks">All Projects</option>
                                     </select>
                                     <select className="form-control datafilter" id="priority-filter" onChange={this.handleFilterChange}>
@@ -108,6 +123,9 @@ export default class FilterBar extends Component {
                                         <option value="task-priority-low">Low</option>
                                         <option value="task-priority-none">None</option>
                                     </select>
+                                    <input type="checkbox" defaultChecked="checked" id="unscheduled-filter"
+                                           className="form-control" onChange={this.handleFilterChange}/>
+                                    <label className="control-label w3-small">Show unscheduled</label>
                                 </div>
                             </ul>
                             <ul className="nav navbar-nav navbar-right ">
