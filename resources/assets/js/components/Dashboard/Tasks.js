@@ -26,9 +26,8 @@ export default class Tasks extends Component {
             dataType: 'json',
             data: JSON.stringify(progressjson),
             success: function(data) {
-                console.log("prog changed")
             },
-            error: function() { console.log('GET request to time totals failed'); },
+            error: function() { console.log('PUT request to progress failed'); },
             beforeSend: setHeader
         });
         $('#' + id + 'display').text(progress + "%");

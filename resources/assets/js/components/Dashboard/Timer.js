@@ -80,7 +80,7 @@ export default class Timer extends Component {
                 $('.logtimer').css('visibility', 'hidden');
                 $('.timerBtn').removeAttr('disabled');
             },
-            error: function() { console.log('GET request to time totals failed'); },
+            error: function() { console.log('POST request to time tracking failed'); },
             beforeSend: setHeader
         });
 
