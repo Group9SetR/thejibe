@@ -34,7 +34,6 @@ export default class FilterBar extends Component {
      */
     handleFilterChange(e){
         $('.tasks.in').removeClass('in').attr('aria-expanded', false);
-
         var filters = "";
         $('.datafilter').each(function(){
             if($(this).val() != "tasks") {

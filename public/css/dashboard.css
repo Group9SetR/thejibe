@@ -175,7 +175,7 @@ tbody td:hover::after{
 }
 
 
-#expandBtn{
+#accordion{
     padding-top: 10px;
 }
  .accordion-toggle:after {
