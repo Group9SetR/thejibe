@@ -208,11 +208,11 @@ export default class Timer extends Component {
                                 </button>
                                 &nbsp;
                                 {this.getHours()}:{this.getMinutes()}:{this.getSeconds()}
-                                <a className="accordion-toggle" data-toggle="collapse" data-parent="#accordion" href="#collapseOne"></a>
+                                <a className="accordion-toggle" data-toggle="collapse" data-parent="#accordion" href="#taskCollapseBtn"></a>
                                 </div>
                             </h4>
                         </div>
-                        <div id="collapseOne" className="panel-body panel-collapse collapse">
+                        <div id="taskCollapseBtn" className="panel-body panel-collapse collapse">
                             <div>
                                 <div className="form-group">
                                     <textarea id="timerDescription" name="description" placeholder="Optional Description" className="form-control" defaultValue="" rows="2"/>
