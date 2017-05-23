@@ -25,7 +25,6 @@ export default class Timer extends Component {
             seconds: 0,
             logtimeModalOpen: false,
             deleteModalOpen: false,
-            completed: false
         };
         this.timer = null;
         this.logTime = this.logTime.bind(this);
@@ -52,6 +51,9 @@ export default class Timer extends Component {
         var billable = $('#timerBillable').prop('checked') ? "1" : "0";
         if (minutes == '00') {
             minutes = '01';
+        }
+        if(document.getElementById('timerComplete').checked) {
+            this.completeTask(id);
         }
         var entry = {
             "time-entry": {
@@ -146,27 +148,8 @@ export default class Timer extends Component {
         $('.logtimer').css('visibility', 'hidden');
         $('.timerBtn').removeAttr('disabled');
     }
-    onCompletionClick(id) {
-        var completed = this.state.completed;
-        if (completed) {
-            fetch('https://thejibe.teamwork.com/tasks/' + id + '/uncomplete.json', this.putHeader())
-                .then( (responseText) => {
-                    return responseText.json();
-                })
-                .then((response) => {
-                    this.setState({ completed: false });
-                    $('#' + id + 'complete').css("color", "black");
-                });
-        } else {
-            fetch('https://thejibe.teamwork.com/tasks/' + id + '/complete.json', this.putHeader())
-                .then( (responseText) => {
-                    return responseText.json();
-                })
-                .then((response) => {
-                    this.setState({ completed: true });
-                    $('#' + id + 'complete').css("color", "green");
-                });
-        }
+    completeTask(id) {
+        fetch('https://thejibe.teamwork.com/tasks/' + id + '/complete.json', this.putHeader());
     }
     putHeader() {
         var key = auth_api_token;
@@ -224,9 +207,7 @@ export default class Timer extends Component {
                                             <input id="timerBillable" name="billable" type="checkbox" defaultChecked="true"/>&nbsp;Billable
                                         </span>
                                         <span className="pull-right">
-                                            <button className="btn btn-default btn-sm" style={{"float":"right"}} type="button" id={current.id + "complete"} onClick={this.onCompletionClick.bind(this, current.id)}>
-                                                <span className="glyphicon glyphicon-ok"></span>&nbsp;{this.state.completed ? "Undo" : "Complete Task"}
-                                            </button>
+                                            <input id="timerComplete" name="complete" type="checkbox" defaultChecked="true"/>&nbsp;Complete Task
                                         </span>
                                      </div>
 
@@ -295,5 +276,4 @@ export default class Timer extends Component {
             </div>
         );
     }
-
 }
