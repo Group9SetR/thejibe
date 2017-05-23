@@ -80,7 +80,7 @@ export default class Timer extends Component {
                 $('.logtimer').css('visibility', 'hidden');
                 $('.timerBtn').removeAttr('disabled');
             },
-            error: function() { console.log('GET request to time totals failed'); },
+            error: function() { console.log('POST request to time tracking failed'); },
             beforeSend: setHeader
         });
 
@@ -223,9 +223,11 @@ export default class Timer extends Component {
                                         <span className="pull-left">
                                             <input id="timerBillable" name="billable" type="checkbox" defaultChecked="true"/>&nbsp;Billable
                                         </span>
-                                        <button className ="btn btn-default btn-sm" style={{"float":"right"}} type="button" id={current.id + "complete"} onClick={this.onCompletionClick.bind(this, current.id)}>
-                                            <span className="glyphicon glyphicon-ok" color="black"></span>
-                                        </button>
+                                        <span className="pull-right">
+                                            <button className="btn btn-default btn-sm" style={{"float":"right"}} type="button" id={current.id + "complete"} onClick={this.onCompletionClick.bind(this, current.id)}>
+                                                <span className="glyphicon glyphicon-ok"></span>&nbsp;{this.state.completed ? "Undo" : "Complete Task"}
+                                            </button>
+                                        </span>
                                      </div>
 
                                 </div>

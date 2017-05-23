@@ -10,6 +10,7 @@ export default class TableHeader extends Component {
         };
         this.setColourIdentifier = this.setColourIdentifier.bind(this);
         this.renderProfile = this.renderProfile.bind(this);
+        this.handleAccordion = this.handleAccordion.bind(this);
     }
 
     componentDidMount() {
@@ -40,6 +41,34 @@ export default class TableHeader extends Component {
             utilization:temp,
             total:total
         });
+    }
+
+    handleAccordion() {
+        if($('.tasks.in').length > 0) {
+            $('.tasks').removeClass('in').attr('aria-enabled', false);
+            $('datafilter').val('tasks');
+        }  else {
+            var filters ="";
+            $('.datafilter').each(function(){
+                if($(this).val() != "tasks") {
+                    filters+='.'+$(this).val();
+                }
+            });
+            if(filters == "") {
+                $('.tasks').addClass('in').attr('aria-expanded', true);
+                if($('#unscheduled-filter').prop('checked') == false) {
+                    $('.unscheduled-tasks').removeClass('in').attr('aria-expanded', false);
+                }
+            } else {
+                if($('#unscheduled-filter').prop('checked') == false) {
+                    filters+=":not(.unscheduled-tasks)";
+                }
+                $(filters).each(function(){
+                    $(this).addClass('in');
+                    $(this).attr('aria-expanded', true);
+                });
+            }
+        }
     }
 
     setColourIdentifier(ratio, classvar) {
@@ -77,8 +106,10 @@ export default class TableHeader extends Component {
                         <div className = "col-sm-8" id = "name" >
                             <p>{ profile['first-name'] } {profile['last-name']}</p>
                         </div>
-                        <div className = "col-sm-1" id="expandBtn">
-                            <a className="accordion-toggle" id="expandBtnToggle" data-toggle="collapse" data-parent="#accordion" href=".tasks"></a>
+                        <div className = "col-sm-1" id="accordion">
+                            <a className="accordion-toggle" id="expandBtnToggle"
+                               data-parent="#accordion"
+                                onClick={this.handleAccordion}></a>
                         </div>
                     </div>
                 </th>

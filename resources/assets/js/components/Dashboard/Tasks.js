@@ -27,9 +27,8 @@ export default class Tasks extends Component {
             dataType: 'json',
             data: JSON.stringify(progressjson),
             success: function(data) {
-                console.log("prog changed")
             },
-            error: function() { console.log('GET request to time totals failed'); },
+            error: function() { console.log('PUT request to progress failed'); },
             beforeSend: setHeader
         });
         $('#' + id + 'display').text(progress + "%");
@@ -106,16 +105,16 @@ export default class Tasks extends Component {
             var taskrowclass = "tasks collapse ";
             taskrowclass += "project-"+task['project-id'] + " company-"+task['company-id']+" ";
             if(task.priority == "medium") {
-                taskrowclass+= "task-priority-medium" ;
+                taskrowclass+= "task-priority-medium " ;
             } else if(task.priority == "high") {
-                taskrowclass+= "task-priority-high";
+                taskrowclass+= "task-priority-high ";
             } else if(task.priority == "low") {
-                taskrowclass+= "task-priority-low";
+                taskrowclass+= "task-priority-low ";
             } else {
-                taskrowclass+= "task-priority-none";
+                taskrowclass+= "task-priority-none ";
             }
             if(task['start-date'] === "" || task['due-date'] === "") {
-                taskrowclass += "unscheduled-tasks";
+                taskrowclass += "unscheduled-tasks ";
             }
             return (
                 <tr key={task.id} className={taskrowclass}>
@@ -124,9 +123,9 @@ export default class Tasks extends Component {
                             <div className="row">
                                 <div className="col-sm-8">
                                     <div className ="taskName">
-                                        <a href={"https://thejibe.teamwork.com/index.cfm#tasks/" + task.id}>{ task.content }</a>
+                                        <a href={"https://thejibe.teamwork.com/index.cfm#tasks/" + task.id} target="_blank">{ task.content }</a>
                                         <div>
-                                            <a href={"https://thejibe.teamwork.com/index.cfm#/projects/" + task['project-id'] + "/overview/summary"}><p className ="projectName"> {task['project-name']} : {task['company-name']} </p></a>
+                                            <a href={"https://thejibe.teamwork.com/index.cfm#/projects/" + task['project-id'] + "/overview/summary"} target="_blank"><p className ="projectName"> {task['project-name']} : {task['company-name']} </p></a>
                                         </div>
                                     </div>
                                 </div>
@@ -136,28 +135,24 @@ export default class Tasks extends Component {
                                             (task.priority === "") ? <span></span>:
                                                 (task.priority === "medium") ?
                                                     <button type="button" className="priorityBtn btn btn-warning btn-sm" style={{ "float":"right"}}><bold>Medium</bold></button>:
-                                                    (task.priority === "low") ?
-                                                        <button type="button" className= "priorityBtn btn btn-success btn-sm" style={{ "float":"right" }}><bold>Low</bold></button>:
-                                                        <button type="button" className= "priorityBtn btn btn-danger btn-sm" style={{ "float":"right"}}><bold>High</bold></button>
-
+                                                (task.priority === "low") ?
+                                                    <button type="button" className= "priorityBtn btn btn-success btn-sm" style={{ "float":"right" }}><bold>Low</bold></button>:
+                                                    <button type="button" className= "priorityBtn btn btn-danger btn-sm" style={{ "float":"right"}}><bold>High</bold></button>
                                         }
                                     </div>
-                                    <div style={{ "float":"right"}} className = "barcollapseBtn">
 
-                                        <button type="button" className="btn btn-default btn-sm accordion-toggle "
+                                    <div style={{ "float":"right"}} className="barToggleBtn">
+                                        <button type="button" className="btn btn-default btn-sm accordion-toggle " id = "collapseBtn"
                                                 data-toggle="collapse" data-parent="#accordion" data-target={'#taskscol-' + task.id} >
                                         </button>
-
                                     </div>
                                 </div>
                             </div>
-
-
                             <div className = "taskscol collapse" id={'taskscol-'+task.id}>
                                 <div className = "row sliderBardiv">
                                     <div id = "sliderBar" style={{ "float":"left"}} >
                                         <input style={{"width":"280px"}} type="range"  min="0" step="10" max="100" id={task.id + "slider"} onChange={this.sliderChange.bind(this, task.id)} defaultValue={task.progress}/>
-                                        <span id={task.id + "display"} style={{ "fontSize":"smaller"}}>{task.progress}%</span>
+                                        <span id={task.id + "display"} style={{ "fontSize":"small"}}>{task.progress}%</span>
                                     </div>
                                     <div className ="col-sm-3" style={{ "float":"right"}}>
                                         <button type="button" onClick={this.startTimer}
@@ -165,7 +160,6 @@ export default class Tasks extends Component {
                                                 className="btn btn-default btn-sm pull-right glyphicon glyphicon-time timerBtn">
                                         </button>
                                     </div>
-
                                 </div>
                                 <div className ="row progressBardiv">
                                     <div className="progress progressBar" style={{ "float":"left"}}>
@@ -175,19 +169,16 @@ export default class Tasks extends Component {
                                         </div>
                                     </div>
                                     <div className="col-sm-3" style={{ "float":"right"}}>
-                                        <p id={"hours-" + task.id}>--/--</p>
+                                        <p id={"hours-" + task.id} style={{ "fontSize": "x-small", "alignment" : "center"}}>N/A</p>
                                     </div>
-
                                 </div>
                             </div>
                         </div>
                     </th>
                     {timespan}
                 </tr>
-
             );
         });
-
         return (<tbody>{elements}</tbody>);
     }
 }
