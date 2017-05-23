@@ -111,7 +111,7 @@ export default class TableHeader extends Component {
             var ratio = this.state.utilization[i] / 8;
             var type = "utilizationbar-bottom w3-hover-text-white ";
             type = this.setColourIdentifier(ratio, type);
-            var utilizationformatted = this.state.utilization[i].toFixed(2);
+            var utilizationformatted = (((this.state.utilization[i])/8)*100).toFixed(0) +"%";
             dailyhours.push(
                 <td key={"utilization-"+i} className={type}>
                     {utilizationformatted}

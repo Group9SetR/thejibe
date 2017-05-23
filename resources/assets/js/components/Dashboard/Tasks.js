@@ -105,13 +105,16 @@ export default class Tasks extends Component {
             var taskrowclass = "tasks collapse ";
             taskrowclass += "project-"+task['project-id'] + " company-"+task['company-id']+" ";
             if(task.priority == "medium") {
-                taskrowclass+= "task-priority-medium";
+                taskrowclass+= "task-priority-medium" ;
             } else if(task.priority == "high") {
                 taskrowclass+= "task-priority-high";
             } else if(task.priority == "low") {
                 taskrowclass+= "task-priority-low";
             } else {
                 taskrowclass+= "task-priority-none";
+            }
+            if(task['start-date'] === "" || task['due-date'] === "") {
+                taskrowclass += "unscheduled-tasks";
             }
             return (
                 <tr key={task.id} className={taskrowclass}>
