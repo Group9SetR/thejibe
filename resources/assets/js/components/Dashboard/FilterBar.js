@@ -106,43 +106,49 @@ export default class FilterBar extends Component {
             <div>
                 <div className="secondnav" id="mySecondnav">
                     <div className="form-inline">
-                        <div className="navbar">
-                            <ul className="nav navbar-nav navbar-left ">
-                                <div className="form-group">
-                                    <select className="form-control datafilter" id="client-filter" onChange={this.handleFilterChange}>
-                                        <option value="tasks">All Companies</option>
-                                    </select>
-                                    <select className="form-control datafilter" id="project-filter" onChange={this.handleFilterChange}>
-                                        <option value="tasks">All Projects</option>
-                                    </select>
-                                    <select className="form-control datafilter" id="priority-filter" onChange={this.handleFilterChange}>
-                                        <option value="tasks">All Priorities</option>
-                                        <option value="task-priority-high">High</option>
-                                        <option value="task-priority-medium">Medium</option>
-                                        <option value="task-priority-low">Low</option>
-                                        <option value="task-priority-none">None</option>
-                                    </select>
-                                    &nbsp;
-                                    <input type="checkbox" id="unscheduled-filter"
-                                           className="form-control" onChange={this.handleFilterChange}/>&nbsp;
-                                    <label className="control-label w3-small">Show unscheduled</label>
+                        <div className="navbar container">
+                            <div className="row">
+                                <div className="col-md-6">
+                                    <ul className="nav navbar-nav navbar-left ">
+                                        <div className="form-group pull-left">
+                                            <select className="form-control datafilter pull-left" id="client-filter" onChange={this.handleFilterChange} style={{maxWidth: 25 + '%'}}>
+                                                <option value="tasks">All Companies</option>
+                                            </select>
+                                            <select className="form-control datafilter pull-left" id="project-filter" onChange={this.handleFilterChange} style={{maxWidth: 25 + '%'}}>
+                                                <option value="tasks">All Projects</option>
+                                            </select>
+                                            <select className="form-control datafilter pull-left" id="priority-filter" onChange={this.handleFilterChange} style={{maxWidth: 25 + '%'}}>
+                                                <option value="tasks">All Priorities</option>
+                                                <option value="task-priority-high">High</option>
+                                                <option value="task-priority-medium">Medium</option>
+                                                <option value="task-priority-low">Low</option>
+                                                <option value="task-priority-none">None</option>
+                                            </select>
+                                            &nbsp;
+                                            <input type="checkbox" id="unscheduled-filter"
+                                                   className="form-control" onChange={this.handleFilterChange}/>&nbsp;
+                                            <label className="control-label w3-small">Show unscheduled</label>
+                                        </div>
+                                    </ul>
                                 </div>
-                            </ul>
-                            <ul className="nav navbar-nav navbar-right ">
-                                <div className ="form-group">
-                                    <input type="date" name="start_date" id="start_date" className="form-control"
-                                           value={startDate} onChange={this.handleDateSelectorChange}/>
-                                    <input type="date" name="end_date" id="end_date" className="form-control"
-                                           value={endDate} onChange={this.handleDateSelectorChange}/>
-                                    <select className="form-control" id="date_filter"
-                                            defaultValue={calendar.default} onChange={this.handleDateFilterChange}>
-                                        <option value={calendar.Type_Enum.WEEK}>Week</option>
-                                        <option value={calendar.Type_Enum.BIWEEK}>2-week</option>
-                                        <option value={calendar.Type_Enum.MONTH}>Month</option>
-                                        <option value={calendar.Type_Enum.TRIMONTH}>90-days</option>
-                                    </select>
+                                <div className="col-md-6">
+                                    <ul className="nav navbar-nav navbar-right">
+                                        <div className ="form-group">
+                                            <input type="date" name="start_date" id="start_date" className="form-control"
+                                                   value={startDate} onChange={this.handleDateSelectorChange}/>
+                                            <input type="date" name="end_date" id="end_date" className="form-control"
+                                                   value={endDate} onChange={this.handleDateSelectorChange}/>
+                                            <select className="form-control" id="date_filter"
+                                                    defaultValue={calendar.default} onChange={this.handleDateFilterChange}>
+                                                <option value={calendar.Type_Enum.WEEK}>Week</option>
+                                                <option value={calendar.Type_Enum.BIWEEK}>2-week</option>
+                                                <option value={calendar.Type_Enum.MONTH}>Month</option>
+                                                <option value={calendar.Type_Enum.TRIMONTH}>90-days</option>
+                                            </select>
+                                        </div>
+                                    </ul>
                                 </div>
-                            </ul>
+                            </div>
                         </div>
                     </div>
                 </div>
