@@ -146,8 +146,6 @@ export default class Tasks extends Component {
                                     </div>
                                 </div>
                             </div>
-
-
                             <div className = "taskscol collapse" id={'taskscol-'+task.id}>
                                 <div className = "row sliderBardiv">
                                     <div id = "sliderBar" style={{ "float":"left"}} >
@@ -160,7 +158,6 @@ export default class Tasks extends Component {
                                                 className="btn btn-default btn-sm pull-right glyphicon glyphicon-time timerBtn">
                                         </button>
                                     </div>
-
                                 </div>
                                 <div className ="row progressBardiv">
                                     <div className="progress progressBar" style={{ "float":"left"}}>
@@ -172,17 +169,14 @@ export default class Tasks extends Component {
                                     <div className="col-sm-3" style={{ "float":"right"}}>
                                         <p id={"hours-" + task.id} style={{ "fontSize": "x-small", "alignment" : "center"}}>N/A</p>
                                     </div>
-
                                 </div>
                             </div>
                         </div>
                     </th>
                     {timespan}
                 </tr>
-
             );
         });
-
         return (<tbody>{elements}</tbody>);
     }
 }

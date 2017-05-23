@@ -29,8 +29,6 @@ section {
     font-family: "Times New Roman", Times, serif;
 }
 
-
-
 /* Pattern styles */
 .container {
     display: table;
@@ -104,18 +102,19 @@ tbody td:hover::after{
     text-overflow: ellipsis;
     word-wrap:break-word;
 }
+
 .taskName:hover {
     text-overflow:inherit;
     overflow:visible;
     height:auto;
 }
+
 .projectName{
     font-family: "Tahoma";
     font-size: smaller;
     color: #2a88bd;
     font-weight: lighter;
 }
-
 
 .taskSpan > div{
     padding-left:0px;
@@ -130,6 +129,7 @@ tbody td:hover::after{
     opacity: 0.6;
     border-radius: 2px;
 }
+
 .taskSpan > div > span {
     color:transparent;
     position: relative;
@@ -174,10 +174,10 @@ tbody td:hover::after{
     color:transparent !important;
 }
 
-
 #accordion{
     padding-top: 10px;
 }
+
 .accordion-toggle:after {
     /* symbol for "opening" panels */
     font-family: 'Glyphicons Halflings';
@@ -185,11 +185,10 @@ tbody td:hover::after{
     float: right;
     font-weight: bold;
 }
+
 .accordion-toggle.collapsed:after {
     content: "\e113";
 }
-
-
 
 /* TaskBar */
 #companyName{
@@ -216,9 +215,6 @@ tbody td:hover::after{
     margin-left: 0px;
 }
 
-
-
-
 /* sliderBar */
 .sliderBar{
     width: 70%;
@@ -228,7 +224,6 @@ tbody td:hover::after{
 #panelTask{
     color: #2a88bd;
     font-size: small;
-
 }
 /* Loading page */
 
@@ -281,13 +276,10 @@ tbody td:hover::after{
     text-align: center;
 }
 
-
-
 .priorityBtn {
     width: 65px;
     padding:auto;
 }
-
 
 /* calendar date */
 .currentDate {
@@ -330,6 +322,7 @@ tbody td:hover::after{
     width: 100%;
     height: 200px;
 }
+
 .modalHeader{
     height: 57px;
     background-color: #f5f5f5;
@@ -341,17 +334,18 @@ tbody td:hover::after{
     width: 100%;
     heght: 50px;
 }
+
 #closeBtn{
     margin-top:10px;
     margin-right: 5px;
 }
+
 .modalcontent{
     padding-top: 20px;
     padding-left:20px;
     padding-right:20px;
     padding-bottom: 17px;
 }
-
 
 .modalFooter{
     padding-left: 5px;
@@ -361,8 +355,6 @@ tbody td:hover::after{
     margin:auto;
     border-top: 2px solid gainsboro;
 }
-
-
 
 #billable_completeBtn{
     padding: 10px;
