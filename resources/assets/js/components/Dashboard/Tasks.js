@@ -152,7 +152,7 @@ export default class Tasks extends Component {
                                 <div className = "row sliderBardiv">
                                     <div id = "sliderBar" style={{ "float":"left"}} >
                                         <input style={{"width":"280px"}} type="range"  min="0" step="10" max="100" id={task.id + "slider"} onChange={this.sliderChange.bind(this, task.id)} defaultValue={task.progress}/>
-                                        <span id={task.id + "display"} style={{ "fontSize":"smaller"}}>{task.progress}%</span>
+                                        <span id={task.id + "display"} style={{ "fontSize":"small"}}>{task.progress}%</span>
                                     </div>
                                     <div className ="col-sm-3" style={{ "float":"right"}}>
                                         <button type="button" onClick={this.startTimer}
@@ -170,7 +170,7 @@ export default class Tasks extends Component {
                                         </div>
                                     </div>
                                     <div className="col-sm-3" style={{ "float":"right"}}>
-                                        <p id={"hours-" + task.id}>--/--</p>
+                                        <p id={"hours-" + task.id} style={{ "fontSize": "x-small", "alignment" : "center"}}>N/A</p>
                                     </div>
 
                                 </div>
