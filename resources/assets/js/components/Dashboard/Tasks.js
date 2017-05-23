@@ -141,7 +141,7 @@ export default class Tasks extends Component {
 
                                         }
                                     </div>
-                                    <div style={{ "float":"right"}}>
+                                    <div style={{ "float":"right"}} className="barToggleBtn">
 
                                         <button type="button" className="btn btn-default btn-sm accordion-toggle " id = "collapseBtn"
                                                 data-toggle="collapse" data-parent="#accordion" data-target={'#taskscol-' + task.id} >
