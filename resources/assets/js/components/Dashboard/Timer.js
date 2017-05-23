@@ -208,8 +208,10 @@ export default class Timer extends Component {
                                 </button>
                                 &nbsp;
                                 {this.getHours()}:{this.getMinutes()}:{this.getSeconds()}
-                                <a className="accordion-toggle" data-toggle="collapse" data-parent="#accordion" href="#taskCollapseBtn"></a>
+                                    <a className="accordion-toggle" data-toggle="collapse" data-parent="#accordion" href="#taskCollapseBtn"></a>
+
                                 </div>
+
                             </h4>
                         </div>
                         <div id="taskCollapseBtn" className="panel-body panel-collapse collapse">

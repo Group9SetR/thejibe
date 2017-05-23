@@ -178,14 +178,14 @@ tbody td:hover::after{
 #accordion{
     padding-top: 10px;
 }
- .accordion-toggle:after {
+.accordion-toggle:after {
     /* symbol for "opening" panels */
     font-family: 'Glyphicons Halflings';
     content: "\e114";
     float: right;
     font-weight: bold;
 }
- .accordion-toggle.collapsed:after {
+.accordion-toggle.collapsed:after {
     content: "\e113";
 }
 
@@ -302,13 +302,13 @@ tbody td:hover::after{
 .panel-heading .accordion-toggle:after {
     /* symbol for "opening" panels */
     font-family: 'Glyphicons Halflings';
-    content: "\e113";
+    content: "\e114";
     float: right;
     color: grey;
 }
 
 .panel-heading .accordion-toggle.collapsed:after {
-    content: "\e114";
+    content: "\e113";
 
 }
 
