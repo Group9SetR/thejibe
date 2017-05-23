@@ -72,7 +72,7 @@ export default class FilterBar extends Component {
 
     populateActiveCompanies(activeCompanies) {
         for (var id in activeCompanies) {
-            $("#client-filter").append(new Option(activeCompanies['id'], id));
+            $("#client-filter").append(new Option("company-" + activeCompanies['id'], id));
         }
     }
 
@@ -91,7 +91,7 @@ export default class FilterBar extends Component {
                     }
                 }
                 for (var id in activeCompanies) {
-                    $("#client-filter").append(new Option(activeCompanies[id], id));
+                    $("#client-filter").append(new Option(activeCompanies[id], "company-" + id));
                 }
             });
     }
