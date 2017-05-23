@@ -79,7 +79,9 @@
 
             <div class="content">
                 <div class="title m-b-md">
-                    The Jibe - TW Dashboard
+                    <img src="{{ asset('jibelogo.png') }}">
+                    <br>
+                    Teamwork Dashboard
                 </div>
 
                 <div class="links">
