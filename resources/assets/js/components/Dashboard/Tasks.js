@@ -134,18 +134,15 @@ export default class Tasks extends Component {
                                             (task.priority === "") ? <span></span>:
                                                 (task.priority === "medium") ?
                                                     <button type="button" className="priorityBtn btn btn-warning btn-sm" style={{ "float":"right"}}><bold>Medium</bold></button>:
-                                                    (task.priority === "low") ?
-                                                        <button type="button" className= "priorityBtn btn btn-success btn-sm" style={{ "float":"right" }}><bold>Low</bold></button>:
-                                                        <button type="button" className= "priorityBtn btn btn-danger btn-sm" style={{ "float":"right"}}><bold>High</bold></button>
-
+                                                (task.priority === "low") ?
+                                                    <button type="button" className= "priorityBtn btn btn-success btn-sm" style={{ "float":"right" }}><bold>Low</bold></button>:
+                                                    <button type="button" className= "priorityBtn btn btn-danger btn-sm" style={{ "float":"right"}}><bold>High</bold></button>
                                         }
                                     </div>
                                     <div style={{ "float":"right"}} className="barToggleBtn">
-
                                         <button type="button" className="btn btn-default btn-sm accordion-toggle " id = "collapseBtn"
                                                 data-toggle="collapse" data-parent="#accordion" data-target={'#taskscol-' + task.id} >
                                         </button>
-
                                     </div>
                                 </div>
                             </div>

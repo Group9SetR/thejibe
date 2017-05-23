@@ -108,7 +108,7 @@ export default class FilterBar extends Component {
                     <div className="form-inline">
                         <div className="navbar">
                             <ul className="nav navbar-nav navbar-left ">
-                                <div className ="form-inline">
+                                <div className="form-group">
                                     <select className="form-control datafilter" id="client-filter" onChange={this.handleFilterChange}>
                                         <option value="tasks">All Companies</option>
                                     </select>
@@ -122,13 +122,14 @@ export default class FilterBar extends Component {
                                         <option value="task-priority-low">Low</option>
                                         <option value="task-priority-none">None</option>
                                     </select>
-                                    <input type="checkbox" defaultChecked="checked" id="unscheduled-filter"
-                                           className="form-control" onChange={this.handleFilterChange}/>
+                                    &nbsp;
+                                    <input type="checkbox" id="unscheduled-filter"
+                                           className="form-control" onChange={this.handleFilterChange}/>&nbsp;
                                     <label className="control-label w3-small">Show unscheduled</label>
                                 </div>
                             </ul>
                             <ul className="nav navbar-nav navbar-right ">
-                                <div className ="form-inline">
+                                <div className ="form-group">
                                     <input type="date" name="start_date" id="start_date" className="form-control"
                                            value={startDate} onChange={this.handleDateSelectorChange}/>
                                     <input type="date" name="end_date" id="end_date" className="form-control"
