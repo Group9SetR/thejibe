@@ -108,7 +108,7 @@ export default class FilterBar extends Component {
                     <div className="form-inline">
                         <div className="navbar">
                             <ul className="nav navbar-nav navbar-left ">
-                                <div className="form-group">
+                                <div className="form-group ">
                                     <select className="form-control datafilter" id="client-filter" onChange={this.handleFilterChange}>
                                         <option value="tasks">All Companies</option>
                                     </select>

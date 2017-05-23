@@ -208,7 +208,12 @@ export default class Timer extends Component {
                                 </button>
                                 &nbsp;
                                 {this.getHours()}:{this.getMinutes()}:{this.getSeconds()}
-                                    <a className="accordion-toggle" data-toggle="collapse" data-parent="#accordion" href="#taskCollapseBtn"></a>
+                                    <a data-toggle="collapse" href="#taskCollapseBtn"
+                                       aria-expanded="false" aria-controls="collapseExample">
+                                        <i className="fa fa-chevron-up pull-right"></i>
+                                        <i className="fa fa-chevron-down pull-right"></i>
+                                    </a>
+
 
                                 </div>
 

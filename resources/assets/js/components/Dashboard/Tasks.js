@@ -142,9 +142,12 @@ export default class Tasks extends Component {
                                     </div>
 
                                     <div style={{ "float":"right"}} className="barToggleBtn">
-                                        <button type="button" className="btn btn-default btn-sm accordion-toggle " id = "collapseBtn"
-                                                data-toggle="collapse" data-parent="#accordion" data-target={'#taskscol-' + task.id} >
-                                        </button>
+                                        <a data-toggle="collapse" href={'#taskscol-' + task.id}
+                                           aria-expanded="false" aria-controls="collapseExample">
+                                            <i className="fa fa-chevron-up pull-right"></i>
+                                            <i className="fa fa-chevron-down pull-right"></i>
+                                        </a>
+
                                     </div>
                                 </div>
                             </div>
