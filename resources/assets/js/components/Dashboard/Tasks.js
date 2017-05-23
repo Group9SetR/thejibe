@@ -54,7 +54,6 @@ export default class Tasks extends Component {
             var estimated = 0;
             $.ajax({
                 url: 'http://thejibe.teamwork.com/tasks/' + task.id + '/time/total.json',
-                async: false,
                 type: 'GET',
                 dataType: 'json',
                 success: function(data) {
@@ -64,6 +63,10 @@ export default class Tasks extends Component {
                         completion = Math.floor(
                             totalhours
                             / estimated * 100);
+                        $('#progress-' + task.id).prop("aria-valuenow", completion);
+                        $('#progress-' + task.id).css("width", completion+"%");
+                        $('#progress-' + task.id).text(completion+"%");
+                        $('#hours-' + task.id).text(totalhours + "/" + estimated);
                     }
                 },
                 error: function() { console.log('GET request to time totals failed'); },
@@ -163,13 +166,13 @@ export default class Tasks extends Component {
                                 </div>
                                 <div className ="row progressBardiv">
                                     <div className="progress progressBar" style={{ "float":"left"}}>
-                                        <div className="progress-bar  " role="progressbar"
-                                             aria-valuenow={completion} aria-valuemin="0" aria-valuemax="100" style={{ "width" : completion + "%"}}>
-                                            {completion}%
+                                        <div id={"progress-" + task.id} className="progress-bar  " role="progressbar"
+                                             aria-valuenow="0" aria-valuemin="0" aria-valuemax="100" style={{ "width" : "0%"}}>
+                                            N/A
                                         </div>
                                     </div>
                                     <div className="col-sm-3" style={{ "float":"right"}}>
-                                        <p>{totalhours}/{estimated}</p>
+                                        <p id={"hours-" + task.id}>--/--</p>
                                     </div>
 
                                 </div>
