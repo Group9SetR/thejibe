@@ -70,32 +70,30 @@ export default class FilterBar extends Component {
         return obj;
     }
 
-    getCompanyList() {
-        fetch('https://thejibe.teamwork.com/companies.json', this.getHeader())
-            .then( (response) => {
-                return response.json();
-            }).then( function(companyList) {
-                for(let i = 0; i < companyList['companies'].length; i++) {
-                    $("#client-filter").append(new Option(
-                        companyList['companies'][i]['name'],
-                        "company-" + companyList['companies'][i]['id']));
-                }
-            //$("#client-filter").select2();
-        });
+    populateActiveCompanies(activeCompanies) {
+        for (var id in activeCompanies) {
+            $("#client-filter").append(new Option(activeCompanies['id'], id));
+        }
     }
 
-    getProjectList() {
+    populateFilters() {
         fetch('https://thejibe.teamwork.com/projects.json', this.getHeader())
             .then( (response) => {
                 return response.json();
             }).then( function(projectList) {
-            for(let i = 0; i < projectList['projects'].length; i++) {
-                $("#project-filter").append(new Option(
-                    projectList['projects'][i]['name'],
-                    "project-" + projectList['projects'][i]['id']));
-            }
-            //$("#project-filter").select2();
-        });
+                var activeCompanies = new Array();
+                for(let i = 0; i < projectList['projects'].length; i++) {
+                    if (projectList['projects'][i]['status'] == "active") {
+                        $("#project-filter").append(new Option(
+                            projectList['projects'][i]['name'],
+                            "project-" + projectList['projects'][i]['id']));
+                        activeCompanies[projectList['projects'][i]['company']['id']] = projectList['projects'][i]['company']['name'];
+                    }
+                }
+                for (var id in activeCompanies) {
+                    $("#client-filter").append(new Option(activeCompanies[id], id));
+                }
+            });
     }
 
     render() {
@@ -151,8 +149,7 @@ export default class FilterBar extends Component {
     }
 
     componentDidMount() {
-        this.getCompanyList();
-        this.getProjectList();
+        this.populateFilters();
         //$("#client-filter").select2();
         //$("#project-filter").select2();
     }
