@@ -41,7 +41,11 @@ export default class Timer extends Component {
         this.deleteTimer = this.deleteTimer.bind(this);
     }
 
+    /**
+     * Logs time under the task with the provided id
+     */
     logTime(id) {
+        var self = this;
         var key = auth_api_token;
         var base64 = new Buffer(key + ":xxx").toString("base64");
         var date = new Date();
@@ -52,6 +56,8 @@ export default class Timer extends Component {
         if (minutes == '00') {
             minutes = '01';
         }
+
+        // Checks to see if Complete Task is ticked, if so completeTask is called which completes the task
         if(document.getElementById('timerComplete').checked) {
             this.completeTask(id);
         }
@@ -66,8 +72,6 @@ export default class Timer extends Component {
                 "isbillable": billable
             }
         };
-        var clearTimer = this.handleClear();
-        var closeLogTimeModal = this.logtimeModalClose();
 
         $.ajax({
             url: 'https://thejibe.teamwork.com/tasks/' + id + '/time_entries.json',
@@ -75,8 +79,8 @@ export default class Timer extends Component {
             dataType: 'json',
             data: JSON.stringify(entry),
             success: function(data) {
-                clearTimer;
-                closeLogTimeModal;
+                self.handleClear();
+                self.logtimeModalClose();
                 $('#timerDescription').val('');
                 $('#timerBillable').prop('checked', true);
                 $('.logtimer').css('visibility', 'hidden');
@@ -148,9 +152,17 @@ export default class Timer extends Component {
         $('.logtimer').css('visibility', 'hidden');
         $('.timerBtn').removeAttr('disabled');
     }
+
+    /**
+     *  Completes task with the provided id
+     */
     completeTask(id) {
         fetch('https://thejibe.teamwork.com/tasks/' + id + '/complete.json', this.putHeader());
     }
+
+    /**
+     * Basic header for PUT requests
+     */
     putHeader() {
         var key = auth_api_token;
         var base64 = new Buffer(key+":xxx").toString("base64");

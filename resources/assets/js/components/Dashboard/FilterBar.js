@@ -56,6 +56,9 @@ export default class FilterBar extends Component {
         }
     }
 
+    /**
+     * Basic header for GET requests.
+     */
     getHeader() {
         var key = auth_api_token;
         var base64 = new Buffer(key+":xxx").toString("base64");
@@ -70,12 +73,11 @@ export default class FilterBar extends Component {
         return obj;
     }
 
-    populateActiveCompanies(activeCompanies) {
-        for (var id in activeCompanies) {
-            $("#client-filter").append(new Option("company-" + activeCompanies['id'], id));
-        }
-    }
-
+    /**
+     *  Populates filters for Companies and Projects with
+     *  1. Active Projects
+     *  2. Active Clients (Clients with at least 1 active project
+     */
     populateFilters() {
         fetch('https://thejibe.teamwork.com/projects.json', this.getHeader())
             .then( (response) => {
@@ -84,12 +86,16 @@ export default class FilterBar extends Component {
                 var activeCompanies = new Array();
                 for(let i = 0; i < projectList['projects'].length; i++) {
                     if (projectList['projects'][i]['status'] == "active") {
+                        // Populate #project-filter drop down with Projects with status == "active"
                         $("#project-filter").append(new Option(
                             projectList['projects'][i]['name'],
                             "project-" + projectList['projects'][i]['id']));
+
+                        // Creates array of active Companies with key being the company-id and value being the name
                         activeCompanies[projectList['projects'][i]['company']['id']] = projectList['projects'][i]['company']['name'];
                     }
                 }
+                // Populate #client-filter drop down with Companies that have at least one project with status == "active"
                 for (var id in activeCompanies) {
                     $("#client-filter").append(new Option(activeCompanies[id], "company-" + id));
                 }
@@ -150,7 +156,5 @@ export default class FilterBar extends Component {
 
     componentDidMount() {
         this.populateFilters();
-        //$("#client-filter").select2();
-        //$("#project-filter").select2();
     }
 }
