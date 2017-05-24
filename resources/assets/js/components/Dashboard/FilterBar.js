@@ -3,17 +3,36 @@ import React, { Component } from 'react';
 export default class FilterBar extends Component {
     constructor(props) {
         super(props);
+        this.state = {
+            calendar: []
+        };
         this.handleDateFilterChange = this.handleDateFilterChange.bind(this);
         this.handleFilterChange = this.handleFilterChange.bind(this);
         this.handleDateSelectorChange = this.handleDateSelectorChange.bind(this);
-        //this.handleDateDirectionChange = this.handleDateDirectionChange.bind(this);
     }
+
+    componentDidMount() {
+        this.setState({
+            calendar:this.props.calendar
+        });
+    }
+
+    componentWillReceiveProps(newProps) {
+        this.setState({
+            calendar:newProps.calendar
+        }, this.handleFilterChange);
+    }
+    /*
+    componentDidUpdate(newProps, newState) {
+        this.handleFilterChange();
+    }*/
 
     handleDateSelectorChange(e) {
         var startdate = new Date(this.props.calendar.convertHTMLDate(document.getElementById('start_date').value));
         var enddate = new Date(this.props.calendar.convertHTMLDate(document.getElementById('end_date').value));
         if(startdate <= enddate) {
             this.props.onDateSelectorChange(startdate, enddate);
+
         } else {
             alert("Start date cannot be greater than end date");
         }
@@ -21,10 +40,6 @@ export default class FilterBar extends Component {
     }
 
     handleDateFilterChange(e) {
-        $('.tasks').each(function() {
-            $(this).removeClass('in');
-            $(this).attr('aria-expanded', false);
-        });
         this.props.onDateFilterChange(e.target.value);
     }
 

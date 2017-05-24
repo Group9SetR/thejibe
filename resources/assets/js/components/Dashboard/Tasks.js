@@ -5,6 +5,7 @@ export default class Tasks extends Component {
     constructor(props) {
         super(props);
         this.startTimer = this.startTimer.bind(this);
+        this.checkIfInRange = this.checkIfInRange.bind(this);
     }
 
     startTimer(e) {
@@ -13,6 +14,29 @@ export default class Tasks extends Component {
         $('.logtimer').css('visibility', 'visible');
         var timer = {"id":e.target.dataset.taskId, "content":e.target.dataset.taskDesc};
         this.props.onTimerChange(timer);
+    }
+
+    /**
+     * In range if no start/end date assigned, start date in range AND end date in range.
+     * @param taskstart
+     * @param taskend
+     * @returns {boolean}
+     */
+    checkIfInRange(taskstart, taskend) {
+        //Check if task within current time period
+        const calendar = this.props.calendar;
+        var start = calendar.convertFromTeamworkDate(taskstart);
+        var end = calendar.convertFromTeamworkDate(taskend);
+        var rangestart = new Date(calendar.range[0][0].year, calendar.range[0][0].month, calendar.range[0][0].day);
+        var lastinrange = calendar.range[calendar.range.length-1][4];
+        var rangeend = new Date(lastinrange.year, lastinrange.month, lastinrange.day);
+
+        if(taskstart != "" && taskend != ""){
+            if(!((start >= rangestart && start <= rangeend) || (end >= rangestart && end <= rangeend))) {
+                return false;
+            }
+        }
+        return true;
     }
 
     sliderChange(id) {
@@ -76,9 +100,16 @@ export default class Tasks extends Component {
                 xhr.setRequestHeader('Content-Type', 'application/json');
             }
 
+            if(!this.checkIfInRange(task['start-date'], task['due-date'])){
+                return;
+            }
+
+
+
             var timespan = [];
             var dailyhours = (Array.isArray(this.props.taskhours) && !this.props.taskhours.length)?0:
                 this.props.taskhours[task.id].toFixed(2);
+
             for(let i=0; i<calendar.range.length; i++) {
                 for(let j=0; j<5; j++) {
                     if(task['start-date'] !== "" && task['due-date'] !== "") {
@@ -180,3 +211,4 @@ export default class Tasks extends Component {
         return (<tbody>{elements}</tbody>);
     }
 }
+
