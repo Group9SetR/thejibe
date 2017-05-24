@@ -56,6 +56,9 @@ export default class FilterBar extends Component {
         }
     }
 
+    /**
+     * Basic header for GET requests.
+     */
     getHeader() {
         var key = auth_api_token;
         var base64 = new Buffer(key+":xxx").toString("base64");
@@ -70,32 +73,33 @@ export default class FilterBar extends Component {
         return obj;
     }
 
-    getCompanyList() {
-        fetch('https://thejibe.teamwork.com/companies.json', this.getHeader())
-            .then( (response) => {
-                return response.json();
-            }).then( function(companyList) {
-                for(let i = 0; i < companyList['companies'].length; i++) {
-                    $("#client-filter").append(new Option(
-                        companyList['companies'][i]['name'],
-                        "company-" + companyList['companies'][i]['id']));
-                }
-            //$("#client-filter").select2();
-        });
-    }
-
-    getProjectList() {
+    /**
+     *  Populates filters for Companies and Projects with
+     *  1. Active Projects
+     *  2. Active Clients (Clients with at least 1 active project
+     */
+    populateFilters() {
         fetch('https://thejibe.teamwork.com/projects.json', this.getHeader())
             .then( (response) => {
                 return response.json();
             }).then( function(projectList) {
-            for(let i = 0; i < projectList['projects'].length; i++) {
-                $("#project-filter").append(new Option(
-                    projectList['projects'][i]['name'],
-                    "project-" + projectList['projects'][i]['id']));
-            }
-            //$("#project-filter").select2();
-        });
+                var activeCompanies = new Array();
+                for(let i = 0; i < projectList['projects'].length; i++) {
+                    if (projectList['projects'][i]['status'] == "active") {
+                        // Populate #project-filter drop down with Projects with status == "active"
+                        $("#project-filter").append(new Option(
+                            projectList['projects'][i]['name'],
+                            "project-" + projectList['projects'][i]['id']));
+
+                        // Creates array of active Companies with key being the company-id and value being the name
+                        activeCompanies[projectList['projects'][i]['company']['id']] = projectList['projects'][i]['company']['name'];
+                    }
+                }
+                // Populate #client-filter drop down with Companies that have at least one project with status == "active"
+                for (var id in activeCompanies) {
+                    $("#client-filter").append(new Option(activeCompanies[id], "company-" + id));
+                }
+            });
     }
 
     render() {
@@ -151,9 +155,6 @@ export default class FilterBar extends Component {
     }
 
     componentDidMount() {
-        this.getCompanyList();
-        this.getProjectList();
-        //$("#client-filter").select2();
-        //$("#project-filter").select2();
+        this.populateFilters();
     }
 }
