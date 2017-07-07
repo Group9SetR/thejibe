@@ -135,7 +135,8 @@ export default class TableHeader extends Component {
             headings.push(<th key={"tweek-"+i} className="text-center" colSpan="5">
                 {range[0].day} {calendar.Month_Enum.properties[range[0].month]} - {range[range.length - 1].day} {calendar.Month_Enum.properties[range[range.length - 1].month]}</th>);
             for (var j = 0; j < range.length; j++) {
-                dates.push(<th key={"tday-"+i+"-"+j} className="text-center calendar-day-headers">{range[j].day}</th>);
+                dates.push(<th key={"tday-"+i+"-"+j} className="text-center calendar-day-headers">{calendar.Week_Enum.properties[j]}
+                {range[j].day}</th>);
             }
         }
 

@@ -19,6 +19,21 @@ export default function Calendar()
             2: {name:"biweek", weeks:2}
         }
     });
+    this.Week_Enum = Object.freeze({
+        MON:0,
+        TUES:1,
+        WEDS:2,
+        THURS:3,
+        FRI:4,
+        properties: {
+            0: "Mon",
+            1: "Tues",
+            2: "Weds",
+            3: "Thurs",
+            4: "Fri",
+        }
+    })
+
     this.Month_Enum = Object.freeze({
         JANUARY:0,
         FEBRUARY:1,
