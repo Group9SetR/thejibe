@@ -1,13 +1,85 @@
 import React, { Component } from 'react';
-
 export default class Tasks extends Component {
 
     constructor(props) {
         super(props);
+        this.state = {
+            tasks:[]
+        };
         this.startTimer = this.startTimer.bind(this);
         this.checkIfInRange = this.checkIfInRange.bind(this);
+        this.allowDrop = this.allowDrop.bind(this);
+        this.drag = this.drag.bind(this);
+        this.drop = this.drop.bind(this);
     }
 
+    componentDidMount() {
+        this.state.tasks = this.props.tasks;
+    }
+
+    componentWillReceiveProps() {
+        this.setState({
+            tasks: this.props.tasks
+        });
+    }
+
+    allowDrop(ev) {
+        ev.preventDefault();
+    }
+
+    drag(ev) {
+        ev.dataTransfer.setData("text", ev.target.id);
+        ev.dataTransfer.setData("task-id", ev.target.dataset.taskId);
+        ev.dataTransfer.setData("date", ev.target.dataset.date);
+    }
+
+    drop(ev) {
+        ev.preventDefault();
+        var data = ev.dataTransfer.getData("text");
+        //TODO get correct element
+        var target = ev.target;
+        while(target.tagName != "TD") {
+            target = target.parentElement;
+        }
+        //TODO check task id match"task-id"));
+        if(target.dataset.taskId == ev.dataTransfer.getData("task-id")) {
+            console.log("it's a match");
+        } else {
+            console.log("it's not a match");
+        }
+        //TODO check start >= end
+        var currenttask = this.state.tasks.find(task=>{
+            return task.id == target.dataset.taskId;
+        });
+        var currenttaskindex = this.state.tasks.findIndex(task=>{
+            return task.id==target.dataset.taskId;
+        });
+        var currentstart = this.props.calendar.convertFromTeamworkDate(currenttask['start-date']);
+        var currentend = this.props.calendar.convertFromTeamworkDate(currenttask['due-date']);
+        var currentdate = new Date(target.dataset.date);
+        console.log(currentdate);
+        if(data.includes("start")) {
+            if(currentdate > currentend) {
+                console.log("start cannot be greater than end date");
+                return;
+            }
+            currenttask['start-date'] = this.props.calendar.convertToTeamworkDate(currentdate);
+        } else if(data.includes("end")) {
+            if(currentdate < currentstart) {
+                console.log("end cannot be less than start date");
+                return;
+            }
+            currenttask['due-date'] = this.props.calendar.convertToTeamworkDate(currentdate);
+        }
+        //TODO make change
+        var newtasks = Object.assign([], this.state.tasks);
+        newtasks[currenttaskindex] = currenttask;
+        this.setState({
+            tasks:newtasks
+        });
+        //TODO append
+        ev.target.appendChild(document.getElementById(data));
+    }
 
     startTimer(e) {
         // set guards so user cannot start another timer without first finishing current one
@@ -64,12 +136,11 @@ export default class Tasks extends Component {
     }
 
     render() {
-        if(Array.isArray(this.props.tasks) && !this.props.tasks.length) {
+        if(Array.isArray(this.state.tasks) && !this.state.tasks.length) {
             return (<tbody><tr></tr></tbody>);
         }
         const calendar = this.props.calendar;
-        const tasks = this.props.tasks;
-
+        const tasks = this.state.tasks;
         var elements = tasks.map(task => {
             var key = auth_api_token;
             var base64 = new Buffer(key+":xxx").toString("base64");
@@ -105,31 +176,58 @@ export default class Tasks extends Component {
                 return;
             }
 
-
-
             var timespan = [];
             var dailyhours = (Array.isArray(this.props.taskhours) && !this.props.taskhours.length)?0:
                 this.props.taskhours[task.id].toFixed(2);
 
             for(let i=0; i<calendar.range.length; i++) {
                 for(let j=0; j<5; j++) {
+                    var rangedate = calendar.range[i][j];
+                    var current = new Date(rangedate.year, rangedate.month, rangedate.day);
                     if(task['start-date'] !== "" && task['due-date'] !== "") {
                         var startdate = calendar.convertFromTeamworkDate(task['start-date']);
                         var duedate = calendar.convertFromTeamworkDate(task['due-date']);
 
-                        var rangedate = calendar.range[i][j];
-                        var current = new Date(rangedate.year, rangedate.month, rangedate.day);
+
                         if(current >= startdate && current <= duedate) {
                             var taskspanname = "taskGraph taskSpan-"+i+"-"+j;
-                            timespan.push(<td style={{ "padding":"0"}} key={task.id+"-"+i+"-"+j} className="taskSpan">
-                                <div className={taskspanname}>
-                                    <span>{dailyhours}</span>
-                                </div></td>);
+                            timespan.push(
+                                <td style={{ "padding":"0"}} key={task.id+"-"+i+"-"+j}
+                                    id={task.id+"-"+i+"-"+j} className="taskSpan"
+                                    data-date={current.toDateString()}
+                                    data-task-id={task.id}
+                                    onDrop={this.drop} onDragOver={this.allowDrop}>
+
+                                    <div className={taskspanname}>
+                                        {current.toDateString() == startdate.toDateString()
+                                        && <span className="task-change-date glyphicon glyphicon-option-vertical"
+                                                 id={task.id+"-start"}
+                                                 data-task-id={task.id}
+                                                 draggable={true}
+                                                 onDragStart={this.drag}></span>}
+                                        <span className="task-hours">{dailyhours}</span>
+                                        {current.toDateString() == duedate.toDateString()
+                                        && <span className="task-change-date glyphicon glyphicon-option-vertical"
+                                                 id={task.id+"-end"}
+                                                 data-task-id={task.id}
+                                                 draggable={true}
+                                                 onDragStart={this.drag}></span>}
+                                    </div>
+
+                                </td>);
                         } else {
-                            timespan.push(<td key={task.id+"-"+i+"-"+j}></td>);
+                            timespan.push(<td key={task.id+"-"+i+"-"+j}
+                                              id={task.id+"-"+i+"-"+j}
+                                              data-date={current.toDateString()}
+                                              data-task-id={task.id}
+                                              onDrop={this.drop} onDragOver={this.allowDrop}></td>);
                         }
                     } else {
-                        timespan.push(<td key={task.id+"-"+i+"-"+j}></td>);
+                        timespan.push(<td key={task.id+"-"+i+"-"+j}
+                                          id={task.id+"-"+i+"-"+j}
+                                          data-date={current.toDateString()}
+                                          data-task-id={task.id}
+                                          onDrop={this.drop} onDragOver={this.allowDrop}></td>);
                     }
                 }
             }

@@ -50,7 +50,7 @@ table {
 td, th {
     position: relative;
 }
-
+/*
 thead th:not(:empty):hover::after,
 td:focus::after,
 thead th:not(:empty):focus::after,
@@ -69,7 +69,7 @@ td:not(.nohover):hover::after,
 thead th:not(.nohover):hover::after,
 tbody td:hover::after{
     background-color: lightgray;
-}
+}*/
 
 .calendar-day-headers {
     text-align:center;
@@ -130,16 +130,19 @@ tbody td:hover::after{
     border-radius: 2px;
 }
 
-.taskSpan > div > span {
+.taskSpan > div > .task-hours {
     color:transparent;
     position: relative;
     top: 50%;
     transform: translateY(-50%);
-
 }
 
-.taskSpan >div:hover > span {
+.taskSpan >div:hover > .task-hours {
     color:black;
+}
+
+.task-change-date:hover {
+
 }
 
 .timerBtn {
@@ -178,7 +181,9 @@ tbody td:hover::after{
     padding-top: 10px;
 }
 
+.task-change-date {
 
+}
 
 
 /* TaskBar */
